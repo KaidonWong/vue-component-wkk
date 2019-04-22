@@ -1,11 +1,11 @@
 <template>
-	<li class="level1">
-		<a :href="url">
+	<li class="level1" :class="submenuShowClass">
+		<a :href="url" @click="onClick">
 			<span class="iconfont" :class="icon"></span>
 			{{name}}
 			<span v-if="hasSubmenu" class="iconfont icon-down"></span>
 		</a>
-		<ul class='submenu' v-if="hasSubmenu">
+		<ul class="submenu" v-if="hasSubmenu" :style="submenuHeightStyle">
 			<li class="level2" v-for="(item,index) of submenu" :key="index">
 				<a :href="item.url">{{item.name}}</a>
 			</li>
@@ -21,13 +21,50 @@ export default {
 		submenu: Array
 	},
 	computed: {
+		expandState: function() {
+			let a = this.$store.getters.getCollapseState(this.name);
+			return a;
+		},
 		hasSubmenu: function() {
 			if (this.submenu == null) {
 				return false;
 			}
 			return true;
+		},
+		submenuShowClass: function() {
+			return {
+				expand: this.expandState
+			};
+		},
+		submenuHeightStyle: function() {
+			if (this.expandState == false) {
+				return {
+					height: "0px"
+				};
+			} else {
+				let height = 46 * this.submenu.length;
+				return {
+					height: `${height}px`
+				};
+			}
 		}
-    },
+	},
+	methods: {
+		onClick: function() {
+			if (typeof this.submenu == "undefined") {
+				return false;
+			}
+			if (this.expandState == false) {
+				this.$store.dispatch("soloCollapseToggle", {
+					name: this.name
+				});
+			} else {
+				this.$store.dispatch("removeCollapseToggle", {
+					name: this.name
+				});
+			}
+		}
+	}
 };
 </script>
 <style lang="scss" scoped>
@@ -51,10 +88,15 @@ a {
 		right: 10px;
 		transition: transform 0.3s;
 	}
-	&.active {
-		.icon-down {
-			transform: rotate(180deg);
-		}
+}
+.submenu {
+	overflow: hidden;
+	height: 0;
+	transition: height 0.3s;
+}
+.expand {
+	.icon-down {
+		transform: rotate(180deg);
 	}
 }
 ul,

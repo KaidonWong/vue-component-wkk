@@ -104,7 +104,7 @@ export default {
 			return [
 				{
 					name: "文章管理",
-                    url: "aaaa.com",
+					url: "aaaa.com"
 				},
 				{
 					name: "评论管理",
@@ -113,22 +113,49 @@ export default {
 			];
 		},
 		getCollapse: function() {
-            let array = new Array();
+			let array = new Array();
 			let a = {
 				name: "内容管理",
-                url: "#",
-                icon: 'icon-video',
+				url: "#",
+				icon: "icon-video",
 				submenu: this.getSubMenu
 			};
 			let b = {
 				name: "统计分析",
-                url: "#",
-                icon: 'icon-video',
-            };
-            array.push(a);
-            array.push(b);
-            array.push(a);
-            return array;
+				url: "#",
+				icon: "icon-address"
+			};
+			let c = {
+				name: "我的标签",
+				url: "#",
+				icon: "icon-bluetoothoff",
+				submenu: this.getSubMenu
+			};
+			let d = {
+				name: "我的标签1",
+				url: "#",
+				icon: "icon-camera",
+				submenu: this.getSubMenu
+			};
+			let e = {
+				name: "我的标签2",
+				url: "#",
+				icon: "icon-video",
+				submenu: this.getSubMenu
+			};
+			let f = {
+				name: "我的标签3",
+				url: "#",
+				icon: "icon-video",
+				submenu: this.getSubMenu
+			};
+			array.push(a);
+			array.push(b);
+			array.push(c);
+			array.push(d);
+			array.push(e);
+			array.push(f);
+			return array;
 		}
 	}
 };
