@@ -67,53 +67,6 @@ export default {
 	}
 };
 </script>
-<style lang="scss" scoped>
-a {
-	position: relative;
-	display: block;
-	text-decoration: none;
-	color: #515a6e;
-	line-height: 2;
-	&:hover {
-		color: #2d8cf0;
-	}
-	span {
-		display: inline-block;
-		width: 25px;
-		font-size: 1.4em;
-		vertical-align: middle;
-	}
-	.icon-down {
-		position: absolute;
-		right: 10px;
-		transition: transform 0.3s;
-	}
-}
-.submenu {
-	overflow: hidden;
-	height: 0;
-	transition: height 0.3s;
-}
-.expand {
-	.icon-down {
-		transform: rotate(180deg);
-	}
-}
-ul,
-li {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-.level1 {
-	> a {
-		padding: 7px;
-	}
-}
-.level2 {
-	> a {
-		padding: 7px 7px 7px 30px;
-	}
-}
+<style lang="scss" src='./li.scss' scoped>
 </style>
 
