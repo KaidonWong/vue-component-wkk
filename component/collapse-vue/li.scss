@@ -1,5 +1,4 @@
 a {
-	position: relative;
 	display: block;
 	text-decoration: none;
 	color: #515a6e;
@@ -8,15 +7,14 @@ a {
 		color: #2d8cf0;
 	}
 	span {
-		display: inline-block;
 		width: 25px;
 		font-size: 1.4em;
 		vertical-align: middle;
 	}
 	.icon-down {
-		position: absolute;
-		right: 10px;
-		transition: transform 0.3s;
+        float: right;
+        transition: transform 0.3s;
+        transform-origin: 40% 50%;
 	}
 }
 .submenu {
@@ -42,6 +40,6 @@ li {
 }
 .level2 {
 	> a {
-		padding: 7px 7px 7px 30px;
+		padding: 7px 7px 7px 35px;
 	}
 }

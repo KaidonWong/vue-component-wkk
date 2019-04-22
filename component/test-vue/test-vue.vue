@@ -135,7 +135,6 @@ export default {
 				name: "我的标签1",
 				url: "#",
 				icon: "icon-camera",
-				submenu: this.getSubMenu
 			};
 			let e = {
 				name: "我的标签2",
