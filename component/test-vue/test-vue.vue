@@ -1,17 +1,31 @@
 <template>
 	<!-- <table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue> -->
-	<collapse-vue :content="getCollapse"></collapse-vue>
+	<!-- <collapse-vue :content="getCollapse"></collapse-vue> -->
+    <!-- <horizon-menu-vue :content="getCollapse"></horizon-menu-vue> -->
+    <!-- <input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue> -->
+    <textarea-vue placeholder="请输入内容" rows='5' @inputevent='onInput'></textarea-vue>
 </template>
+
 <script>
 import tableVue from "../table-vue/table-vue.vue";
-import liVue from "../collapse-vue/li-vue.vue";
 import collapseVue from "../collapse-vue/collapse-vue.vue";
+import horizonMenuVue from "../horizon-menu-vue/horizon-menu-vue.vue";
+import inputVue from "../input-vue/input-vue.vue";
+import textareaVue from "../input-vue/textarea-vue.vue";
+
 export default {
 	components: {
 		"table-vue": tableVue,
-		"li-vue": liVue,
-		"collapse-vue": collapseVue
-	},
+		"collapse-vue": collapseVue,
+        "horizon-menu-vue": horizonMenuVue,
+        "input-vue": inputVue,
+        'textarea-vue': textareaVue,
+    },
+    data: function() {
+        return {
+            inputValue: "",
+        }
+    },
 	computed: {
 		getColumns: function() {
 			let array = new Array();
@@ -108,6 +122,14 @@ export default {
 				{
 					name: "评论管理",
 					url: "bbbb.com"
+				},
+				{
+					name: "文案管理",
+					url: "aaaa.com"
+				},
+				{
+					name: "预案管理",
+					url: "bbbb.com"
 				}
 			];
 		},
@@ -133,7 +155,7 @@ export default {
 			let d = {
 				name: "我的标签1",
 				url: "#",
-				icon: "icon-camera",
+				icon: "icon-camera"
 			};
 			let e = {
 				name: "我的标签2",
@@ -155,6 +177,11 @@ export default {
 			array.push(f);
 			return array;
 		}
-	}
+    },
+    methods: {
+        onInput: function(e) {
+            this.inputValue = e;
+        }
+    }
 };
 </script>
