@@ -20,12 +20,7 @@ export default {
 		content: Array
     },
     beforeMount: function(){
-        // for(let item of this.content) {
-        //     this.$store.dispatch('setCollapseToggle', {
-        //         key: item.name,
-        //         val: false,
-        //     })
-        // }
+
     }
 };
 </script>

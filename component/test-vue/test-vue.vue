@@ -1,6 +1,5 @@
 <template>
 	<!-- <table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue> -->
-	<!-- <li-vue name='lalalala' url='lalal' :submenu='getSubMenu'></li-vue> -->
 	<collapse-vue :content="getCollapse"></collapse-vue>
 </template>
 <script>
@@ -135,7 +134,6 @@ export default {
 				name: "我的标签1",
 				url: "#",
 				icon: "icon-camera",
-				submenu: this.getSubMenu
 			};
 			let e = {
 				name: "我的标签2",
