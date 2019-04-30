@@ -1,9 +1,12 @@
 <template>
 	<!-- <table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue> -->
 	<!-- <collapse-vue :content="getCollapse"></collapse-vue> -->
-    <!-- <horizon-menu-vue :content="getCollapse"></horizon-menu-vue> -->
-    <!-- <input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue> -->
-    <textarea-vue placeholder="请输入内容" rows='5' @inputevent='onInput'></textarea-vue>
+	<!-- <horizon-menu-vue :content="getCollapse"></horizon-menu-vue> -->
+	<input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue>
+	<!-- <textarea-vue placeholder="请输入内容" rows='5' @inputevent='onInput'></textarea-vue> -->
+	<!-- <radio-vue :content="getRadio" :selected="radioSelected" @inputevent="onRadio"></radio-vue> -->
+	<!-- <checkbox-vue :content="getCheckbox" :selected="checkboxSelected" @inputevent="onCheckbox"></checkbox-vue> -->
+	<!-- <switch-vue :status="switchStatus" onLabel="开" offLabel="关" @inputevent="onSwitch"></switch-vue> -->
 </template>
 
 <script>
@@ -12,20 +15,29 @@ import collapseVue from "../collapse-vue/collapse-vue.vue";
 import horizonMenuVue from "../horizon-menu-vue/horizon-menu-vue.vue";
 import inputVue from "../input-vue/input-vue.vue";
 import textareaVue from "../input-vue/textarea-vue.vue";
+import radioVue from "../input-vue/radio-vue.vue";
+import checkboxVue from "../input-vue/checkbox-vue.vue";
+import switchVue from "../input-vue/switch-vue.vue";
 
 export default {
 	components: {
 		"table-vue": tableVue,
 		"collapse-vue": collapseVue,
-        "horizon-menu-vue": horizonMenuVue,
-        "input-vue": inputVue,
-        'textarea-vue': textareaVue,
-    },
-    data: function() {
-        return {
-            inputValue: "",
-        }
-    },
+		"horizon-menu-vue": horizonMenuVue,
+		"input-vue": inputVue,
+		"textarea-vue": textareaVue,
+		"radio-vue": radioVue,
+		"checkbox-vue": checkboxVue,
+		"switch-vue": switchVue,
+	},
+	data: function() {
+		return {
+			inputValue: "",
+			radioSelected: "male",
+			checkboxSelected: ["apple", "watermelon"],
+			switchStatus: false,
+		};
+	},
 	computed: {
 		getColumns: function() {
 			let array = new Array();
@@ -176,12 +188,54 @@ export default {
 			array.push(e);
 			array.push(f);
 			return array;
+		},
+		getRadio: function() {
+			return [
+				{
+					label: "男",
+					value: "male"
+				},
+				{
+					label: "女",
+					value: "female"
+				},
+				{
+					label: "其它",
+					value: "other"
+				}
+			];
+		},
+		getCheckbox: function() {
+			return [
+				{
+					label: "苹果",
+					value: "apple"
+				},
+				{
+					label: "西瓜",
+					value: "watermelon"
+				},
+				{
+					label: "芒果",
+					value: "mango"
+				}
+			];
 		}
-    },
-    methods: {
-        onInput: function(e) {
-            this.inputValue = e;
-        }
-    }
+	},
+	methods: {
+		onInput: function(e) {
+			this.inputValue = e;
+		},
+		onRadio: function(e) {
+			this.radioSelected = e;
+		},
+		onCheckbox: function(e) {
+			let len = this.checkboxSelected.length;
+			this.checkboxSelected.splice(0, len, ...e);
+		},
+		onSwitch: function() {
+			this.switchStatus = !this.switchStatus;
+		}
+	}
 };
 </script>

@@ -78,18 +78,22 @@ export default {
 </script>
 <style lang="scss" scoped>
 .basediv {
+    display: inline-block;
 	padding: 2px;
 	border: 1px solid #cccccc;
     border-radius: 3px;
     transition: box-shadow 0.1s;
 	&.focus {
 		border: 1px solid transparent;
-		box-shadow: 0 0 2px #2d8cf0;
+		box-shadow: 0 0 4px #2d8cf0;
 	}
 	span {
 		color: #666666;
 		vertical-align: middle;
-	}
+    }
+    .icon-Closewithcircle {
+        color: #aaaaaa;
+    }
 	input {
 		outline: none;
 		border: none;
