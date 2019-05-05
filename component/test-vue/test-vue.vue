@@ -1,8 +1,12 @@
 <template>
+    <div>
+        <input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue>
+        <select-vue iconbefore='icon-bluetoothon'></select-vue>
+    </div>
 	<!-- <table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue> -->
 	<!-- <collapse-vue :content="getCollapse"></collapse-vue> -->
 	<!-- <horizon-menu-vue :content="getCollapse"></horizon-menu-vue> -->
-	<input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue>
+	<!-- <input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue> -->
 	<!-- <textarea-vue placeholder="请输入内容" rows='5' @inputevent='onInput'></textarea-vue> -->
 	<!-- <radio-vue :content="getRadio" :selected="radioSelected" @inputevent="onRadio"></radio-vue> -->
 	<!-- <checkbox-vue :content="getCheckbox" :selected="checkboxSelected" @inputevent="onCheckbox"></checkbox-vue> -->
@@ -18,6 +22,7 @@ import textareaVue from "../input-vue/textarea-vue.vue";
 import radioVue from "../input-vue/radio-vue.vue";
 import checkboxVue from "../input-vue/checkbox-vue.vue";
 import switchVue from "../input-vue/switch-vue.vue";
+import selectVue from "../input-vue/select-vue.vue";
 
 export default {
 	components: {
@@ -28,7 +33,8 @@ export default {
 		"textarea-vue": textareaVue,
 		"radio-vue": radioVue,
 		"checkbox-vue": checkboxVue,
-		"switch-vue": switchVue,
+        "switch-vue": switchVue,
+        "select-vue": selectVue,
 	},
 	data: function() {
 		return {
