@@ -6,6 +6,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 module.exports = {
     entry: {
         test: './entry/test.js',
+        main: './entry/main.js'
     },
     output: {
         filename: '[name].bundle.js',
@@ -42,6 +43,11 @@ module.exports = {
             chunks: ['test'],
             template: 'template/test.html',
             filename: 'test.html',
+        }),
+        new HtmlWebpackPlugin({
+            chunks: ['main'],
+            template: 'template/main.html',
+            filename: 'main.html',
         }),
     ],
 };

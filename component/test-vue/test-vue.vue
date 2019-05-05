@@ -7,7 +7,8 @@
 	<!-- <radio-vue :content="getRadio" :selected="radioSelected" @inputevent="onRadio"></radio-vue> -->
 	<!-- <checkbox-vue :content="getCheckbox" :selected="checkboxSelected" @inputevent="onCheckbox"></checkbox-vue> -->
 	<!-- <switch-vue :status="switchStatus" onLabel="开" offLabel="关" @inputevent="onSwitch"></switch-vue> -->
-	<select-vue iconbefore="icon-bluetoothon" :options="getSelectOptions" @inputevent="onInput"></select-vue>
+	<!-- <select-vue iconbefore="icon-bluetoothon" :options="getSelectOptions" @inputevent="onInput"></select-vue> -->
+	<button-blue-vue label="申请授权" @clickevent='onSwitch'></button-blue-vue>
 </template>
 
 <script>
@@ -20,6 +21,7 @@ import radioVue from "../input-vue/radio-vue.vue";
 import checkboxVue from "../input-vue/checkbox-vue.vue";
 import switchVue from "../input-vue/switch-vue.vue";
 import selectVue from "../input-vue/select-vue.vue";
+import buttonBlueVue from "../button-vue/button-blue-vue.vue";
 
 export default {
 	components: {
@@ -31,7 +33,8 @@ export default {
 		"radio-vue": radioVue,
 		"checkbox-vue": checkboxVue,
 		"switch-vue": switchVue,
-		"select-vue": selectVue
+		"select-vue": selectVue,
+		"button-blue-vue": buttonBlueVue
 	},
 	data: function() {
 		return {
