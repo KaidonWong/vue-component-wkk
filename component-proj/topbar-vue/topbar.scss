@@ -1,0 +1,95 @@
+.topbar {
+	box-shadow: 0 0 0.2em #666666;
+	padding: 0.5em 1em;
+	.logo {
+        float: left;
+        margin-right: 2%;
+		width: 7%;
+		min-width: 90px;
+		> .pic-container {
+			position: relative;
+			padding-bottom: 35%;
+			img {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+			}
+		}
+    }
+    .menus {
+        float: left;
+        //900px以下就不显示，最小宽度为630px
+        width: 660px;
+        // background-color: #eeeeee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .menu {
+            &:nth-of-type(1) {
+                margin-right: 8%;
+                letter-spacing: 0.1em;
+                font-size: 1.1em;
+                font-weight: bold;
+            }
+            &+.menu {
+                font-size: 1em;
+                &:hover {
+                    color: #d40e10;
+                    cursor: default;
+                }
+            }
+        }
+    }
+	.logoright {
+		float: right;
+		width: 7%;
+		min-width: 100px;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		.avatar {
+			> .pic-container {
+				position: relative;
+				padding-bottom: 100%;
+				img {
+					border-radius: 50%;
+					position: absolute;
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+		.name {
+            padding: 0 0.3em;
+            color: #666666;
+            letter-spacing: 0.05em;
+		}
+	}
+}
+.vertical-menus {
+    position: absolute;
+    top: -14em;
+    width: 100%;
+    background-color: rgba($color: #330000, $alpha: 0.8);
+    color: #ffffff;
+    transition: top 0.2s ease-in-out;
+    .menu {
+        // display: inline-block;
+        padding: 0.4em 1em;
+        &:nth-of-type(1) {
+            letter-spacing: 0.1em;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        &+.menu {
+            font-size: 1em;
+            &:hover {
+                color: #d40e10;
+                cursor: default;
+            }
+        }
+    }
+    &.active {
+        top: 0;
+    }
+}

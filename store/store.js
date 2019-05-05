@@ -1,10 +1,12 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import collapse from './modules/collapse'
-Vue.use(Vuex)
+import Vue from "vue";
+import Vuex from "vuex";
+import collapse from "./modules/collapse";
+import globalstate from "./modules/globalstate";
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: {
-        collapse,
-    }
-})
+	modules: {
+		collapse,
+		globalstate
+	}
+});

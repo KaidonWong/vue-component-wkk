@@ -1,96 +1,89 @@
 <template>
-	<div class="topbar clearfix">
-		<div class="logo">
-			<div class="pic-container" ref="topbarpic">
-				<img src="../../asset/topbar/logo.png" alt>
-			</div>
-		</div>
-		<div class="logoright" :style="HeightStyle">
-			<div class="avatar" :style="WidthStyle">
-				<div class="pic-container">
-					<img src="../../asset/topbar/avatar.jpg" alt>
+	<div>
+		<div class="topbar clearfix" @click="onClickTopbar">
+			<div class="logo">
+				<div class="pic-container" ref="topbarpic">
+					<img src="../../asset/topbar/logo.png" alt>
 				</div>
 			</div>
-			<div class='name'>{{user.name}}</div>
-			<button-vue label="申请授权" @clickevent="onButton"></button-vue>
+			<div v-if="horizonMenuShow" class="menus" :style="HeightStyle">
+				<div class="menu" v-for="(menu,index) of menus" :key="index">{{menu.label}}</div>
+			</div>
+			<div class="logoright" :style="HeightStyle">
+				<div class="avatar" :style="WidthStyle">
+					<div class="pic-container">
+						<img src="../../asset/topbar/avatar.jpg" alt>
+					</div>
+				</div>
+				<div class="name">{{user.name}}</div>
+			</div>
+		</div>
+		<div style="position: relative;height: 14em;overflow: hidden;">
+			<div v-if="!horizonMenuShow" class="vertical-menus" :class="verticalActiveClass"  @click="onClickTopbar">
+				<div class="menu" v-for="(menu,index) of menus" :key="index">{{menu.label}}</div>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
-import buttonRedVue from "../../component/button-vue/button-red-vue.vue";
 export default {
 	props: {
-		user: Object
+		user: Object,
+		menus: Array
 	},
 	data: function() {
 		return {
+			ready: false,
 			HeightStyle: {},
-			WidthStyle: {}
+			WidthStyle: {},
+			verticalActiveClass: {}
 		};
 	},
+	computed: {
+		windowWidth: function() {
+			return this.$store.getters["globalstate/getWindowWidth"];
+		},
+		horizonMenuShow: function() {
+			//true: desktop  false: phone
+			this.adjustStyle();
+			return this.$store.getters["globalstate/getMode"];
+		}
+	},
 	components: {
-		"button-vue": buttonRedVue
+		// "button-vue": buttonRedVue
 	},
 	methods: {
-		onButton: function() {
-			console.log("a");
+		adjustStyle: function() {
+			if (this.ready == false) {
+				return;
+			}
+			let dom = this.$refs.topbarpic;
+			let h = dom.offsetHeight;
+			let w = h / 1.3;
+			this.HeightStyle = {
+				height: `${h}px`
+			};
+			this.WidthStyle = {
+				width: `${w}px`
+			};
+		},
+		onClickTopbar: function() {
+			if (this.verticalActiveClass.active == true) {
+				this.verticalActiveClass = {
+					active: false
+				};
+			} else {
+				this.verticalActiveClass = {
+					active: true
+				};
+			}
 		}
 	},
 	mounted: function() {
-		let dom = this.$refs.topbarpic;
-		let h = dom.offsetHeight;
-		let w = h / 2;
-		this.HeightStyle = {
-			height: `${h}px`
-		};
-		this.WidthStyle = {
-			width: `${w}px`
-		};
+		this.ready = true;
+		this.adjustStyle();
 	}
 };
 </script>
-<style lang="scss" scoped>
-.topbar {
-	box-shadow: 0 0 0.3em #666666;
-	padding: 0.5em 1em;
-	.logo {
-		float: left;
-		width: 30%;
-		max-width: 140px;
-		> .pic-container {
-			position: relative;
-			padding-bottom: 35%;
-			img {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-			}
-		}
-	}
-	.logoright {
-		float: right;
-		width: 70%;
-		max-width: 400px;
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		.avatar {
-			> .pic-container {
-				position: relative;
-				padding-bottom: 100%;
-				img {
-					border-radius: 50%;
-					position: absolute;
-					width: 100%;
-					height: 100%;
-				}
-			}
-        }
-        .name {
-            margin-right: 2em;
-            color: #666666;
-
-        }
-	}
-}
+<style lang="scss" src='./topbar.scss' scoped>
 </style>
