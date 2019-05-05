@@ -1,8 +1,4 @@
 <template>
-    <div>
-        <input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue>
-        <select-vue iconbefore='icon-bluetoothon'></select-vue>
-    </div>
 	<!-- <table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue> -->
 	<!-- <collapse-vue :content="getCollapse"></collapse-vue> -->
 	<!-- <horizon-menu-vue :content="getCollapse"></horizon-menu-vue> -->
@@ -11,6 +7,7 @@
 	<!-- <radio-vue :content="getRadio" :selected="radioSelected" @inputevent="onRadio"></radio-vue> -->
 	<!-- <checkbox-vue :content="getCheckbox" :selected="checkboxSelected" @inputevent="onCheckbox"></checkbox-vue> -->
 	<!-- <switch-vue :status="switchStatus" onLabel="开" offLabel="关" @inputevent="onSwitch"></switch-vue> -->
+	<select-vue iconbefore="icon-bluetoothon" :options="getSelectOptions" @inputevent="onInput"></select-vue>
 </template>
 
 <script>
@@ -33,15 +30,15 @@ export default {
 		"textarea-vue": textareaVue,
 		"radio-vue": radioVue,
 		"checkbox-vue": checkboxVue,
-        "switch-vue": switchVue,
-        "select-vue": selectVue,
+		"switch-vue": switchVue,
+		"select-vue": selectVue
 	},
 	data: function() {
 		return {
 			inputValue: "",
 			radioSelected: "male",
 			checkboxSelected: ["apple", "watermelon"],
-			switchStatus: false,
+			switchStatus: false
 		};
 	},
 	computed: {
@@ -212,6 +209,22 @@ export default {
 			];
 		},
 		getCheckbox: function() {
+			return [
+				{
+					label: "苹果",
+					value: "apple"
+				},
+				{
+					label: "西瓜",
+					value: "watermelon"
+				},
+				{
+					label: "芒果",
+					value: "mango"
+				}
+			];
+		},
+		getSelectOptions: function() {
 			return [
 				{
 					label: "苹果",
