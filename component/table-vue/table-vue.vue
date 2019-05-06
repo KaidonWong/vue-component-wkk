@@ -57,7 +57,7 @@ export default {
 				widthnum += a;
 			}
 			//border 含有两个px
-			// widthnum += 2;
+			widthnum += 0.2;
 			//fixed height need a scroll bar, so extra width;
 			if (typeof this.config.height != "undefined") {
 				widthnum += 1.6;

@@ -1,0 +1,30 @@
+.panel {
+    overflow: auto;
+    width: 95%;
+    max-width: 1280px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1em 2em;
+	background-color: #ffffff;
+	box-shadow: 0.1em 0.1em 0.1em #bbbbbb;
+	.title {
+        margin-bottom: 4em;
+        font-weight: bold;
+        font-size: 1.1em;
+        
+	}
+	.table {
+		.table-wrap {
+			float: left;
+            position: relative;
+            padding: 1px;
+			.above-table {
+                position: absolute;
+                top: -3em;
+                width: 100%;
+				display: flex;
+				justify-content: space-between;
+			}
+		}
+    }
+}

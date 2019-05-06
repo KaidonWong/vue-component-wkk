@@ -1,5 +1,17 @@
 <template>
-	<table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue>
+	<div style="width: 100%;height: 100%;background-color: #ffffff;padding: 3em;">
+		<table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue>
+		<input-vue
+			placeholder="请输入内容"
+			iconbefore="icon-bluetoothon"
+			iconafter="icon-search"
+			@inputevent="onInput"
+		></input-vue>
+
+        <search-input-vue></search-input-vue>
+        <modal-vue></modal-vue>
+	</div>
+	<!-- <table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue> -->
 	<!-- <collapse-vue :content="getCollapse"></collapse-vue> -->
 	<!-- <horizon-menu-vue :content="getCollapse"></horizon-menu-vue> -->
 	<!-- <input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue> -->
@@ -8,7 +20,8 @@
 	<!-- <checkbox-vue :content="getCheckbox" :selected="checkboxSelected" @inputevent="onCheckbox"></checkbox-vue> -->
 	<!-- <switch-vue :status="switchStatus" onLabel="开" offLabel="关" @inputevent="onSwitch"></switch-vue> -->
 	<!-- <select-vue iconbefore="icon-bluetoothon" :options="getSelectOptions" @inputevent="onInput"></select-vue> -->
-	<!-- <button-blue-vue label="申请授权" @clickevent='onSwitch'></button-blue-vue> -->
+	<!-- <button-vue label="申请授权" @clickevent='onSwitch' color="#0000aa"></button-vue> -->
+
 </template>
 
 <script>
@@ -21,7 +34,9 @@ import radioVue from "../input-vue/radio-vue.vue";
 import checkboxVue from "../input-vue/checkbox-vue.vue";
 import switchVue from "../input-vue/switch-vue.vue";
 import selectVue from "../input-vue/select-vue.vue";
-import buttonBlueVue from "../button-vue/button-blue-vue.vue";
+import buttonVue from "../button-vue/button-vue.vue";
+import searchInputVue from "../input-vue/search-input-vue.vue";
+import modalSkeletonVue from "../modal-vue/modal-skeleton-vue.vue";
 
 export default {
 	components: {
@@ -34,7 +49,9 @@ export default {
 		"checkbox-vue": checkboxVue,
 		"switch-vue": switchVue,
 		"select-vue": selectVue,
-		"button-blue-vue": buttonBlueVue
+        "button-vue": buttonVue,
+        "search-input-vue": searchInputVue,
+        "modal-vue": modalSkeletonVue,
 	},
 	data: function() {
 		return {
@@ -127,10 +144,10 @@ export default {
 		},
 		getConfig: function() {
 			let a = {
-                height: 300,
-                checkbox: true,
-                //0: 没有操作栏
-                editColumnType: 1,
+				height: 300,
+				checkbox: true,
+				//0: 没有操作栏
+				editColumnType: 1
 			};
 			return a;
 		},

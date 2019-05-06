@@ -1,12 +1,13 @@
 @import "table-common.scss";
 .table {
-	border: $border;
+    border: $border;
 	.thead {
 		.tline {
 			background-color: #f8f8f9;
             border-bottom: $border;
             >div {
                 font-weight: bold;
+                color: #555555;
             }
 		}
 		.td-edit-column {
@@ -15,13 +16,15 @@
 			padding: 0.5em;
 			line-height: 1;
             border-left: $border;
-            border-right: $border;
             text-align: center;
 		}
 	}
 	.tbody {
 		.tline {
-			border-bottom: $border;
+            border-bottom: $border;
+            >div {
+                color: #666666;
+            }
 			&:nth-of-type(2n) {
 				background-color: #f8f8f9;
 			}

@@ -42,17 +42,20 @@ export default {
 @import "table-common.scss";
 .container {
 	float: left;
-    width: 17em;
+	width: 17em;
 
 	padding: 0.5em;
-    text-align: center;
-        line-height: 1;
+	text-align: center;
+	line-height: 1;
 	border-left: $border;
 	> div {
-        display: inline;
-        
+		display: inline;
 		padding: 0 0.2em;
-		color: #640000;
+        color: #640000;
+        &:hover {
+            color: #d40e10;
+            cursor: pointer;
+        }
 	}
 }
 </style>
