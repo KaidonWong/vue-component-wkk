@@ -10,7 +10,7 @@ export default {
 	computed: {
 		styleObject: function() {
 			return {
-				width: this.width + "px",
+				width: this.width + "em",
 				float: "left"
 			};
 		}
@@ -20,8 +20,10 @@ export default {
 <style lang="scss" scoped>
     @import 'table-common.scss';
     div {
-        line-height: 1.5;
-        padding: 8px;
+        padding: 0.5em;
+        line-height: 1;
+        color: #333;
+        overflow: hidden;
         &+div {
             border-left: $border;
         }

@@ -1,20 +1,33 @@
-@import 'table-common.scss';
+@import "table-common.scss";
 .table {
-    border: $border;
-    .thead {
-        .tline {
-            background-color: #f8f8f9;
-        }
-    }
-    .tbody {
-        .tline {
-            border-top: $border;
-            &:nth-of-type(2n) {
-                background-color: #f8f8f9;
+	border: $border;
+	.thead {
+		.tline {
+			background-color: #f8f8f9;
+            border-bottom: $border;
+            >div {
+                font-weight: bold;
             }
-            &:hover {
-                background-color: #ebf7ff;
-            }
-        }
-    }
+		}
+		.td-edit-column {
+			width: 17em;
+			float: left;
+			padding: 0.5em;
+			line-height: 1;
+            border-left: $border;
+            border-right: $border;
+            text-align: center;
+		}
+	}
+	.tbody {
+		.tline {
+			border-bottom: $border;
+			&:nth-of-type(2n) {
+				background-color: #f8f8f9;
+			}
+			&:hover {
+				background-color: #ebf7ff;
+			}
+		}
+	}
 }

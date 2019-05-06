@@ -1,14 +1,16 @@
-import Vue from 'vue';
-import '../css/common.css';
-import '../asset/iconfont/iconfont.css';
-import store from '../store/store';
+import Vue from "vue";
+import "../css/common.css";
+import "../asset/iconfont/iconfont.css";
+import store from "../store/store";
+import router from "../router/router";
 
-import structureVue from '../component-proj/structure-vue/structure-vue.vue';
+import structureVue from "../component-proj/structure-vue/structure-vue.vue";
 
 new Vue({
-    el: '#root',
+	el: "#root",
     store,
-    components: {
-        'structure-vue': structureVue,
-    }
-})
+    router,
+	components: {
+		"structure-vue": structureVue
+	}
+});

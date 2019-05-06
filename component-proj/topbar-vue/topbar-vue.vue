@@ -6,8 +6,8 @@
 					<img src="../../asset/topbar/logo.png" alt>
 				</div>
 			</div>
-			<div v-if="horizonMenuShow" class="menus" :style="HeightStyle">
-				<div class="menu" v-for="(menu,index) of menus" :key="index">{{menu.label}}</div>
+			<div v-if="horizonMenuShow" class="menus clearfix" :style="HeightStyle">
+				<div class="menu" v-for="(menu,index) of menus" :key="index" :to="menu.to">{{menu.label}}</div>
 			</div>
 			<div class="logoright" :style="HeightStyle">
 				<div class="avatar" :style="WidthStyle">
@@ -19,8 +19,13 @@
 			</div>
 		</div>
 		<div style="position: relative;height: 14em;overflow: hidden;">
-			<div v-if="!horizonMenuShow" class="vertical-menus" :class="verticalActiveClass"  @click="onClickTopbar">
-				<div class="menu" v-for="(menu,index) of menus" :key="index">{{menu.label}}</div>
+			<div
+				v-if="!horizonMenuShow"
+				class="vertical-menus"
+				:class="verticalActiveClass"
+				@click="onClickTopbar"
+			>
+				<div class="menu" v-for="(menu,index) of menus" :key="index" :to="menu.to">{{menu.label}}</div>
 			</div>
 		</div>
 	</div>
@@ -67,7 +72,12 @@ export default {
 				width: `${w}px`
 			};
 		},
-		onClickTopbar: function() {
+		onClickTopbar: function(e) {
+            let target = e.target;
+            let to = target.attributes.getNamedItem('to');
+            if(to != null) {
+                this.$router.push({ path: `/${to.value}`})
+            }
 			if (this.verticalActiveClass.active == true) {
 				this.verticalActiveClass = {
 					active: false

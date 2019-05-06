@@ -1,5 +1,5 @@
 <template>
-	<!-- <table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue> -->
+	<table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue>
 	<!-- <collapse-vue :content="getCollapse"></collapse-vue> -->
 	<!-- <horizon-menu-vue :content="getCollapse"></horizon-menu-vue> -->
 	<!-- <input-vue placeholder="请输入内容" iconbefore='icon-bluetoothon' iconafter='icon-search' @inputevent='onInput'></input-vue> -->
@@ -8,7 +8,7 @@
 	<!-- <checkbox-vue :content="getCheckbox" :selected="checkboxSelected" @inputevent="onCheckbox"></checkbox-vue> -->
 	<!-- <switch-vue :status="switchStatus" onLabel="开" offLabel="关" @inputevent="onSwitch"></switch-vue> -->
 	<!-- <select-vue iconbefore="icon-bluetoothon" :options="getSelectOptions" @inputevent="onInput"></select-vue> -->
-	<button-blue-vue label="申请授权" @clickevent='onSwitch'></button-blue-vue>
+	<!-- <button-blue-vue label="申请授权" @clickevent='onSwitch'></button-blue-vue> -->
 </template>
 
 <script>
@@ -50,17 +50,17 @@ export default {
 			let a = {
 				field: "id",
 				title: "ID",
-				width: 200
+				width: 7
 			};
 			let b = {
 				field: "name",
 				title: "姓名",
-				width: 200
+				width: 12
 			};
 			let c = {
 				field: "age",
 				title: "年龄",
-				width: 100
+				width: 10
 			};
 			array.push(a);
 			array.push(b);
@@ -106,7 +106,7 @@ export default {
 			};
 			let h = {
 				id: 2,
-				name: "wangkaikai",
+				name: "wangkaikaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 				age: 25
 			};
 			let i = {
@@ -127,7 +127,10 @@ export default {
 		},
 		getConfig: function() {
 			let a = {
-				height: 300
+                height: 300,
+                checkbox: true,
+                //0: 没有操作栏
+                editColumnType: 1,
 			};
 			return a;
 		},

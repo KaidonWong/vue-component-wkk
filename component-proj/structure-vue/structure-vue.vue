@@ -1,5 +1,8 @@
 <template>
-	<topbar-vue :user="user" :menus="menus"></topbar-vue>
+	<div>
+		<topbar-vue :user="user" :menus="menus"></topbar-vue>
+        <router-view class="section" name='section'></router-view>
+	</div>
 </template>
 <script>
 import topbarVue from "../../component-proj/topbar-vue/topbar-vue.vue";
@@ -29,7 +32,7 @@ export default {
 				},
 				{
 					label: "用户管理",
-					to: "#"
+					to: "yhgl"
 				},
 				{
 					label: "角色分配",
@@ -56,4 +59,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.section {
+    position: relative;
+    top: -13em;
+}
 </style>

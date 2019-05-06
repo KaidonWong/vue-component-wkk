@@ -1,6 +1,7 @@
 .topbar {
 	box-shadow: 0 0 0.2em #666666;
-	padding: 0.5em 1em;
+    padding: 0.5em 1em;
+    background-color: #ffffff;
 	.logo {
         float: left;
         margin-right: 2%;
@@ -20,11 +21,11 @@
         float: left;
         //900px以下就不显示，最小宽度为630px
         width: 660px;
+        padding-top: 0.5%;
         // background-color: #eeeeee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         .menu {
+            float: left;
+            margin-right: 3%;
             &:nth-of-type(1) {
                 margin-right: 8%;
                 letter-spacing: 0.1em;
@@ -32,7 +33,9 @@
                 font-weight: bold;
             }
             &+.menu {
+                line-height: 1.8;
                 font-size: 1em;
+                color: #444444;
                 &:hover {
                     color: #d40e10;
                     cursor: default;
@@ -52,6 +55,7 @@
 				position: relative;
 				padding-bottom: 100%;
 				img {
+                    border: 1px solid #d40e10;
 					border-radius: 50%;
 					position: absolute;
 					width: 100%;
@@ -70,7 +74,7 @@
     position: absolute;
     top: -14em;
     width: 100%;
-    background-color: rgba($color: #330000, $alpha: 0.8);
+    background-color: rgba($color: #000000, $alpha: 0.8);
     color: #ffffff;
     transition: top 0.2s ease-in-out;
     .menu {
