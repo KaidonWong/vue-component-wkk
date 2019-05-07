@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import yhglSection from "../component-proj/yhgl-vue/section.vue";
+import addUserModal from "../component-proj/yhgl-vue/add-user-modal.vue";
 
 Vue.use(VueRouter);
 
@@ -12,17 +13,14 @@ const routes = [
             section: yhglSection,
         },
 		children: [
-			// {
-			// 	path: "emails",
-			// 	component: UserEmailsSubscriptions
-			// },
-			// {
-			// 	path: "profile",
-			// 	components: {
-			// 		default: UserProfile,
-			// 		helper: UserProfilePreview
-			// 	}
-			// }
+			{
+                path: "adduser",
+                name: "adduser",
+				components: {
+                    modal: addUserModal,
+                }
+			},
+
 		]
 	}
 ];

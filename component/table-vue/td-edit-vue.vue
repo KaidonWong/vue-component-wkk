@@ -44,7 +44,7 @@ export default {
 	float: left;
 	width: 17em;
 
-	padding: 0.5em;
+	padding: 0.8em;
 	text-align: center;
 	line-height: 1;
 	border-left: $border;

@@ -54,8 +54,8 @@ export default {
 $boxWidth: 0.8em;
 .container {
 	float: left;
-	width: 2em;
-	padding: 0.6em;
+	width: 2.4em;
+	padding: 0.8em;
 }
 .box {
 	height: $boxWidth;

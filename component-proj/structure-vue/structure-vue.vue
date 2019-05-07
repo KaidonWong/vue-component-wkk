@@ -1,66 +1,74 @@
 <template>
-	<div>
-		<topbar-vue :user="user" :menus="menus"></topbar-vue>
-        <router-view class="section" name='section'></router-view>
-	</div>
+	<div class="base-structure clearfix">
+		<topbar-vue @contractevent="onContract"></topbar-vue>
+		<sidebar-vue :user="user" :menus="menus" :contract="contract"></sidebar-vue>
+        <router-view class='section' name='section'></router-view>
+    </div>
 </template>
 <script>
-import topbarVue from "../../component-proj/topbar-vue/topbar-vue.vue";
+import topbarVue from "../topbar-vue/topbar2-vue.vue";
+import sidebarVue from "../sidebar-vue/sidebar-vue.vue";
 export default {
+	components: {
+		"topbar-vue": topbarVue,
+		"sidebar-vue": sidebarVue
+	},
 	data: function() {
 		return {
+            contract: false,
 			user: {
-				name: "王开恺",
-				id: "11111"
+				id: 15245123,
+				name: "张红四",
+				job: "华北片区总经理"
 			},
 			menus: [
 				{
-					label: "软件授权管理平台",
-					to: "#"
-				},
-				{
-					label: "申请授权",
-					to: "#"
-				},
-				{
 					label: "数据统计",
-					to: "#"
+                    to: "sjtj",
+                    icon: "icon-et-sales-statistics",
 				},
 				{
 					label: "项目管理",
-					to: "#"
+                    to: "xmgl",
+                    icon: "icon-xiangmu",
 				},
 				{
 					label: "用户管理",
-					to: "yhgl"
+                    to: "yhgl",
+                    icon: "icon-UserSettings1",
 				},
 				{
-					label: "角色分配",
-					to: "#"
+					label: "权限分配",
+                    to: "qxfp",
+                    icon: "icon-key",
+				},
+				{
+					label: "授权日志",
+                    to: "sqrz",
+                    icon: "icon-devicelogs",
+				},
+				{
+					label: "操作日志",
+                    to: "czrz",
+                    icon: "icon-systemlogs",
 				}
 			]
 		};
-	},
-	components: {
-		"topbar-vue": topbarVue
-	},
-	mounted: function() {
-		var _this = this;
-		_this.$store.dispatch("globalstate/setWindowWidth", {
-			width: document.documentElement.clientWidth
-		});
-		window.onresize = function() {
-			// 定义窗口大小变更通知事件
-			_this.$store.dispatch("globalstate/setWindowWidth", {
-				width: document.documentElement.clientWidth
-			});
-		};
-	}
+    },
+    methods: {
+        onContract: function() {
+            this.contract = !this.contract;
+        }
+    },
 };
 </script>
 <style lang="scss" scoped>
+.base-structure {
+	width: 100%;
+	height: 100%;
+}
 .section {
-    position: relative;
-    top: -13em;
+    float: left;
+    width: calc(100% - 14em);
 }
 </style>

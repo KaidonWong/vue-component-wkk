@@ -79,7 +79,7 @@ export default {
 <style lang="scss" scoped>
 .basediv {
     display: inline-block;
-	padding: 2px;
+	padding: 3px;
 	border: 1px solid #cccccc;
     border-radius: 3px;
     transition: box-shadow 0.1s;

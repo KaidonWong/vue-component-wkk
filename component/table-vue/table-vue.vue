@@ -1,5 +1,5 @@
 <template>
-	<div class="table" :style="tableStyle">
+	<div class="table">
 		<div class="thead">
 			<div class="tline clearfix">
 				<td-checkbox-vue v-if="config.checkbox" lineid="all" @toggle="onToggleAll"></td-checkbox-vue>
@@ -7,7 +7,7 @@
 					v-for="(column,index) of columns"
 					:key="index"
 					:content="column.title"
-					:width="column.width"
+					:width="calcWidth(column.width)"
 				></td-vue>
 				<div v-if="hasEditColumn" class="td-edit-column">操作</div>
 			</div>
@@ -15,9 +15,14 @@
 		<div class="tbody" :style="tbodyStyle">
 			<div class="tline clearfix" v-for="(line,index) of dataInOrder" :key="index">
 				<td-checkbox-vue v-if="config.checkbox" :lineid="line[0]" :toggleall="toggleAll"></td-checkbox-vue>
-				<td-vue v-for="(item,index) of line" :key="index" :content="item" :width="columnWidth[index]"></td-vue>
-		        <td-edit-vue v-if="hasEditColumn" :type="config.editColumnType"></td-edit-vue>
-        	</div>
+				<td-vue
+					v-for="(item,index) of line"
+					:key="index"
+					:content="item"
+					:width="calcWidth(columnWidth[index])"
+				></td-vue>
+				<td-edit-vue v-if="hasEditColumn" :type="config.editColumnType"></td-edit-vue>
+			</div>
 		</div>
 	</div>
 </template>
@@ -28,13 +33,14 @@ import tdVue from "./td-vue.vue";
 export default {
 	data: function() {
 		return {
-			toggleAll: false
+			toggleAll: false,
+			totalWidth: 0
 		};
 	},
 	components: {
 		"td-vue": tdVue,
-        "td-checkbox-vue": tdCheckboxVue,
-        "td-edit-vue": tdEditVue,
+		"td-checkbox-vue": tdCheckboxVue,
+		"td-edit-vue": tdEditVue
 	},
 	props: {
 		columns: Array,
@@ -44,38 +50,42 @@ export default {
 	methods: {
 		onToggleAll: function() {
 			this.toggleAll = !this.toggleAll;
+		},
+		calcWidth: function(a) {
+			if (
+				this.config.checkbox == false &&
+				this.config.editColumnType == 0
+			) {
+				//没有checkbox，没有操作栏, 只有滚动条8px，边界 2px
+				return `calc((100% - 10px)/${this.totalWidth}*${a})`;
+			} else if (
+				this.config.checkbox == true &&
+				this.config.editColumnType == 0
+			) {
+				return `calc((100% - 2.4em -10px)/${this.totalWidth}*${a})`;
+			} else if (
+				this.config.checkbox == true &&
+				this.config.editColumnType != 0
+			) {
+				return `calc((100% - 2.4em - 17em -10px)/${this.totalWidth}*${a})`;
+			} else if (
+				this.config.checkbox == false &&
+				this.config.editColumnType != 0
+			) {
+				return `calc((100% - 17em - 10px)/${this.totalWidth}*${a})`;
+			}
+
+			return `calc((100% - 21em -2px)/${this.totalWidth}*${a})`;
 		}
 	},
 	computed: {
 		hasEditColumn: function() {
 			return this.config.editColumnType != 0;
 		},
-		tableStyle: function() {
-			let widthnum = 0;
-			for (let item of this.columns) {
-				let { width: a } = item;
-				widthnum += a;
-			}
-			//border 含有两个px
-			widthnum += 0.2;
-			//fixed height need a scroll bar, so extra width;
-			if (typeof this.config.height != "undefined") {
-				widthnum += 1.6;
-			}
-			if (this.config.checkbox == true) {
-				widthnum += 2;
-			}
-			if (this.hasEditColumn == true) {
-				widthnum += 17;
-			}
-			return {
-				width: widthnum + "em"
-			};
-		},
 		tbodyStyle: function() {
 			if (typeof this.config.height != "undefined") {
 				return {
-					"overflow-y": "auto",
+					"overflow-y": "scroll",
 					height: this.config.height + "px"
 				};
 			}
@@ -108,6 +118,10 @@ export default {
 	},
 	mounted: function() {
 		this.$store.dispatch("table/removeAll");
+		this.totalWidth = 0;
+		for (let i = 0, len = this.columns.length; i < len; i++) {
+			this.totalWidth += this.columns[i].width;
+		}
 	}
 };
 </script>

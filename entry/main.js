@@ -1,5 +1,5 @@
 import Vue from "vue";
-import "../css/common.css";
+import "../common/common.css";
 import "../asset/iconfont/iconfont.css";
 import store from "../store/store";
 import router from "../router/router";

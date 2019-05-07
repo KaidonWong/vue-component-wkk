@@ -1,0 +1,11 @@
+@mixin pic-container($ratio) {
+    .pic-container {
+        position: relative;
+        padding-bottom: $ratio;
+        img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

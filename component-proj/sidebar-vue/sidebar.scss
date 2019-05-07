@@ -1,0 +1,68 @@
+@import "../../common/pic-container.scss";
+.base-sidebar {
+    float: left;
+    overflow: hidden;
+    width: 14em;
+    height: 100%;
+    background-color: #222d32;
+    transition: width 0.3s ease-in-out;
+    .user-panel {
+        width: 14em;
+        height: 7em;
+        background-color: #2c393f;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2em 1.2em;
+        .avatar {
+            position: relative;
+            right: 0em;
+            transition: right 0.3s ease-in-out;
+            width: 3em;
+            img {
+                border-radius: 1.5em;
+            }
+            @include pic-container(100%);
+        }
+        .remark {
+            width: 8em;
+            color: #eeeeee;
+            transition: opacity 0.3s ease-in-out;
+            .name {
+                font-weight: bold;
+            }
+            .job {
+                font-size: 0.9em;
+            }
+        }
+    }
+    .menu {
+        width:14em;
+        color: #eeeeee;
+        padding: 1em;
+        border-left: .2em solid;
+        border-color: transparent;
+        line-height: 1;
+        &:hover,&.active {
+            background-color: #000000;
+            border-color: #009688;
+            cursor: default;
+        }
+        .iconfont {
+            margin-right: 0.4em;
+            font-size: 1.2em;
+        }
+        .label {
+            transition: opacity 0.3s ease-in-out;
+        }
+    }
+    &.contract {
+        width: 3.8em;
+        .avatar {
+            right: 0.9em;
+        }
+        .remark,.label {
+            opacity: 0;
+        }
+    }
+}

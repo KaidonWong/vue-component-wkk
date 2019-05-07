@@ -4,13 +4,13 @@
 <script>
 export default {
 	props: {
-		width: Number,
+		width: String,
 		content: [String, Number]
 	},
 	computed: {
 		styleObject: function() {
 			return {
-				width: this.width + "em",
+				width: this.width,
 				float: "left"
 			};
 		}
@@ -20,7 +20,7 @@ export default {
 <style lang="scss" scoped>
     @import 'table-common.scss';
     div {
-        padding: 0.5em;
+        padding: 0.8em;
         line-height: 1;
         color: #333;
         overflow: hidden;

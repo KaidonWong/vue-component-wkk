@@ -1,15 +1,18 @@
 <template>
 	<div style="width: 100%;height: 100%;background-color: #ffffff;padding: 3em;">
+		<!-- <section-header-vue icon="icon-caidan" title="用户管理" subtitle="增删查改用户信息"></section-header-vue>
+		<topbar-vue :user="user" :menus="menus"></topbar-vue>-->
 		<table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue>
-		<input-vue
+		<!-- <input-vue
 			placeholder="请输入内容"
 			iconbefore="icon-bluetoothon"
 			iconafter="icon-search"
 			@inputevent="onInput"
 		></input-vue>
 
-        <search-input-vue></search-input-vue>
-        <modal-vue></modal-vue>
+		<search-input-vue></search-input-vue>-->
+
+		<!-- <modal-vue></modal-vue> -->
 	</div>
 	<!-- <table-vue :columns="getColumns" :data="getData" :config='getConfig'></table-vue> -->
 	<!-- <collapse-vue :content="getCollapse"></collapse-vue> -->
@@ -21,7 +24,6 @@
 	<!-- <switch-vue :status="switchStatus" onLabel="开" offLabel="关" @inputevent="onSwitch"></switch-vue> -->
 	<!-- <select-vue iconbefore="icon-bluetoothon" :options="getSelectOptions" @inputevent="onInput"></select-vue> -->
 	<!-- <button-vue label="申请授权" @clickevent='onSwitch' color="#0000aa"></button-vue> -->
-
 </template>
 
 <script>
@@ -37,6 +39,8 @@ import selectVue from "../input-vue/select-vue.vue";
 import buttonVue from "../button-vue/button-vue.vue";
 import searchInputVue from "../input-vue/search-input-vue.vue";
 import modalSkeletonVue from "../modal-vue/modal-skeleton-vue.vue";
+import topbarVue from "../topbar-vue/topbar-vue.vue";
+import sectionHeaderVue from "../section-header-vue/section-header-vue.vue";
 
 export default {
 	components: {
@@ -49,97 +53,149 @@ export default {
 		"checkbox-vue": checkboxVue,
 		"switch-vue": switchVue,
 		"select-vue": selectVue,
-        "button-vue": buttonVue,
-        "search-input-vue": searchInputVue,
-        "modal-vue": modalSkeletonVue,
+		"button-vue": buttonVue,
+		"search-input-vue": searchInputVue,
+		"modal-vue": modalSkeletonVue,
+		"topbar-vue": topbarVue,
+		"section-header-vue": sectionHeaderVue
 	},
 	data: function() {
 		return {
 			inputValue: "",
 			radioSelected: "male",
 			checkboxSelected: ["apple", "watermelon"],
-			switchStatus: false
+			switchStatus: false,
+			user: {
+				name: "王开恺",
+				id: "11111"
+			},
+			menus: [
+				{
+					label: "软件授权管理平台",
+					to: "#"
+				},
+				{
+					label: "申请授权",
+					to: "#"
+				},
+				{
+					label: "数据统计",
+					to: "#"
+				},
+				{
+					label: "项目管理",
+					to: "#"
+				},
+				{
+					label: "用户管理",
+					to: "yhgl"
+				},
+				{
+					label: "角色分配",
+					to: "#"
+				}
+			]
 		};
 	},
 	computed: {
 		getColumns: function() {
-			let array = new Array();
-			let a = {
-				field: "id",
-				title: "ID",
-				width: 7
-			};
-			let b = {
-				field: "name",
-				title: "姓名",
-				width: 12
-			};
-			let c = {
-				field: "age",
-				title: "年龄",
-				width: 10
-			};
-			array.push(a);
-			array.push(b);
-			array.push(c);
+			let array = [
+				{
+					field: "name",
+					title: "名称",
+					width: 1
+				},
+				{
+					field: "tel",
+					title: "电话",
+					width: 1
+				},
+				{
+					field: "job",
+					title: "岗位",
+					width: 1
+				},
+				{
+					field: "role",
+					title: "角色",
+					width: 1
+				},
+				{
+					field: "createTime",
+					title: "创建时间",
+					width: 1
+				}
+			];
+
 			return array;
 		},
 		getData: function() {
-			let array = new Array();
-			let a = {
-				id: 1,
-				name: "哇咔咔",
-				age: 25
-			};
-			let b = {
-				id: 2,
-				name: "wangkaikai",
-				age: 25
-			};
-			let c = {
-				id: 3,
-				name: "wangkaikai",
-				age: 25
-			};
-			let d = {
-				id: 1,
-				name: "哇咔咔",
-				age: 25
-			};
-			let e = {
-				id: 2,
-				name: "wangkaikai",
-				age: 25
-			};
-			let f = {
-				id: 3,
-				name: "wangkaikai",
-				age: 25
-			};
-			let g = {
-				id: 1,
-				name: "哇咔咔",
-				age: 25
-			};
-			let h = {
-				id: 2,
-				name: "wangkaikaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-				age: 25
-			};
-			let i = {
-				id: 3,
-				name: "wangkaikai",
-				age: 25
-			};
-			array.push(a);
-			array.push(b);
-			array.push(c);
-			array.push(d);
-			array.push(e);
-			array.push(f);
-			array.push(g);
-			array.push(h);
-			array.push(i);
+			let array = [
+				{
+					id: 1,
+					name: "王开恺",
+					tel: "12215643154",
+					job: "XXX片区负责人",
+					role: "新疆片区权限角色",
+					createTime: "2020-01-01 23:00:00"
+				},
+				{
+					id: 1,
+					name: "王开恺",
+					tel: "12215643154",
+					job: "XXX片区负责人",
+					role: "新疆片区权限角色",
+					createTime: "2020-01-01 23:00:00"
+				},
+				{
+					id: 1,
+					name: "王开恺",
+					tel: "12215643154",
+					job: "XXX片区负责人",
+					role: "新疆片区权限角色",
+					createTime: "2020-01-01 23:00:00"
+				},
+				{
+					id: 1,
+					name: "王开恺",
+					tel: "12215643154",
+					job: "XXX片区负责人",
+					role: "新疆片区权限角色",
+					createTime: "2020-01-01 23:00:00"
+				},
+				{
+					id: 1,
+					name: "王开恺",
+					tel: "12215643154",
+					job: "XXX片区负责人",
+					role: "新疆片区权限角色",
+					createTime: "2020-01-01 23:00:00"
+				},
+				{
+					id: 1,
+					name: "王开恺",
+					tel: "12215643154",
+					job: "XXX片区负责人",
+					role: "新疆片区权限角色",
+					createTime: "2020-01-01 23:00:00"
+				},
+				{
+					id: 1,
+					name: "王开恺",
+					tel: "12215643154",
+					job: "XXX片区负责人",
+					role: "新疆片区权限角色",
+					createTime: "2020-01-01 23:00:00"
+				},
+				{
+					id: 1,
+					name: "王开恺",
+					tel: "12215643154",
+					job: "XXX片区负责人",
+					role: "新疆片区权限角色",
+					createTime: "2020-01-01 23:00:00"
+				}
+			];
 			return array;
 		},
 		getConfig: function() {
@@ -278,6 +334,18 @@ export default {
 		onSwitch: function() {
 			this.switchStatus = !this.switchStatus;
 		}
+	},
+	mounted: function() {
+		var _this = this;
+		_this.$store.dispatch("globalstate/setWindowWidth", {
+			width: document.documentElement.clientWidth
+		});
+		window.onresize = function() {
+			// 定义窗口大小变更通知事件
+			_this.$store.dispatch("globalstate/setWindowWidth", {
+				width: document.documentElement.clientWidth
+			});
+		};
 	}
 };
 </script>
