@@ -2,21 +2,17 @@
 	<div class="modal-background">
 		<div class="modal">
 			<div class="header">
-				添加用户
+				添加角色
 				<span class="iconfont icon-close" @click="onAdd"></span>
 			</div>
 			<div class="content">
 				<div class="line">
-					<span>姓名：</span>
+					<span>名称：</span>
 					<input-vue placeholder="请输入内容" @inputevent="onInput"></input-vue>
 				</div>
 				<div class="line">
 					<span>备注：</span>
 					<input-vue placeholder="请输入内容" @inputevent="onInput"></input-vue>
-				</div>
-				<div class="line">
-					<span>角色：</span>
-					<select-vue :options="getSelectOptions" @inputevent="onInput"></select-vue>
 				</div>
 			</div>
 			<div class="buttons">

@@ -2,8 +2,8 @@
 	<div class="base-structure clearfix">
 		<topbar-vue @contractevent="onContract"></topbar-vue>
 		<sidebar-vue :user="user" :menus="menus" :contract="contract"></sidebar-vue>
-        <router-view class='section' name='section'></router-view>
-    </div>
+		<router-view class="section" name="section"></router-view>
+	</div>
 </template>
 <script>
 import topbarVue from "../topbar-vue/topbar2-vue.vue";
@@ -15,7 +15,7 @@ export default {
 	},
 	data: function() {
 		return {
-            contract: false,
+			contract: false,
 			user: {
 				id: 15245123,
 				name: "张红四",
@@ -24,42 +24,42 @@ export default {
 			menus: [
 				{
 					label: "数据统计",
-                    to: "sjtj",
-                    icon: "icon-et-sales-statistics",
+					to: "sjtj",
+					icon: "icon-et-sales-statistics"
 				},
 				{
 					label: "项目管理",
-                    to: "xmgl",
-                    icon: "icon-xiangmu",
+					to: "xmgl",
+					icon: "icon-xiangmu"
 				},
 				{
 					label: "用户管理",
-                    to: "yhgl",
-                    icon: "icon-UserSettings1",
+					to: "yhgl",
+					icon: "icon-UserSettings1"
 				},
 				{
 					label: "权限分配",
-                    to: "qxfp",
-                    icon: "icon-key",
+					to: "qxfp",
+					icon: "icon-key"
 				},
 				{
-					label: "授权日志",
-                    to: "sqrz",
-                    icon: "icon-devicelogs",
+					label: "授权历史",
+					to: "sqls",
+					icon: "icon-devicelogs"
 				},
 				{
 					label: "操作日志",
-                    to: "czrz",
-                    icon: "icon-systemlogs",
+					to: "czrz",
+					icon: "icon-systemlogs"
 				}
 			]
 		};
-    },
-    methods: {
-        onContract: function() {
-            this.contract = !this.contract;
-        }
-    },
+	},
+	methods: {
+		onContract: function() {
+			this.contract = !this.contract;
+		}
+	}
 };
 </script>
 <style lang="scss" scoped>
@@ -68,7 +68,8 @@ export default {
 	height: 100%;
 }
 .section {
-    float: left;
-    width: calc(100% - 14em);
+	float: left;
+	width: calc(100% - 14em);
+	height: 100%;
 }
 </style>

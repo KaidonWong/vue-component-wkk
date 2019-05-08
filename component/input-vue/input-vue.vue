@@ -96,7 +96,8 @@ export default {
     }
 	input {
 		outline: none;
-		border: none;
+        border: none;
+        width: 10em;
 	}
 }
 </style>

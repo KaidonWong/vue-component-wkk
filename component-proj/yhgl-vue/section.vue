@@ -2,30 +2,27 @@
 	<div class="panel">
 		<section-header-vue icon="icon-UserSettings1" title="用户管理" subtitle="增删查改用户信息"></section-header-vue>
 		<div class="table-panel">
-			<div class="table clearfix">
-				<div class="table-wrap">
-					<div class="above-table">
-						<div class="buttons">
-							<button-vue label="添加用户" icon="icon-add" color="#d40e10" @clickevent="onAdd"></button-vue>
-							<button-vue label="删除用户" icon="icon-delete1" color="#d40e10" @clickevent="onAdd"></button-vue>
-						</div>
-						<search-input-vue></search-input-vue>
-					</div>
-					<table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue>
+			<div class="above-table">
+				<div class="buttons">
+					<button2-vue label="添加用户" icon="icon-add" color="#009688" @clickevent="onAdd"></button2-vue>
+					<button2-vue label="删除用户" icon="icon-delete1" color="#FF9800" @clickevent="onAdd"></button2-vue>
 				</div>
+				<search-input-vue></search-input-vue>
 			</div>
+
+			<table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue>
 		</div>
 		<router-view class="modal" name="modal"></router-view>
 	</div>
 </template>
 <script>
-import buttonVue from "../../component/button-vue/button-vue.vue";
+import button2Vue from "../../component/button-vue/button2-vue.vue";
 import searchInputVue from "../../component/input-vue/search-input-vue.vue";
 import tableVue from "../../component/table-vue/table-vue.vue";
 import sectionHeaderVue from "../../component/section-header-vue/section-header-vue.vue";
 export default {
 	components: {
-		"button-vue": buttonVue,
+		"button2-vue": button2Vue,
 		"search-input-vue": searchInputVue,
 		"table-vue": tableVue,
 		"section-header-vue": sectionHeaderVue
@@ -36,27 +33,27 @@ export default {
 				{
 					field: "name",
 					title: "名称",
-					width: 7
+					width: 1
 				},
 				{
 					field: "tel",
 					title: "电话",
-					width: 10
+					width: 1
 				},
 				{
 					field: "job",
 					title: "岗位",
-					width: 15
+					width: 1
 				},
 				{
 					field: "role",
 					title: "角色",
-					width: 15
+					width: 1
 				},
 				{
 					field: "createTime",
 					title: "创建时间",
-					width: 15
+					width: 1
 				}
 			];
 
@@ -133,10 +130,10 @@ export default {
 		},
 		getConfig: function() {
 			let a = {
-				// height: 300,
+				height: 600,
 				checkbox: true,
 				//0: 没有操作栏
-				editColumnType: 1
+				editColumnType: 3
 			};
 			return a;
 		}

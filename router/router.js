@@ -2,25 +2,40 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import yhglSection from "../component-proj/yhgl-vue/section.vue";
 import addUserModal from "../component-proj/yhgl-vue/add-user-modal.vue";
-
+import qxfpSection from "../component-proj/qxfp-vue/section.vue";
+import addRoleModal from "../component-proj/qxfp-vue/add-role-modal.vue";
 Vue.use(VueRouter);
-
 const routes = [
 	{
-        path: "/yhgl",
-        name: "yhgl",
+		path: "/yhgl",
+		name: "yhgl",
 		components: {
-            section: yhglSection,
-        },
+			section: yhglSection
+		},
 		children: [
 			{
-                path: "adduser",
-                name: "adduser",
+				path: "adduser",
+				name: "adduser",
 				components: {
-                    modal: addUserModal,
-                }
-			},
-
+					modal: addUserModal
+				}
+			}
+		]
+	},
+	{
+		path: "/qxfp",
+		name: "qxfp",
+		components: {
+			section: qxfpSection
+		},
+		children: [
+			{
+				path: "addrole",
+				name: "addrole",
+				components: {
+					modal: addRoleModal
+				}
+			}
 		]
 	}
 ];

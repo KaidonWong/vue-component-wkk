@@ -6,13 +6,13 @@
 			<div>项目权限</div>
 		</template>
 		<template v-if="isType2">
-			<div>菜单权限</div>
+			<div>修改</div>
 			<div>项目权限</div>
 		</template>
 		<template v-if="isType3">
 			<div>修改</div>
-			<div>删除</div>
 		</template>
+
 	</div>
 </template>
 <script>

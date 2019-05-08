@@ -28,7 +28,7 @@ export default {
 	methods: {
 		onFocus: function() {
 			this.borderStyle = {
-				"border-color": "#d40e10"
+				"border-color": "#009688"
 			};
 		},
 		onBlur: function() {
@@ -68,7 +68,7 @@ export default {
 		float: left;
 		height: 100%;
 		padding: 0.3em 1em;
-		background-color: #d40e10;
+		background-color: #009688;
 		border-radius: 0 1em 1em 0;
 		span {
 			font-size: 1.5em;

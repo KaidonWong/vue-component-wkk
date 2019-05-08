@@ -1,5 +1,5 @@
 <template>
-	<div class="button" @click="onClick" @mouseenter="onEnter" @mouseleave="onLeave" :style="buttonStyle">
+	<div class="button" @click.stop="onClick" @mouseenter="onEnter" @mouseleave="onLeave" :style="buttonStyle">
 		<span v-if="hasIcon" class="iconfont" :class="icon"></span>
 		{{label}}
 	</div>

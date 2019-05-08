@@ -1,0 +1,32 @@
+.basediv-transfer-box {
+	width: 16em;
+    color: #555555;
+	.header {
+        padding: 0.3em 0;
+		background-color: #f9fafc;
+		border: 1px solid #dcdee2;
+		border-radius: 0.5em 0.5em 0 0;
+    }
+    .content {
+        height: 16em;
+        overflow-y: auto;
+        border: 1px solid #dcdee2;
+        border-radius: 0 0 0.5em 0.5em;
+        border-top: 0px;
+    }
+    .search {
+        padding: 0.6em;
+        text-align: center;
+        border: 1px solid #dcdee2;
+        border-top: 0px;
+        border-bottom: 0px;
+    }
+    .line {
+        padding: 0.3em 0.6em;
+        display: flex;
+        align-items: center;
+        >span {
+            margin-left: 0.5em;
+        }
+    }
+}

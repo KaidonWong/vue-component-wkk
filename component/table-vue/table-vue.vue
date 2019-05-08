@@ -75,7 +75,7 @@ export default {
 				return `calc((100% - 17em - 10px)/${this.totalWidth}*${a})`;
 			}
 
-			return `calc((100% - 21em -2px)/${this.totalWidth}*${a})`;
+			return '10em';
 		}
 	},
 	computed: {
@@ -84,11 +84,16 @@ export default {
 		},
 		tbodyStyle: function() {
 			if (typeof this.config.height != "undefined") {
+                //设置了固定高度
 				return {
 					"overflow-y": "scroll",
 					height: this.config.height + "px"
 				};
-			}
+			}else {
+                return {
+                    'width': '100%'
+                };
+            }
 		},
 		columnWidth: function() {
 			let columnWidth = new Array();

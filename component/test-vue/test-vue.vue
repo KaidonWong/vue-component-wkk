@@ -2,7 +2,11 @@
 	<div style="width: 100%;height: 100%;background-color: #ffffff;padding: 3em;">
 		<!-- <section-header-vue icon="icon-caidan" title="用户管理" subtitle="增删查改用户信息"></section-header-vue>
 		<topbar-vue :user="user" :menus="menus"></topbar-vue>-->
-		<table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue>
+		<!-- <button2-vue label="添加用户" icon="icon-add" color="#d40e10" @clickevent="onSwitch"></button2-vue> -->
+		<!-- <button2-vue label="申请授权" @clickevent="onSwitch" color="#009688"></button2-vue> -->
+		<!-- <transfer-box-vue :options="allOptions" title="所有项目"></transfer-box-vue> -->
+		<transfer-vue :availableOptions="availableOptions" :ownedOptions="ownedOptions"></transfer-vue>
+		<!-- <table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue> -->
 		<!-- <input-vue
 			placeholder="请输入内容"
 			iconbefore="icon-bluetoothon"
@@ -37,10 +41,13 @@ import checkboxVue from "../input-vue/checkbox-vue.vue";
 import switchVue from "../input-vue/switch-vue.vue";
 import selectVue from "../input-vue/select-vue.vue";
 import buttonVue from "../button-vue/button-vue.vue";
+import button2Vue from "../button-vue/button2-vue.vue";
 import searchInputVue from "../input-vue/search-input-vue.vue";
 import modalSkeletonVue from "../modal-vue/modal-skeleton-vue.vue";
 import topbarVue from "../topbar-vue/topbar-vue.vue";
 import sectionHeaderVue from "../section-header-vue/section-header-vue.vue";
+import transferVue from "../transfer-vue/transfer-vue.vue";
+import transferBoxVue from "../transfer-vue/transfer-box-vue.vue";
 
 export default {
 	components: {
@@ -54,10 +61,13 @@ export default {
 		"switch-vue": switchVue,
 		"select-vue": selectVue,
 		"button-vue": buttonVue,
+		"button2-vue": button2Vue,
 		"search-input-vue": searchInputVue,
 		"modal-vue": modalSkeletonVue,
 		"topbar-vue": topbarVue,
-		"section-header-vue": sectionHeaderVue
+		"section-header-vue": sectionHeaderVue,
+		"transfer-vue": transferVue,
+		"transfer-box-vue": transferBoxVue
 	},
 	data: function() {
 		return {
@@ -65,6 +75,26 @@ export default {
 			radioSelected: "male",
 			checkboxSelected: ["apple", "watermelon"],
 			switchStatus: false,
+			/******transfer 穿梭框********* */
+			availableOptions: [
+				{ id: 1, label: "JJM平台" },
+				{ id: 2, label: "BHF平台" },
+				{ id: 3, label: "监控站项目" },
+				{ id: 4, label: "西藏BF项目" },
+				{ id: 5, label: "JJM平台" },
+				{ id: 6, label: "BHF平台" },
+				{ id: 7, label: "监控站项目" },
+				{ id: 8, label: "西藏BF项目" },
+				{ id: 9, label: "JJM平台" },
+				{ id: 10, label: "BHF平台" },
+				{ id: 11, label: "监控站项目" },
+				{ id: 12, label: "西藏BF项目" }
+			],
+			ownedOptions: [
+				{ id: 13, label: "JJM平台" },
+				{ id: 14, label: "BHF平台" }
+			],
+			/*************** */
 			user: {
 				name: "王开恺",
 				id: "11111"
@@ -200,7 +230,7 @@ export default {
 		},
 		getConfig: function() {
 			let a = {
-				height: 300,
+				// height: 300,
 				checkbox: true,
 				//0: 没有操作栏
 				editColumnType: 1
