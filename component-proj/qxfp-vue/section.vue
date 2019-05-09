@@ -9,7 +9,7 @@
 				</div>
 				<search-input-vue></search-input-vue>
 			</div>
-			<table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue>
+			<table-vue :columns="getColumns" :data="getData" :config="getConfig" @editevent="onEditTable"></table-vue>
 		</div>
 		<router-view class="modal" name="modal"></router-view>
 	</div>
@@ -96,7 +96,13 @@ export default {
 	methods: {
 		onAdd: function() {
 			this.$router.push({ name: "addrole" });
-		}
+        },
+        onEditTable: function(e) {
+            if(e.type == 2) {
+                this.$router.push({ name: "selpri" });
+            }
+            
+        }
 	}
 };
 </script>

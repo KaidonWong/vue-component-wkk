@@ -1,0 +1,19 @@
+@import "../../common/section-shadow.scss";
+.panel {
+	.table-panel {
+        overflow: auto;
+		@include section-shadow();
+		background-color: #ffffff;
+		margin: 1em;
+        padding: 1em;
+        font-size: 0.95em;
+        height: 100%;
+        .above-table {
+            
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1em;
+        }
+	}
+}

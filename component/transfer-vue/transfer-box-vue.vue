@@ -35,7 +35,19 @@ export default {
 	props: {
 		title: String,
 		options: Array
-    },
+	},
+	watch: {
+		options: function(val) {
+			this.selected.clear();
+			this.toggleAll = false;
+			this.$emit("changesel", this.selected);
+			this.filteredOptions.splice(0, this.filteredOptions.length);
+			//为了不让vue复用原来的dom，用来清除状态
+			setTimeout(() => {
+				this.filteredOptions.splice(0, 0, ...this.options);
+			}, 10);
+		}
+	},
 	methods: {
 		onSearch: function(search) {
 			this.selected.clear();
@@ -47,12 +59,12 @@ export default {
 				}
 				return true;
 			});
-            this.filteredOptions.splice(0, this.filteredOptions.length);
-            //为了不让vue复用原来的dom，用来清除状态
-            setTimeout(()=>{
-                this.filteredOptions.splice(0, 0, ...resultArr);
-            },10);
-			this.$emit('changesel',this.selected);
+			this.filteredOptions.splice(0, this.filteredOptions.length);
+			//为了不让vue复用原来的dom，用来清除状态
+			setTimeout(() => {
+				this.filteredOptions.splice(0, 0, ...resultArr);
+			}, 10);
+			this.$emit("changesel", this.selected);
 		},
 		onAllBox: function(on) {
 			this.toggleAll = on;
@@ -62,8 +74,8 @@ export default {
 				this.selected.add(item);
 			} else {
 				this.selected.delete(item);
-            }
-            this.$emit('changesel',this.selected);
+			}
+			this.$emit("changesel", this.selected);
 		}
 	}
 };

@@ -1,8 +1,9 @@
 .basediv-transfer {
-    width: 3em;
+    width: 35em;
     display: flex;
     justify-content: space-between;
     .buttons {
+        display: block;
         margin: 7em 1em;
         .button-left {
             margin-bottom: 1em;

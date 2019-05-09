@@ -31,9 +31,10 @@ module.exports = {
                 ]
             },
             {
+                // https://vue-loader.vuejs.org/en/configurations/extract-css.html
                 test: /\.vue$/,
                 loader: 'vue-loader'
-            }
+            },
         ]
     },
     plugins: [

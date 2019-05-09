@@ -18,6 +18,15 @@ module.exports = merge(common, {
                 ],
             },
             {
+                test: /\.less$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader',
+                    'less-loader',
+                ],
+            },
+            {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: file => (

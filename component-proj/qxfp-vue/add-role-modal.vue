@@ -89,6 +89,7 @@ export default {
 			}
 		}
 		.content {
+            font-size: 0.9em;
 			.line {
                 width: 80%;
                 margin: 0.5em auto;

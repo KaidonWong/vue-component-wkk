@@ -14,14 +14,14 @@
 		</div>
 		<div class="tbody" :style="tbodyStyle">
 			<div class="tline clearfix" v-for="(line,index) of dataInOrder" :key="index">
-				<td-checkbox-vue v-if="config.checkbox" :lineid="line[0]" :toggleall="toggleAll"></td-checkbox-vue>
+				<td-checkbox-vue v-if="config.checkbox" :lineid="data[index].id" :toggleall="toggleAll"></td-checkbox-vue>
 				<td-vue
 					v-for="(item,index) of line"
 					:key="index"
 					:content="item"
 					:width="calcWidth(columnWidth[index])"
 				></td-vue>
-				<td-edit-vue v-if="hasEditColumn" :type="config.editColumnType"></td-edit-vue>
+				<td-edit-vue v-if="hasEditColumn" :lineid="data[index].id" :type="config.editColumnType" @editevent="onEdit"></td-edit-vue>
 			</div>
 		</div>
 	</div>
@@ -74,9 +74,11 @@ export default {
 			) {
 				return `calc((100% - 17em - 10px)/${this.totalWidth}*${a})`;
 			}
-
 			return '10em';
-		}
+        },
+        onEdit: function(e) {
+            this.$emit('editevent',e);
+        }
 	},
 	computed: {
 		hasEditColumn: function() {
