@@ -42,6 +42,7 @@ export default {
 		onClickOption: function(e) {
             this.selected = e;
             this.$emit("inputevent", this.selected);
+            this.onBlur();
 		},
 		onBlur: function(e) {
             this.baseDivClass.focus = false;
@@ -54,7 +55,7 @@ export default {
 	position: relative;
 	display: inline-block;
 	padding: 2px;
-	border: 1px solid #cccccc;
+	border: 1px solid #dcdee2;
 	border-radius: 3px;
 	transition: box-shadow 0.1s;
     outline: none;
@@ -97,12 +98,13 @@ export default {
 		width: 98%;
 		max-height: 100px;
 		box-shadow: 0 0 1px #aaaaaa;
-		padding: 0.2em 0;
+        padding: 0.2em 0;
 		.option {
 			color: #444;
 			font-size: 0.9em;
 			padding: 0.2em;
-			padding-left: 0.5em;
+            padding-left: 0.5em;
+            background-color: #ffffff;
 			&:hover {
 				background-color: #eeeeee;
 			}

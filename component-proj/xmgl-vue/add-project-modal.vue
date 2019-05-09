@@ -89,12 +89,20 @@ export default {
 			}
 		}
 		.content {
-            font-size: 0.9em;
+			font-size: 0.9em;
 			.line {
-                width: 80%;
-                margin: 0.5em auto;
-                color: #333;
-				padding: 0.2em 2em;
+				> span:nth-of-type(1) {
+					display: inline-block;
+                    width: 7em;
+                    text-align: right;
+				}
+				width: 80%;
+				margin: 0.5em auto;
+				color: #333;
+                padding: 0.2em 2em;
+                .input {
+                    width: 13em;
+                }
 			}
 		}
 		.buttons {

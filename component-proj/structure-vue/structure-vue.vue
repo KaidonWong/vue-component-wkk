@@ -67,8 +67,8 @@ export default {
 @import "../../iview-src/styles/custom";
 @import "../../iview-src/styles/mixins/index";
 @import "../../iview-src/styles/common/index";
-// @import "../../iview-src/styles/animation/index";
-// @import "../../iview-src/styles/components/index";
+@import "../../iview-src/styles/animation/index";
+@import "../../iview-src/styles/components/index";
 </style>
 <style lang="scss" scoped>
 .base-structure {

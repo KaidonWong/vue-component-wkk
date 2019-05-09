@@ -3,6 +3,7 @@
 		<span v-if="hasIconBefore" class="iconfont" :class="iconbefore"></span>
 		<input
 			type="text"
+			:style="inputWidth"
 			:value="defaultVal"
 			:placeholder="placeholder"
 			@input="onInput($event)"
@@ -19,7 +20,7 @@ export default {
 		placeholder: String,
 		default: String,
 		iconbefore: String,
-		iconafter: String
+		iconafter: String,
 	},
 	data: function() {
 		return {
@@ -42,6 +43,21 @@ export default {
 				return false;
 			}
 			return true;
+		},
+		inputWidth: function() {
+			if (this.hasIconBefore == true && this.hasIconAfter == true) {
+				return {
+					width: "calc(100% - 4.5em)"
+				};
+			} else if (this.hasIconBefore == false && this.hasIconAfter == false) {
+				return {
+					width: "calc(100% - 1.5em)"
+				};
+			} else {
+				return {
+					width: "calc(100% - 3em)"
+				};
+            }
 		}
 	},
 	methods: {
@@ -78,11 +94,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .basediv {
-    display: inline-block;
+	display: inline-block;
 	padding: 3px;
-	border: 1px solid #cccccc;
-    border-radius: 3px;
-    transition: box-shadow 0.1s;
+	border: 1px solid #dcdee2;
+	border-radius: 3px;
+	transition: box-shadow 0.1s;
 	&.focus {
 		border: 1px solid transparent;
 		box-shadow: 0 0 4px #2d8cf0;
@@ -90,14 +106,13 @@ export default {
 	span {
 		color: #666666;
 		vertical-align: middle;
-    }
-    .icon-Closewithcircle {
-        color: #aaaaaa;
-    }
+	}
+	.icon-Closewithcircle {
+		color: #aaaaaa;
+	}
 	input {
 		outline: none;
-        border: none;
-        width: 10em;
+		border: none;
 	}
 }
 </style>

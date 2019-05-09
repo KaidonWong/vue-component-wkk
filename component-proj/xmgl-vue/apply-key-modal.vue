@@ -12,15 +12,15 @@
 				</div>
 				<div class="line">
 					<span>姓名：</span>
-					<input-vue placeholder @inputevent="onInput"></input-vue>
+					<input-vue class="input" @inputevent="onInput"></input-vue>
 				</div>
 				<div class="line">
 					<span>电话：</span>
-					<input-vue placeholder @inputevent="onInput"></input-vue>
+					<input-vue class="input" @inputevent="onInput"></input-vue>
 				</div>
 				<div class="line">
 					<span>详细地址：</span>
-					<input-vue placeholder @inputevent="onInput"></input-vue>
+					<input-vue class="input" @inputevent="onInput"></input-vue>
 				</div>
 				<div class="line">
 					<span>有效期限：</span>
@@ -29,7 +29,7 @@
 						type="daterange"
 						split-panels
 						placeholder
-						style="width: 10em"
+						style="width: 13em"
 					></date-picker-vue>
 				</div>
 			</div>
@@ -46,6 +46,11 @@ import selectVue from "../../component/input-vue/select-vue.vue";
 import inputVue from "../../component/input-vue/input-vue.vue";
 import datePickerVue from "../../iview-src/components/date-picker";
 export default {
+	data: function() {
+		return {
+			dateTimeRange: []
+		};
+	},
 	props: {
 		model: Object
 	},
@@ -56,22 +61,6 @@ export default {
 		"date-picker-vue": datePickerVue
 	},
 	computed: {
-		getSelectOptions: function() {
-			return [
-				{
-					label: "苹果",
-					value: "apple"
-				},
-				{
-					label: "西瓜",
-					value: "watermelon"
-				},
-				{
-					label: "芒果",
-					value: "mango"
-				}
-			];
-		}
 	},
 	methods: {
 		onInput: function() {},
@@ -92,7 +81,7 @@ export default {
 	.modal {
 		margin: 10em auto;
 		width: 25%;
-		min-width: 20em;
+		min-width: 30em;
 		border-radius: 1em;
 		background-color: #ffffff;
 		.header {
@@ -116,12 +105,16 @@ export default {
 			.line {
 				> span:nth-of-type(1) {
 					display: inline-block;
-					width: 5em;
+                    width: 7em;
+                    text-align: right;
 				}
 				width: 80%;
 				margin: 0.5em auto;
 				color: #333;
-				padding: 0.2em 2em;
+                padding: 0.2em 2em;
+                .input {
+                    width: 13em;
+                }
 			}
 		}
 		.buttons {
