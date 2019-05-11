@@ -46,6 +46,7 @@ export default {
 	line-height: 1;
     color: #ffffff;
     opacity: 0.85;
+    text-align: center;
 	&:hover {
 		cursor: default;
 		transform: translate3d(0, -1px, 0);

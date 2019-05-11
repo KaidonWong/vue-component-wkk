@@ -1,0 +1,24 @@
+@import "../../common/section-shadow.scss";
+.panel {
+	.condition-panel {
+		@include section-shadow();
+		background-color: #ffffff;
+		margin: 1em;
+		padding: 1em;
+		font-size: 0.95em;
+		.line {
+            float: left;
+            margin-right: 1em;
+			color: #333;
+		}
+	}
+	.table-panel {
+		overflow: auto;
+		@include section-shadow();
+		background-color: #ffffff;
+		margin: 1em;
+		padding: 1em;
+		font-size: 0.95em;
+		height: 100%;
+	}
+}

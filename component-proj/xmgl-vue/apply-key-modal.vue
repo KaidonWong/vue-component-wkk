@@ -23,7 +23,7 @@
 					<input-vue class="input" @inputevent="onInput"></input-vue>
 				</div>
 				<div class="line">
-					<span>有效期限：</span>
+					<span>时间范围：</span>
 					<date-picker-vue
 						v-model="dateTimeRange"
 						type="daterange"

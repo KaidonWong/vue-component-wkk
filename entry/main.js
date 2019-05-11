@@ -3,13 +3,15 @@ import "../common/common.css";
 import "../asset/iconfont/iconfont.css";
 import store from "../store/store";
 import router from "../router/router";
+import echarts from "echarts";
 
 import structureVue from "../component-proj/structure-vue/structure-vue.vue";
 
+Vue.prototype.$echarts = echarts;
 new Vue({
 	el: "#root",
-    store,
-    router,
+	store,
+	router,
 	components: {
 		"structure-vue": structureVue
 	}

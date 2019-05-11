@@ -8,10 +8,62 @@ import selectPriviledgeModal from "../component-proj/qxfp-vue/select-priviledge-
 import xmglSection from "../component-proj/xmgl-vue/section.vue";
 import addProjModal from "../component-proj/xmgl-vue/add-project-modal.vue";
 import applyKeyModal from "../component-proj/xmgl-vue/apply-key-modal.vue";
+import sjtjSection from "../component-proj/sjtj-vue/section.vue";
+import sqlsSection from "../component-proj/sqls-vue/section.vue";
+import czrzSection from "../component-proj/czrz-vue/section.vue";
+import loginSection from "../component-proj/login-vue/login-vue.vue";
 
 
 Vue.use(VueRouter);
 const routes = [
+    {
+		path: "/login",
+		name: "login",
+		components: {
+            login: loginSection,
+        },
+        props: {
+            login: true,
+        },
+		children: [
+		]
+    },
+    {
+		path: "/sjtj",
+		name: "sjtj",
+		components: {
+			section: sjtjSection
+        },
+        props: {
+            section: true
+        },
+		children: [
+		]
+    },
+    {
+		path: "/sqls",
+		name: "sqls",
+		components: {
+			section: sqlsSection
+        },
+        props: {
+            section: true
+        },
+		children: [
+		]
+    },
+    {
+		path: "/czrz",
+		name: "czrz",
+		components: {
+			section: czrzSection
+        },
+        props: {
+            section: true
+        },
+		children: [
+		]
+	},
     {
 		path: "/xmgl",
 		name: "xmgl",

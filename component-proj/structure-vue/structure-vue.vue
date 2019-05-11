@@ -2,7 +2,10 @@
 	<div class="base-structure clearfix">
 		<topbar-vue @contractevent="onContract"></topbar-vue>
 		<sidebar-vue :user="user" :menus="menus" :contract="contract"></sidebar-vue>
-		<router-view class="section" name="section"></router-view>
+		<router-view class="section" :class="{contract:contract}" name="section"></router-view>
+		<transition name="fade">
+			<router-view class="login-page" name="login"></router-view>
+		</transition>
 	</div>
 </template>
 <script>
@@ -64,21 +67,20 @@ export default {
 </script>
 <style lang="less">
 //iview 组件的样式没有解耦
-@import "../../iview-src/styles/custom";
-@import "../../iview-src/styles/mixins/index";
-@import "../../iview-src/styles/common/index";
-@import "../../iview-src/styles/animation/index";
-@import "../../iview-src/styles/components/index";
+@import "../../iview-src/styles/index.less";
 </style>
 <style lang="scss" scoped>
 .base-structure {
 	width: 100%;
-    height: 100%;
+	height: 100%;
 }
 .section {
 	float: left;
 	width: calc(100% - 14em);
 	height: 100%;
+	&.contract {
+		width: calc(100% - 3.8em);
+	}
 }
 </style>
 

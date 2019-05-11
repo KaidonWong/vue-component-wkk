@@ -36,15 +36,15 @@
             position: absolute;
             right: 0;
             top: 100%;
-            width: 6em;
+            width: 7em;
             color: #000000;
-            font-size: 0.6em;
+            font-size: 0.5em;
             box-shadow: 0 0 20px #aaa;
             span {
-                color: #000000;
+                color: #666666;
             }
             >div {
-                padding: 0.3em;
+                padding: 0.6em;
                 &:hover {
                     background-color: #ccc;
                     cursor: default;

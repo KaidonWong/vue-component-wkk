@@ -13,12 +13,16 @@
 			<div @click.stop="onEdit(1)">修改</div>
 			<div @click.stop="onEdit(2)">获取权限</div>
 		</template>
+		<template v-if="isType4">
+			<div @click.stop="onEdit(1)">详情</div>
+			<div @click.stop="onEdit(2)">下载密钥</div>
+		</template>
 	</div>
 </template>
 <script>
 export default {
 	props: {
-        type: Number,
+		type: Number,
 		lineid: [String, Number]
 	},
 	data: function() {
@@ -33,11 +37,14 @@ export default {
 		},
 		isType3: function() {
 			return this.type == 3;
+		},
+		isType4: function() {
+			return this.type == 4;
 		}
 	},
 	methods: {
 		onEdit: function(e) {
-			this.$emit("editevent",{id:this.lineid,type:e});
+			this.$emit("editevent", { id: this.lineid, type: e });
 		}
 	}
 };

@@ -20,7 +20,7 @@
 					<span class="iconfont icon-user-settings-line"></span>
 					用户设置
 				</div>
-				<div @click="goTo('logout')">
+				<div @click="goTo('login')">
 					<span class="iconfont icon-logout"></span>
 					退出登录
 				</div>
@@ -34,7 +34,9 @@ export default {
 		return {};
 	},
 	methods: {
-        goTo: function(e) {},
+        goTo: function(e) {
+            this.$router.push({ path: `/${e}` });
+        },
         onContract: function() {
             this.$emit('contractevent');
         }
