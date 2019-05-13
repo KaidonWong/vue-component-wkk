@@ -7,12 +7,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="caidan" @click='onContract'>
+		<div class="caidan" @click="onContract">
 			<span class="iconfont icon-caidan"></span>
 		</div>
-		<div class="title">
-			天亿达软件授权管理平台
-		</div>
+		<div class="title">天亿达软件授权管理平台</div>
 		<div class="user">
 			<span class="iconfont icon-user"></span>
 			<div class="submenu">
@@ -34,12 +32,18 @@ export default {
 		return {};
 	},
 	methods: {
-        goTo: function(e) {
-            this.$router.push({ path: `/${e}` });
-        },
-        onContract: function() {
-            this.$emit('contractevent');
-        }
+		goTo: function(e) {
+            let _this = this;
+			this.$router.push({ path: `/${e}` });
+			if (e == "login") {
+				_this.$store.dispatch("globalstate/setToken", {
+					token: null
+				});
+			}
+		},
+		onContract: function() {
+			this.$emit("contractevent");
+		}
 	}
 };
 </script>

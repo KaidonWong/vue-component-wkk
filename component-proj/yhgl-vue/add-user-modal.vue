@@ -7,16 +7,30 @@
 			</div>
 			<div class="content">
 				<div class="line">
-					<span>姓名：</span>
-					<input-vue placeholder="请输入内容" @inputevent="onInput"></input-vue>
+					<span>名称：</span>
+					<input-vue v-model="name" style="width:13em"></input-vue>
 				</div>
 				<div class="line">
-					<span>备注：</span>
-					<input-vue placeholder="请输入内容" @inputevent="onInput"></input-vue>
+					<span>电话：</span>
+					<input-vue v-model="name" style="width:13em"></input-vue>
+				</div>
+				<div class="line">
+					<span>岗位：</span>
+					<input-vue v-model="name" style="width:13em"></input-vue>
 				</div>
 				<div class="line">
 					<span>角色：</span>
-					<select-vue :options="getSelectOptions" @inputevent="onInput"></select-vue>
+					<select-vue v-model="name" style="width:13em">
+						<option-vue v-for="item of getSelectOptions" :value="item.value" :key="item.value">{{ item.label }}</option-vue>
+					</select-vue>
+				</div>
+				<div class="line">
+					<span>真实姓名：</span>
+					<input-vue v-model="name" style="width:13em"></input-vue>
+				</div>
+				<div class="line">
+					<span>密码：</span>
+					<input-vue v-model="name" type="password" style="width:13em"></input-vue>
 				</div>
 			</div>
 			<div class="buttons">
@@ -28,13 +42,23 @@
 </template>
 <script>
 import buttonVue from "../../component/button-vue/button-vue.vue";
-import selectVue from "../../component/input-vue/select-vue.vue";
-import inputVue from "../../component/input-vue/input-vue.vue";
+import inputVue from "../../iview-src/components/input";
+import {
+	selectVue,
+	optionVue,
+	optionGroupVue
+} from "../../iview-src/components/select";
 export default {
 	components: {
 		"button-vue": buttonVue,
 		"select-vue": selectVue,
+		"option-vue": optionVue,
 		"input-vue": inputVue
+	},
+	data: function() {
+		return {
+			name: ""
+		};
 	},
 	computed: {
 		getSelectOptions: function() {
@@ -57,8 +81,8 @@ export default {
 	methods: {
 		onInput: function() {},
 		onAdd: function() {
-            window.history.go(-1);
-        }
+			window.history.go(-1);
+		}
 	}
 };
 </script>
@@ -79,34 +103,35 @@ export default {
 		.header {
 			position: relative;
 			color: #007d71;
-            padding: 1em;
-            font-weight: bold;
-            letter-spacing: 0.1em;
+			padding: 1em;
+			font-weight: bold;
+			letter-spacing: 0.1em;
 			span {
 				position: absolute;
 				right: 1em;
 				display: inline-block;
 				font-size: 1.2em;
 				line-height: 1;
-				color: #333333;	
+				color: #333333;
 				vertical-align: middle;
 			}
 		}
 		.content {
+			margin-bottom: 2em;
 			font-size: 0.9em;
 			.line {
 				> span:nth-of-type(1) {
 					display: inline-block;
-                    width: 7em;
-                    text-align: right;
+					width: 5em;
+					text-align: right;
 				}
-				width: 80%;
+				width: 90%;
 				margin: 0.5em auto;
 				color: #333;
-                padding: 0.2em 2em;
-                .input {
-                    width: 13em;
-                }
+				padding: 0.2em 2em;
+				.input {
+					width: 13em;
+				}
 			}
 		}
 		.buttons {

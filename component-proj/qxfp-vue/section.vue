@@ -10,6 +10,9 @@
 				<search-input-vue></search-input-vue>
 			</div>
 			<table-vue :columns="getColumns" :data="getData" :config="getConfig" @editevent="onEditTable"></table-vue>
+			<div class="page">
+				<page-vue :total="4" show-sizer/>
+			</div>
 		</div>
 		<router-view class="modal" name="modal"></router-view>
 	</div>
@@ -19,12 +22,14 @@ import button2Vue from "../../component/button-vue/button2-vue.vue";
 import searchInputVue from "../../component/input-vue/search-input-vue.vue";
 import tableVue from "../../component/table-vue/table-vue.vue";
 import sectionHeaderVue from "../../component/section-header-vue/section-header-vue.vue";
+import pageVue from "../../iview-src/components/page";
 export default {
 	components: {
 		"button2-vue": button2Vue,
 		"search-input-vue": searchInputVue,
 		"table-vue": tableVue,
-		"section-header-vue": sectionHeaderVue
+        "section-header-vue": sectionHeaderVue,
+                "page-vue": pageVue
 	},
 	computed: {
 		getColumns: function() {
@@ -55,37 +60,13 @@ export default {
 					name: "新疆片区权限角色",
 					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
 					createTime: "2020-01-01 23:00:00"
-				},
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
-				},
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
-				},
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
-				},
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
 				}
 			];
 			return array;
 		},
 		getConfig: function() {
 			let a = {
-				height: 600,
+				//height: 600,
 				checkbox: true,
 				//0: 没有操作栏
 				editColumnType: 2
@@ -96,13 +77,17 @@ export default {
 	methods: {
 		onAdd: function() {
 			this.$router.push({ name: "addrole" });
-        },
-        onEditTable: function(e) {
-            if(e.type == 2) {
-                this.$router.push({ name: "selpri" });
-            }
-            
-        }
+		},
+		onEditTable: function(e) {
+			if (e.type == 2) {
+				this.$router.push({ name: "selpri" });
+			}
+		}
+	},
+	mounted: function() {
+		this.$store.dispatch("globalstate/setCurrentSection", {
+			currentSection: "qxfp"
+		});
 	}
 };
 </script>

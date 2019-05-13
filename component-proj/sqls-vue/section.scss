@@ -20,5 +20,11 @@
 		padding: 1em;
 		font-size: 0.95em;
 		height: 100%;
-	}
+    }
+    .page {
+        margin-top: 1em;
+        >ul {
+            float: right;
+        }
+    }
 }

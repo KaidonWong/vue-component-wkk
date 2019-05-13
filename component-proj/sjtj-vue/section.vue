@@ -140,6 +140,10 @@ export default {
 		}
 	},
 	mounted: function() {
+		this.$store.dispatch("globalstate/setCurrentSection", {
+			currentSection: "sjtj"
+		});
+
 		let chartA = this.$echarts.init(
 			document.querySelector("#chartA .content")
 		);

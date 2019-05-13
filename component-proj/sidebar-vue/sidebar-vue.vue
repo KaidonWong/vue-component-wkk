@@ -15,8 +15,8 @@
 			class="menu"
 			v-for="(item,index) of menus"
 			:key="index"
-			:class="menuStateClasses[index]"
-			@click="onClickMenu(index,item.to)"
+			:class="currentSectionClasses[index]"
+			@click="onClickMenu(item.to)"
 		>
 			<span class="iconfont" :class="item.icon"></span>
 			<span class="label">{{item.label}}</span>
@@ -26,36 +26,20 @@
 <script>
 export default {
 	data: function() {
-		return {
-			menuStateClasses: []
-		};
+		return {};
 	},
 	props: {
 		user: Object,
 		menus: Array,
 		contract: Boolean
 	},
-	computed: {},
-	mounted: function() {
-		let arr = new Array();
-		for (let i = 0, len = this.menus.length; i < len; i++) {
-			if (i == 0) {
-				arr.push({ active: true });
-			} else {
-				arr.push({ active: false });
-			}
-		}
-		this.menuStateClasses = arr;
-	},
+	computed: {
+        currentSectionClasses: function() {
+            return this.$store.getters["globalstate/getCurrentSection"];
+        }
+    },
 	methods: {
-		onClickMenu: function(index, to) {
-			for (let i = 0, len = this.menuStateClasses.length; i < len; i++) {
-				if (i == index) {
-					this.menuStateClasses[i].active = true;
-				} else {
-					this.menuStateClasses[i].active = false;
-				}
-			}
+		onClickMenu: function(to) {
 			this.$router.push({ path: `/${to}` });
 		}
 	}

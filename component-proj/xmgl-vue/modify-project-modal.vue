@@ -2,17 +2,29 @@
 	<div class="modal-background">
 		<div class="modal">
 			<div class="header">
-				添加角色
+				修改项目
 				<span class="iconfont icon-close" @click="onAdd"></span>
 			</div>
 			<div class="content">
 				<div class="line">
 					<span>名称：</span>
-					<input-vue style="width: 13em"></input-vue>
+					<input-vue v-model="projectName" style="width:13em"></input-vue>
 				</div>
 				<div class="line">
-					<span>备注：</span>
-					<input-vue style="width: 13em"></input-vue>
+					<span>编号：</span>
+					<input-vue v-model="projectNo" style="width:13em"></input-vue>
+				</div>
+				<div class="line">
+					<span>创建时间：</span>
+					<span>{{model.createTime}}</span>
+				</div>
+				<div class="line">
+					<span style="vertical-align:top">公钥：</span>
+					<input-vue v-model="model.key1" readonly type="textarea" :rows="4" style="width:13em"/>
+				</div>
+				<div class="line">
+					<span style="vertical-align:top">私钥:</span>
+					<input-vue v-model="model.key2" readonly type="textarea" :rows="4" style="width:13em"/>
 				</div>
 			</div>
 			<div class="buttons">
@@ -25,13 +37,27 @@
 <script>
 import buttonVue from "../../component/button-vue/button-vue.vue";
 import inputVue from "../../iview-src/components/input";
-import { selectVue, optionVue, optionGroupVue } from "../../iview-src/components/select";
+import {
+	selectVue,
+	optionVue,
+	optionGroupVue
+} from "../../iview-src/components/select";
+
 export default {
 	components: {
 		"button-vue": buttonVue,
-        "select-vue": selectVue,
-        "option-vue": optionVue,
+		"select-vue": selectVue,
+		"option-vue": optionVue,
 		"input-vue": inputVue
+	},
+	props: {
+		model: Object
+	},
+	data: function() {
+		return {
+			projectName: this.model.name,
+			projectNo: this.model.no
+		};
 	},
 	computed: {
 		getSelectOptions: function() {
@@ -54,8 +80,8 @@ export default {
 	methods: {
 		onInput: function() {},
 		onAdd: function() {
-            window.history.go(-1);
-        }
+			window.history.go(-1);
+		}
 	}
 };
 </script>
@@ -76,35 +102,35 @@ export default {
 		.header {
 			position: relative;
 			color: #007d71;
-            padding: 1em;
-            font-weight: bold;
-            letter-spacing: 0.1em;
+			padding: 1em;
+			font-weight: bold;
+			letter-spacing: 0.1em;
 			span {
 				position: absolute;
 				right: 1em;
 				display: inline-block;
 				font-size: 1.2em;
 				line-height: 1;
-				color: #333333;	
+				color: #333333;
 				vertical-align: middle;
 			}
 		}
 		.content {
-            margin-bottom: 2em;
+			margin-bottom: 2em;
 			font-size: 0.9em;
 			.line {
 				> span:nth-of-type(1) {
 					display: inline-block;
-                    width: 7em;
-                    text-align: right;
+					width: 5em;
+					text-align: right;
 				}
 				width: 90%;
 				margin: 0.5em auto;
 				color: #333;
-                padding: 0.2em 2em;
-                .input {
-                    width: 13em;
-                }
+				padding: 0.2em 2em;
+				.input {
+					width: 13em;
+				}
 			}
 		}
 		.buttons {

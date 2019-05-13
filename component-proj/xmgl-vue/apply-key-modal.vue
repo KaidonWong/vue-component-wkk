@@ -8,19 +8,19 @@
 			<div class="content">
 				<div class="line">
 					<span>项目：</span>
-					<span>{{model.name}}({{model.no}})</span>
+					<span>{{model.name}}（{{model.no}}）</span>
 				</div>
 				<div class="line">
 					<span>姓名：</span>
-					<input-vue class="input" @inputevent="onInput"></input-vue>
+					<input-vue v-model="name" style="width:13em"></input-vue>
 				</div>
 				<div class="line">
 					<span>电话：</span>
-					<input-vue class="input" @inputevent="onInput"></input-vue>
+					<input-vue v-model="name" style="width:13em"></input-vue>
 				</div>
 				<div class="line">
 					<span>详细地址：</span>
-					<input-vue class="input" @inputevent="onInput"></input-vue>
+					<input-vue v-model="name" style="width:13em"></input-vue>
 				</div>
 				<div class="line">
 					<span>时间范围：</span>
@@ -42,13 +42,18 @@
 </template>
 <script>
 import buttonVue from "../../component/button-vue/button2-vue.vue";
-import selectVue from "../../component/input-vue/select-vue.vue";
-import inputVue from "../../component/input-vue/input-vue.vue";
+import inputVue from "../../iview-src/components/input";
+import {
+	selectVue,
+	optionVue,
+	optionGroupVue
+} from "../../iview-src/components/select";
 import datePickerVue from "../../iview-src/components/date-picker";
 export default {
 	data: function() {
 		return {
-			dateTimeRange: []
+            dateTimeRange: [],
+            name: ""
 		};
 	},
 	props: {
@@ -101,6 +106,7 @@ export default {
 			}
 		}
 		.content {
+            margin-bottom: 2em;
 			font-size: 0.9em;
 			.line {
 				> span:nth-of-type(1) {

@@ -8,11 +8,11 @@
 			<div class="content">
 				<div class="line">
 					<span>名称：</span>
-					<input-vue placeholder="请输入内容" @inputevent="onInput"></input-vue>
+					<input-vue v-model="projectName" style="width:13em"></input-vue>
 				</div>
 				<div class="line">
 					<span>编号：</span>
-					<input-vue placeholder="请输入内容" @inputevent="onInput"></input-vue>
+					<input-vue v-model="projectNo" style="width:13em"></input-vue>
 				</div>
 			</div>
 			<div class="buttons">
@@ -24,14 +24,21 @@
 </template>
 <script>
 import buttonVue from "../../component/button-vue/button-vue.vue";
-import selectVue from "../../component/input-vue/select-vue.vue";
-import inputVue from "../../component/input-vue/input-vue.vue";
+import inputVue from "../../iview-src/components/input";
+import { selectVue, optionVue, optionGroupVue } from "../../iview-src/components/select";
 export default {
 	components: {
 		"button-vue": buttonVue,
-		"select-vue": selectVue,
+        "select-vue": selectVue,
+        "option-vue": optionVue,
 		"input-vue": inputVue
-	},
+    },
+    data: function() {
+        return {
+            projectName: "",
+            projectNo: "",
+        }
+    },
 	computed: {
 		getSelectOptions: function() {
 			return [
@@ -89,14 +96,15 @@ export default {
 			}
 		}
 		.content {
+            margin-bottom: 2em;
 			font-size: 0.9em;
 			.line {
 				> span:nth-of-type(1) {
 					display: inline-block;
-                    width: 7em;
+                    width: 5em;
                     text-align: right;
 				}
-				width: 80%;
+				width: 90%;
 				margin: 0.5em auto;
 				color: #333;
                 padding: 0.2em 2em;

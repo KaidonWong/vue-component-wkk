@@ -109,6 +109,7 @@ export default {
 			}
 		}
 		.content {
+            margin-bottom: 2em;
             font-size: 0.9em;
             .transfer-box {
                 margin: 1em auto;

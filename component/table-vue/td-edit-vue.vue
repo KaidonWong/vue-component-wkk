@@ -2,8 +2,6 @@
 	<div class="container">
 		<template v-if="isType1">
 			<div @click.stop="onEdit(1)">修改</div>
-			<div @click.stop="onEdit(2)">菜单权限</div>
-			<div @click.stop="onEdit(3)">项目权限</div>
 		</template>
 		<template v-if="isType2">
 			<div @click.stop="onEdit(1)">修改</div>

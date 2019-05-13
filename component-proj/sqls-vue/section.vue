@@ -26,6 +26,9 @@
 		</div>
 		<div class="table-panel">
 			<table-vue :columns="getColumns" :data="getData" :config="getConfig" @editevent="onEditTable"></table-vue>
+			<div class="page">
+				<page-vue :total="4" show-sizer/>
+			</div>
 		</div>
 		<router-view class="modal" name="modal"></router-view>
 	</div>
@@ -38,6 +41,7 @@ import sectionHeaderVue from "../../component/section-header-vue/section-header-
 
 import datePickerVue from "../../iview-src/components/date-picker";
 import { selectVue, optionVue } from "../../iview-src/components/select";
+import pageVue from "../../iview-src/components/page";
 
 export default {
 	data: function() {
@@ -56,7 +60,7 @@ export default {
 				{
 					label: "方思晓",
 					value: "mango"
-                },
+				}
 			]
 		};
 	},
@@ -67,24 +71,25 @@ export default {
 		"section-header-vue": sectionHeaderVue,
 		"select-vue": selectVue,
 		"option-vue": optionVue,
-		"date-picker-vue": datePickerVue
+		"date-picker-vue": datePickerVue,
+		"page-vue": pageVue
 	},
 	computed: {
 		getColumns: function() {
 			let array = [
 				{
 					field: "name",
-					title: "名称",
+					title: "项目名称",
 					width: 1
 				},
 				{
-					field: "remark",
-					title: "备注",
+					field: "time",
+					title: "授权时间",
 					width: 1
 				},
 				{
-					field: "createTime",
-					title: "创建时间",
+					field: "user",
+					title: "授权用户",
 					width: 1
 				}
 			];
@@ -95,40 +100,16 @@ export default {
 			let array = [
 				{
 					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
-				},
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
-				},
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
-				},
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
-				},
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
+					name: "新疆BHF项目",
+					user: "张心思",
+					time: "2020-01-01 23:00:00"
 				}
 			];
 			return array;
 		},
 		getConfig: function() {
 			let a = {
-				height: 600,
+				//height: 600,
 				checkbox: false,
 				//0: 没有操作栏
 				editColumnType: 4
@@ -146,6 +127,11 @@ export default {
 				this.$router.push({ name: "selpri" });
 			}
 		}
+	},
+	mounted: function() {
+		this.$store.dispatch("globalstate/setCurrentSection", {
+			currentSection: "sqls"
+		});
 	}
 };
 </script>

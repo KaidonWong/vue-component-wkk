@@ -1,32 +1,35 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import yhglSection from "../component-proj/yhgl-vue/section.vue";
 import addUserModal from "../component-proj/yhgl-vue/add-user-modal.vue";
 import qxfpSection from "../component-proj/qxfp-vue/section.vue";
 import addRoleModal from "../component-proj/qxfp-vue/add-role-modal.vue";
 import selectPriviledgeModal from "../component-proj/qxfp-vue/select-priviledge-modal.vue";
+//项目管理
 import xmglSection from "../component-proj/xmgl-vue/section.vue";
 import addProjModal from "../component-proj/xmgl-vue/add-project-modal.vue";
 import applyKeyModal from "../component-proj/xmgl-vue/apply-key-modal.vue";
+import modifyProjModal from "../component-proj/xmgl-vue/modify-project-modal.vue";
+
 import sjtjSection from "../component-proj/sjtj-vue/section.vue";
 import sqlsSection from "../component-proj/sqls-vue/section.vue";
 import czrzSection from "../component-proj/czrz-vue/section.vue";
 import loginSection from "../component-proj/login-vue/login-vue.vue";
 
-
 Vue.use(VueRouter);
 const routes = [
     {
 		path: "/login",
-		name: "login",
 		components: {
             login: loginSection,
         },
-        props: {
-            login: true,
+    },
+    {
+		path: "",//默认进入login页面
+		components: {
+            login: loginSection,
         },
-		children: [
-		]
     },
     {
 		path: "/sjtj",
@@ -79,6 +82,26 @@ const routes = [
 				name: "appkey",
 				components: {
 					modal: applyKeyModal
+                },
+                props: {
+                    modal: true
+                },
+            },
+            {
+				path: "addproj",
+				name: "addproj",
+				components: {
+					modal: addProjModal
+                },
+                props: {
+                    modal: true
+                },
+            },
+            {
+				path: "modifyproj",
+				name: "modifyproj",
+				components: {
+					modal: modifyProjModal
                 },
                 props: {
                     modal: true

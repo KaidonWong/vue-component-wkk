@@ -15,5 +15,12 @@
             align-items: center;
             margin-bottom: 1em;
         }
-	}
+        .page {
+            margin-top: 1em;
+            >ul {
+                float: right;
+            }
+        }
+    }
+
 }

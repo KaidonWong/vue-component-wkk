@@ -12,16 +12,19 @@
 				</div>
 				<div class="side"></div>
 			</div>
-            <div style="height: 4em"></div>
+			<div style="height: 4em"></div>
 			<div class="line">
-				<input-vue v-model="name" size="large" placeholder="用户名" icon="ios-contact"></input-vue>
+				<input-vue v-model="userName" size="large" placeholder="用户名" icon="ios-contact"></input-vue>
+				<div id="name-tip">用户名不能为空！</div>
 			</div>
 			<div class="line">
 				<input-vue v-model="password" size="large" placeholder="密码" icon="md-key" type="password"></input-vue>
+				<div id="pass-tip">密码不能为空！</div>
 			</div>
-            <div class="line">
-                <button-vue label="提交" color="#009688" @clickevent="onSubmit" style="width: 100%;"></button-vue>
-            </div>
+			<div class="line">
+				<button-vue label="提交" color="#009688" @clickevent="onSubmit" style="width: 100%;"></button-vue>
+				<div id="wrong-tip">用户名与密码错误！</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -30,20 +33,52 @@ import inputVue from "../../iview-src/components/input";
 import buttonVue from "../../component/button-vue/button2-vue.vue";
 export default {
 	components: {
-        "input-vue": inputVue,
-        "button-vue": buttonVue
-    },
-    data: function() {
-        return {
-            name: "",
-            password: ""
-        }
-    },
-    methods: {
-        onSubmit: function() {
-            this.$router.push({ path: `/sjtj` });
-        }
-    }
+		"input-vue": inputVue,
+		"button-vue": buttonVue
+	},
+	data: function() {
+		return {
+			userName: "",
+			password: ""
+		};
+	},
+	methods: {
+		onSubmit: function() {
+            let _this = this;
+			if (this.name == "") {
+				document.querySelector("#name-tip").style.visibility =
+					"visible";
+				return;
+			}
+			if (this.password == "") {
+				document.querySelector("#pass-tip").style.visibility =
+					"visible";
+				return;
+			}
+			this.axios({
+				method: "post",
+				url: "http://192.168.1.22:8082/apis/login/m/login",
+				params: {
+					userName: this.userName,
+					password: this.password
+				}
+			})
+				.then(function({data}) {
+					if (data.code == 0) {
+						_this.$store.dispatch("globalstate/setToken", {
+							token: data.data.token
+						});
+						_this.$router.push({ path: `/sjtj` });
+					} else {
+						document.querySelector("#wrong-tip").style.visibility =
+							"visible";
+					}
+				})
+				.catch(function(error) {
+					// console.log(error);
+				});
+		}
+	}
 };
 </script>
 <style lang="scss" scoped>
@@ -85,11 +120,18 @@ export default {
 				background: url(../../asset/login/aiwrap.png) no-repeat;
 				background-size: 100% 100%;
 			}
-        }
-        .line {
-            width: 70%;
-            margin: 1em auto;
-        }
+		}
+		.line {
+			width: 70%;
+			margin: 0.5em auto;
+		}
+	}
+	#name-tip,
+	#pass-tip,
+	#wrong-tip {
+		visibility: hidden;
+		color: #831616;
+		font-size: 0.9em;
 	}
 }
 </style>
