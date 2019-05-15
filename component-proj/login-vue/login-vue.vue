@@ -57,7 +57,7 @@ export default {
 			}
 			this.axios({
 				method: "post",
-				url: "http://192.168.1.22:8082/apis/login/m/login",
+				url: "/apis/login/m/login",
 				params: {
 					userName: this.userName,
 					password: this.password
@@ -109,8 +109,8 @@ export default {
 				line-height: 3;
 				.logo {
 					float: left;
-					width: 3em;
-					margin: 0.4em;
+					width: 2em;
+					margin: 0.8em;
 					@include pic-container(70%);
 				}
 			}

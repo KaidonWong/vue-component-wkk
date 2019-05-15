@@ -38,6 +38,7 @@ export default {
         },
         onInput: function(e) {
             this.value = e.target.value;
+            this.$emit('searchevent',this.value);
         },
 		onSubmit: function() {
             this.$emit('searchevent',this.value);

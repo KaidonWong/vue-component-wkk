@@ -5,16 +5,16 @@
 			<div class="above-table">
 				<div class="buttons">
 					<button2-vue label="添加项目" icon="icon-add" color="#009688" @clickevent="onAdd"></button2-vue>
-					<button2-vue label="删除项目" icon="icon-delete1" color="#FF9800"></button2-vue>
+					<button2-vue label="删除项目" icon="icon-delete1" color="#FF9800" @clickevent="onDelete"></button2-vue>
 				</div>
-				<search-input-vue></search-input-vue>
+				<search-input-vue @searchevent="onSearch"></search-input-vue>
 			</div>
-			<table-vue :columns="getColumns" :data="getData" :config="getConfig" @editevent="onEditTable"></table-vue>
+			<table-vue :columns="getColumns" :data="dataArr" :config="getConfig" @editevent="onEditTable"></table-vue>
 			<div class="page">
-				<page-vue :total="4" show-sizer/>
+				<page-vue :total="dataNum" :current="currentPage" show-total @on-change="changePage"/>
 			</div>
 		</div>
-		<router-view class="modal" name="modal"></router-view>
+		<router-view class="modal" name="modal" @addsuccess="refreshTable"></router-view>
 	</div>
 </template>
 <script>
@@ -24,6 +24,14 @@ import tableVue from "../../component/table-vue/table-vue.vue";
 import sectionHeaderVue from "../../component/section-header-vue/section-header-vue.vue";
 import pageVue from "../../iview-src/components/page";
 export default {
+	data: function() {
+		return {
+			dataArr: [],
+			dataNum: 0,
+			keyWord: "",
+			currentPage: 1
+		};
+	},
 	components: {
 		"button2-vue": button2Vue,
 		"search-input-vue": searchInputVue,
@@ -35,13 +43,13 @@ export default {
 		getColumns: function() {
 			let array = [
 				{
-					field: "name",
-					title: "名称",
+					field: "projectName",
+					title: "项目名称",
 					width: 1
 				},
 				{
-					field: "no",
-					title: "编号",
+					field: "projectNumber",
+					title: "项目编号",
 					width: 1
 				},
 				{
@@ -49,19 +57,6 @@ export default {
 					title: "创建时间",
 					width: 1
 				}
-			];
-			return array;
-		},
-		getData: function() {
-			let array = [
-				{
-					id: 1,
-					name: "西藏BHF项目",
-					no: "ky-1545",
-                    createTime: "2020-01-01 23:00:00",
-                    key1: "...3333333333333333555555555555555555555555555555555555555555555555555555555333333333333333333333333333333333333.......",
-                    key2: "......",
-				},
 			];
 			return array;
 		},
@@ -76,38 +71,83 @@ export default {
 		}
 	},
 	methods: {
-		getLineData: function(id) {
-			let arr = this.getData;
-			for (let i = 0, len = arr.length; i < len; i++) {
-				if (id == arr[i].id) {
-					return arr[i];
-				}
-			}
-			return {};
-		},
 		onAdd: function() {
 			this.$router.push({ name: "addproj" });
 		},
+		onDelete: function() {
+			let _this = this;
+			let arr = this.$store.getters["table/getSelected"];
+			let str = arr.join("%2C");
+			this.$store.dispatch("table/removeAll");
+			this.axios({
+				method: "delete",
+				url: `/apis/p/project/${str}`
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					_this.$Message.success("项目删除成功！");
+					_this.refreshTable();
+				} else {
+					_this.$Message.error("项目删除失败！");
+				}
+			});
+		},
+		refreshTable: function() {
+			this.fetchTableData(1);
+			this.currentPage = 1;
+		},
+		getLineById: function(id) {
+			for (let i = 0, len = this.dataArr.length; i < len; i++) {
+				if (this.dataArr[i].id == id) {
+					return this.dataArr[i];
+				}
+			}
+			return null;
+		},
 		onEditTable: function(e) {
-            let lineData = this.getLineData(e.id);
+			let model = this.getLineById(e.id);
 			if (e.type == 1) {
 				this.$router.push({
 					name: "modifyproj",
-					params: { model: lineData }
+					params: { model: model }
 				});
 			}
 			if (e.type == 2) {
-				this.$router.push({
-					name: "appkey",
-					params: { model: lineData }
-				});
+				this.$router.push({ name: "appkey" });
 			}
+		},
+		changePage: function(e) {
+			this.fetchTableData(e);
+		},
+		onSearch: function(e) {
+			this.keyWord = e;
+			this.fetchTableData(1);
+			this.currentPage = 1;
+		},
+		fetchTableData: function(pageNum) {
+			let _this = this;
+			let params = {
+				pn: pageNum
+			};
+			if (this.keyWord != "") {
+				Object.assign(params, { keys: this.keyWord });
+			}
+			this.axios({
+				method: "get",
+				url: "/apis/p/projects",
+				params: params
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					_this.dataArr = data.data.list;
+					_this.dataNum = data.data.total;
+				}
+			});
 		}
 	},
 	mounted: function() {
 		this.$store.dispatch("globalstate/setCurrentSection", {
 			currentSection: "xmgl"
-		});
+        });
+        this.fetchTableData(1);
 	}
 };
 </script>

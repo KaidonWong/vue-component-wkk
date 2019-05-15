@@ -3,8 +3,10 @@ import VueRouter from "vue-router";
 
 import yhglSection from "../component-proj/yhgl-vue/section.vue";
 import addUserModal from "../component-proj/yhgl-vue/add-user-modal.vue";
+//权限分配
 import qxfpSection from "../component-proj/qxfp-vue/section.vue";
 import addRoleModal from "../component-proj/qxfp-vue/add-role-modal.vue";
+import modifyRoleModal from "../component-proj/qxfp-vue/modify-role-modal.vue";
 import selectPriviledgeModal from "../component-proj/qxfp-vue/select-priviledge-modal.vue";
 //项目管理
 import xmglSection from "../component-proj/xmgl-vue/section.vue";
@@ -152,6 +154,16 @@ const routes = [
                 },
             },
             {
+				path: "modifyrole",
+				name: "modifyrole",
+				components: {
+					modal: modifyRoleModal
+                },
+                props: {
+                    modal: true
+                },
+            },
+            {
 				path: "selpri",
 				name: "selpri",
 				components: {
@@ -165,8 +177,10 @@ const routes = [
 	}
 ];
 
-// 3. 创建 router 实例，然后传 `routes` 配置
-// 你还可以传别的配置参数, 不过先这么简单着吧。
-export default new VueRouter({
+var router = new VueRouter({
 	routes // (缩写) 相当于 routes: routes
 });
+
+// 3. 创建 router 实例，然后传 `routes` 配置
+// 你还可以传别的配置参数, 不过先这么简单着吧。
+export default router;

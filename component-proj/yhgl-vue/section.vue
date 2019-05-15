@@ -12,7 +12,7 @@
 
 			<table-vue :columns="getColumns" :data="getData" :config="getConfig" @editevent="onEditTable"></table-vue>
 			<div class="page">
-				<page-vue :total="4" show-sizer/>
+				<page-vue :total="4" show-total/>
 			</div>
 		</div>
 		<router-view class="modal" name="modal"></router-view>

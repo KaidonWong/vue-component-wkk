@@ -5,18 +5,21 @@
 		<!-- <button2-vue label="添加用户" icon="icon-add" color="#d40e10" @clickevent="onSwitch"></button2-vue> -->
 		<!-- <button2-vue label="申请授权" @clickevent="onSwitch" color="#009688"></button2-vue> -->
 		<!-- <transfer-box-vue :options="allOptions" title="所有项目"></transfer-box-vue> -->
-		<transfer-vue :availableOptions="availableOptions" :ownedOptions="ownedOptions"></transfer-vue>
+		<!-- <transfer-vue :availableOptions="availableOptions" :ownedOptions="ownedOptions"></transfer-vue> -->
         <date-picker-vue v-model="dateTime" type="datetime" show-week-numbers confirm placeholder="Select date" style="width: 10em"></date-picker-vue>
 		<date-picker-vue v-model="dateTimeRange" type="daterange" split-panels placeholder="Select date" style="width: 200px"></date-picker-vue>
         <!-- <table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue> -->
-		<!-- <input-vue
+        <div style='margin: 1em;'>
+		<input-vue
 			placeholder="请输入内容"
 			iconbefore="icon-bluetoothon"
 			iconafter="icon-search"
-			@inputevent="onInput"
+			v-model="inputValue"
 		></input-vue>
+        </div>
 
-		<search-input-vue></search-input-vue>-->
+
+		<!-- <search-input-vue></search-input-vue>-->
 
 		<!-- <modal-vue></modal-vue> -->
 	</div>
@@ -385,10 +388,7 @@ export default {
 	}
 };
 </script>
-// <style lang="less">
-// @import "../../iview-src/styles/custom";
-// @import "../../iview-src/styles/mixins/index";
-// @import "../../iview-src/styles/common/index";
-// @import "../../iview-src/styles/animation/index";
-// @import "../../iview-src/styles/components/index";
-// </style>
+<style lang="less">
+//iview 组件的样式没有解耦
+@import "../../iview-src/styles/index.less";
+</style>

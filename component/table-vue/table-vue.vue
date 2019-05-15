@@ -14,7 +14,7 @@
 		</div>
 		<div class="tbody" :style="tbodyStyle">
 			<div class="tline clearfix" v-for="(line,index) of dataInOrder" :key="index">
-				<td-checkbox-vue v-if="config.checkbox" :lineid="data[index].id" :toggleall="toggleAll"></td-checkbox-vue>
+				<td-checkbox-vue v-if="config.checkbox" :lineid="data[index].id" :key="data[index].id+'_c'" :toggleall="toggleAll"></td-checkbox-vue>
 				<td-vue
 					v-for="(item,index) of line"
 					:key="index"

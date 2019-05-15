@@ -1,143 +1,99 @@
 <template>
-	<div class="modal-background">
-		<div class="modal">
-			<div class="header">
-				修改项目
-				<span class="iconfont icon-close" @click="onAdd"></span>
-			</div>
-			<div class="content">
-				<div class="line">
-					<span>名称：</span>
-					<input-vue v-model="projectName" style="width:13em"></input-vue>
-				</div>
-				<div class="line">
-					<span>编号：</span>
-					<input-vue v-model="projectNo" style="width:13em"></input-vue>
-				</div>
-				<div class="line">
-					<span>创建时间：</span>
-					<span>{{model.createTime}}</span>
-				</div>
-				<div class="line">
-					<span style="vertical-align:top">公钥：</span>
-					<input-vue v-model="model.key1" readonly type="textarea" :rows="4" style="width:13em"/>
-				</div>
-				<div class="line">
-					<span style="vertical-align:top">私钥:</span>
-					<input-vue v-model="model.key2" readonly type="textarea" :rows="4" style="width:13em"/>
-				</div>
-			</div>
-			<div class="buttons">
-				<button-vue label="确定" icon="icon-save" color="#007d71" @clickevent="onAdd"></button-vue>
-				<button-vue label="取消" icon="icon-withdraw" color="#007d71" @clickevent="onAdd"></button-vue>
-			</div>
+	<modal-base-vue title="修改项目" @addevent="onAdd">
+		<div class="line">
+			<span>名称：</span>
+			<input-vue v-model="name" style="width: 12em"></input-vue>
+			<div class="tip">{{tip['projectName']}}</div>
 		</div>
-	</div>
+		<div class="line">
+			<span>编号：</span>
+			<input-vue v-model="no" style="width: 12em"></input-vue>
+			<div class="tip">{{tip['projectNumber']}}</div>
+		</div>
+		<div class="line">
+			<span>创建时间：</span>
+			<span>{{model.createTime}}</span>
+		</div>
+		<div class="line">
+			<span style="vertical-align: top;">公钥：</span>
+			<input-vue :value="model.publicKey" type="textarea" :rows="5" readonly style="width: 14em"></input-vue>
+		</div>
+		<div class="line">
+			<span style="vertical-align: top;">密钥：</span>
+			<input-vue :value="model.privateKey" type="textarea" :rows="5" readonly style="width: 14em"></input-vue>
+		</div>
+	</modal-base-vue>
 </template>
 <script>
-import buttonVue from "../../component/button-vue/button-vue.vue";
+import modalBaseVue from "../modal-base-vue/modal-base.vue";
 import inputVue from "../../iview-src/components/input";
 import {
 	selectVue,
 	optionVue,
 	optionGroupVue
 } from "../../iview-src/components/select";
-
 export default {
-	components: {
-		"button-vue": buttonVue,
-		"select-vue": selectVue,
-		"option-vue": optionVue,
-		"input-vue": inputVue
+	data: function() {
+		return {
+			name: "",
+			no: "",
+			tip: {}
+		};
 	},
 	props: {
 		model: Object
 	},
-	data: function() {
-		return {
-			projectName: this.model.name,
-			projectNo: this.model.no
-		};
+	components: {
+		"modal-base-vue": modalBaseVue,
+		"select-vue": selectVue,
+		"option-vue": optionVue,
+		"input-vue": inputVue
 	},
-	computed: {
-		getSelectOptions: function() {
-			return [
-				{
-					label: "苹果",
-					value: "apple"
-				},
-				{
-					label: "西瓜",
-					value: "watermelon"
-				},
-				{
-					label: "芒果",
-					value: "mango"
-				}
-			];
-		}
-	},
+	computed: {},
 	methods: {
-		onInput: function() {},
 		onAdd: function() {
-			window.history.go(-1);
+			let _this = this;
+			this.axios({
+				method: "put",
+				url: "/apis/p/project",
+				data: {
+					id: _this.model.id,
+					projectName: _this.name,
+					projectNumber: _this.no
+				}
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					_this.$Message.success("角色修改成功！");
+					window.history.go(-1);
+					_this.$emit("addsuccess");
+				}
+				if (data.code == 501 || data.code == 401) {
+					_this.tip = data.data;
+				}
+			});
 		}
+	},
+	mounted: function() {
+		this.name = this.model.projectName;
+		this.no = this.model.projectNumber;
 	}
 };
 </script>
 <style lang="scss" scoped>
-.modal-background {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background-color: rgba($color: #000000, $alpha: 0.3);
-	.modal {
-		margin: 10em auto;
-		width: 25%;
-		min-width: 20em;
-		border-radius: 1em;
-		background-color: #ffffff;
-		.header {
-			position: relative;
-			color: #007d71;
-			padding: 1em;
-			font-weight: bold;
-			letter-spacing: 0.1em;
-			span {
-				position: absolute;
-				right: 1em;
-				display: inline-block;
-				font-size: 1.2em;
-				line-height: 1;
-				color: #333333;
-				vertical-align: middle;
-			}
-		}
-		.content {
-			margin-bottom: 2em;
-			font-size: 0.9em;
-			.line {
-				> span:nth-of-type(1) {
-					display: inline-block;
-					width: 5em;
-					text-align: right;
-				}
-				width: 90%;
-				margin: 0.5em auto;
-				color: #333;
-				padding: 0.2em 2em;
-				.input {
-					width: 13em;
-				}
-			}
-		}
-		.buttons {
-			padding: 0.5em 2em 1em 0;
-			text-align: right;
-			border-top: 1px solid #007d71;
-		}
+.line {
+	> span:nth-of-type(1) {
+		display: inline-block;
+		width: 5em;
+		text-align: right;
+	}
+	width: 90%;
+	margin: 0 auto;
+	color: #333;
+	padding: 0.5em 0;
+	.tip {
+		padding-left: 7em;
+		color: #800000;
+		font-size: 0.6em;
 	}
 }
 </style>

@@ -36,6 +36,7 @@ export default {
             let _this = this;
 			this.$router.push({ path: `/${e}` });
 			if (e == "login") {
+                //退出登录需要清空token
 				_this.$store.dispatch("globalstate/setToken", {
 					token: null
 				});

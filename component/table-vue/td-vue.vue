@@ -22,6 +22,7 @@ export default {
     div {
         padding: 0.8em;
         line-height: 1;
+        height: 2.5em;
         color: #333;
         overflow: hidden;
         &+div {

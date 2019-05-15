@@ -59,7 +59,7 @@
             :placement="placement"
             :transfer="transfer"
             :show-elevator="showElevator"
-            :_current.once="currentPage"
+            :_current="currentPage"
             :current="currentPage"
             :all-pages="allPages"
             :is-small="isSmall"

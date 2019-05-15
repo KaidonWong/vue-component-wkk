@@ -5,16 +5,16 @@
 			<div class="above-table">
 				<div class="buttons">
 					<button2-vue label="添加角色" icon="icon-add" color="#009688" @clickevent="onAdd"></button2-vue>
-					<button2-vue label="删除角色" icon="icon-delete1" color="#FF9800" @clickevent="onAdd"></button2-vue>
+					<button2-vue label="删除角色" icon="icon-delete1" color="#FF9800" @clickevent="onDelete"></button2-vue>
 				</div>
-				<search-input-vue></search-input-vue>
+				<search-input-vue @searchevent="onSearch"></search-input-vue>
 			</div>
-			<table-vue :columns="getColumns" :data="getData" :config="getConfig" @editevent="onEditTable"></table-vue>
+			<table-vue :columns="getColumns" :data="dataArr" :config="getConfig" @editevent="onEditTable"></table-vue>
 			<div class="page">
-				<page-vue :total="4" show-sizer/>
+				<page-vue :total="dataNum" :current="currentPage" show-total @on-change="changePage"/>
 			</div>
 		</div>
-		<router-view class="modal" name="modal"></router-view>
+		<router-view class="modal" name="modal" @addsuccess="refreshTable"></router-view>
 	</div>
 </template>
 <script>
@@ -24,18 +24,26 @@ import tableVue from "../../component/table-vue/table-vue.vue";
 import sectionHeaderVue from "../../component/section-header-vue/section-header-vue.vue";
 import pageVue from "../../iview-src/components/page";
 export default {
+	data: function() {
+		return {
+			dataArr: [],
+			dataNum: 0,
+			keyWord: "",
+			currentPage: 1,
+		};
+	},
 	components: {
 		"button2-vue": button2Vue,
 		"search-input-vue": searchInputVue,
 		"table-vue": tableVue,
-        "section-header-vue": sectionHeaderVue,
-                "page-vue": pageVue
+		"section-header-vue": sectionHeaderVue,
+		"page-vue": pageVue
 	},
 	computed: {
 		getColumns: function() {
 			let array = [
 				{
-					field: "name",
+					field: "roleName",
 					title: "名称",
 					width: 1
 				},
@@ -48,18 +56,6 @@ export default {
 					field: "createTime",
 					title: "创建时间",
 					width: 1
-				}
-			];
-
-			return array;
-		},
-		getData: function() {
-			let array = [
-				{
-					id: 1,
-					name: "新疆片区权限角色",
-					remark: "主要负责在新疆地区的项目，比如和田JJM平台",
-					createTime: "2020-01-01 23:00:00"
 				}
 			];
 			return array;
@@ -78,16 +74,80 @@ export default {
 		onAdd: function() {
 			this.$router.push({ name: "addrole" });
 		},
+		onDelete: function() {
+			let _this = this;
+			let arr = this.$store.getters["table/getSelected"];
+			let str = arr.join("%2C");
+			this.$store.dispatch("table/removeAll");
+			this.axios({
+				method: "delete",
+				url: `/apis/r/role/${str}`
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					_this.$Message.success("角色删除成功！");
+					_this.refreshTable();
+				} else {
+					_this.$Message.error("角色删除失败！");
+				}
+			});
+		},
+		refreshTable: function() {
+			this.fetchTableData(1);
+			this.currentPage = 1;
+		},
+		getLineById: function(id) {
+			for (let i = 0, len = this.dataArr.length; i < len; i++) {
+				if (this.dataArr[i].id == id) {
+					return this.dataArr[i];
+				}
+			}
+			return null;
+		},
 		onEditTable: function(e) {
+			let model = this.getLineById(e.id);
+			if (e.type == 1) {
+				this.$router.push({
+					name: "modifyrole",
+					params: { model: model }
+				});
+			}
 			if (e.type == 2) {
 				this.$router.push({ name: "selpri" });
 			}
+		},
+		changePage: function(e) {
+			this.fetchTableData(e);
+		},
+		onSearch: function(e) {
+			this.keyWord = e;
+			this.fetchTableData(1);
+			this.currentPage = 1;
+		},
+		fetchTableData: function(pageNum) {
+			let _this = this;
+			let params = {
+				pn: pageNum
+			};
+			if (this.keyWord != "") {
+				Object.assign(params, { key: this.keyWord });
+			}
+			this.axios({
+				method: "get",
+				url: "/apis/r/roles",
+				params: params
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					_this.dataArr = data.data.list;
+					_this.dataNum = data.data.total;
+				}
+			});
 		}
 	},
 	mounted: function() {
 		this.$store.dispatch("globalstate/setCurrentSection", {
 			currentSection: "qxfp"
 		});
+		this.fetchTableData(1);
 	}
 };
 </script>

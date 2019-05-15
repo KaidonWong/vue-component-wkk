@@ -1,5 +1,5 @@
 <template>
-	<modal-base-vue title="添加角色" @addevent="onAdd">
+	<modal-base-vue title="修改角色" @addevent="onAdd">
 		<div class="line">
 			<span>名称：</span>
 			<input-vue v-model="roleName" style="width: 12em"></input-vue>
@@ -27,7 +27,10 @@ export default {
             remark: "",
             tip: {}
 		};
-	},
+    },
+    props: {
+        model: Object
+    },
 	components: {
 		"modal-base-vue": modalBaseVue,
 		"select-vue": selectVue,
@@ -39,12 +42,12 @@ export default {
 		onAdd: function() {
 			let _this = this;
 			this.axios({
-				method: "post",
+				method: "put",
 				url: "/apis/r/role",
-				data: { roleName: _this.roleName, remark: _this.remark }
+				data: { id:_this.model.id,roleName: _this.roleName, remark: _this.remark }
 			}).then(function({ data }) {
 				if (data.code == 0) {
-                    _this.$Message.success('角色添加成功！');
+                    _this.$Message.success('角色修改成功！');
                     window.history.go(-1);
                     _this.$emit("addsuccess");
                 }
@@ -53,7 +56,11 @@ export default {
 				}
 			});
 		}
-	}
+    },
+    mounted: function() {
+        this.roleName = this.model.roleName;
+        this.remark = this.model.remark;
+    },
 };
 </script>
 <style lang="scss" scoped>
