@@ -7,8 +7,8 @@
 				</div>
 			</div>
 			<div class="remark">
-				<div class="name">{{user.name}}</div>
-				<div class="job">{{user.job}}</div>
+				<div class="name">{{currentUser.userRealName}}</div>
+				<div class="job">{{currentUser.userPost}}</div>
 			</div>
 		</div>
 		<div
@@ -21,23 +21,76 @@
 			<span class="iconfont" :class="item.icon"></span>
 			<span class="label">{{item.label}}</span>
 		</div>
+		<div style="display: none">{{computed_currentUser.userRealName}}</div>
 	</div>
 </template>
 <script>
 export default {
 	data: function() {
-		return {};
+		return {
+			currentUser: {}
+		};
 	},
 	props: {
-		user: Object,
-		menus: Array,
 		contract: Boolean
 	},
 	computed: {
-        currentSectionClasses: function() {
-            return this.$store.getters["globalstate/getCurrentSection"];
-        }
-    },
+		currentSectionClasses: function() {
+			return this.$store.getters["globalstate/getCurrentSection"];
+		},
+		computed_currentUser: function() {
+			let tmp = this.$store.getters["globalstate/getCurrentUser"];
+			if (tmp == null) {
+				tmp = {
+					userRealName: "default",
+					userPost: "default"
+				};
+			}
+			this.currentUser = tmp;
+			return tmp;
+		},
+		menus: function() {
+			let normalMenu = [
+				{
+					label: "数据统计",
+					to: "sjtj",
+					icon: "icon-et-sales-statistics"
+				},
+				{
+					label: "项目管理",
+					to: "xmgl",
+					icon: "icon-xiangmu"
+				},
+				{
+					label: "授权历史",
+					to: "sqls",
+					icon: "icon-devicelogs"
+				}
+			];
+			let expandMenu = [
+				{
+					label: "操作日志",
+					to: "czrz",
+					icon: "icon-systemlogs"
+				},
+				{
+					label: "用户管理",
+					to: "yhgl",
+					icon: "icon-UserSettings1"
+				},
+				{
+					label: "权限分配",
+					to: "qxfp",
+					icon: "icon-key"
+				}
+			];
+			if (this.currentUser.roleId == 1) {
+				return [...normalMenu, ...expandMenu];
+			} else {
+				return normalMenu;
+			}
+		}
+	},
 	methods: {
 		onClickMenu: function(to) {
 			this.$router.push({ path: `/${to}` });

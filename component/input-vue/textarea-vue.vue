@@ -1,9 +1,9 @@
 <template>
 	<textarea
 		:class="baseDivClass"
-		:value="defaultVal"
+		:value="inputValue"
 		:placeholder="placeholder"
-        :rows="rowsNumber"
+        :rows="rows"
 		@input="onInput($event)"
 		@focus="onFocus"
 		@blur="onBlur"
@@ -11,24 +11,26 @@
 </template>
 <script>
 export default {
+    model: {
+        prop: 'inputVal',
+        event: 'inputevent'
+    },
 	props: {
 		placeholder: String,
-        default: String,
+        inputVal: String,
         rows: [Number,String],
 	},
 	data: function() {
 		return {
-			defaultVal: this.default,
+			inputValue: this.inputVal,
             baseDivClass: {},
-            rowsNumber: this.rows,
 		};
 	},
 	computed: {},
 	methods: {
 		onInput: function(e) {
-			let inputVal = e.target.value;
-			this.defaultVal = inputVal;
-			this.$emit("inputevent", inputVal);
+			this.inputValue = e.target.value;
+			this.$emit("inputevent", this.inputValue);
 		},
 		onFocus: function(e) {
 			this.baseDivClass = {
@@ -46,6 +48,7 @@ export default {
 <style lang="scss" scoped>
 textarea {
     outline: none;
+    width: 15em;
 	border: 1px solid #cccccc;
 	border-radius: 3px;
 	transition: box-shadow 0.1s;

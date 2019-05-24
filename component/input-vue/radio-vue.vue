@@ -16,6 +16,10 @@
 </template>
 <script>
 export default {
+    model: {
+        prop: "selected",
+        event: "inputevent"
+    },
 	props: {
 		// [{name: xxx,value:xxx},{}]
 		content: Array,
@@ -36,32 +40,33 @@ $circleWidth: 0.6em;
 	width: $ringWidth;
 	border: 1px solid #aaaaaa;
 	border-radius: 50%;
-	padding: 2px;
 	.circle {
 		height: $circleWidth;
 		width: $circleWidth;
 		border-radius: 50%;
-		background-color: #aaaaaa;
-		transform: scale(0);
+		background-color: #2d8cf0;
+        transform: translate3d(0.12em,0.12em,0) scale3d(0,0,0);
 		transition: transform 0.2s ease-in-out;
 	}
-	transform: scale(0.8);
 }
 .groups {
-	display: flex;
+    display: flex;
 	.group {
 		margin-right: 10px;
 		display: flex;
+        align-items: center;
+        &:hover {
+            cursor: default;
+        }
 		.label {
-			font-size: 0.8em;
+            
 		}
 		&.on {
 			.ring {
 				border-color: #2d8cf0;
 				box-shadow: 0 0 4px #000;
 				.circle {
-					background-color: #2d8cf0;
-					transform: scale(1);
+					transform: translate3d(0.12em,0.12em,0) scale3d(1,1,1);
 				}
 			}
 		}

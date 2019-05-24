@@ -21,7 +21,7 @@
 					:content="item"
 					:width="calcWidth(columnWidth[index])"
 				></td-vue>
-				<td-edit-vue v-if="hasEditColumn" :lineid="data[index].id" :type="config.editColumnType" @editevent="onEdit"></td-edit-vue>
+				<td-edit-vue v-if="hasEditColumn" :lineData="data[index]" :type="config.editColumnType" @editevent="onEdit"></td-edit-vue>
 			</div>
 		</div>
 	</div>

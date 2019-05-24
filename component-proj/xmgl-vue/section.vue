@@ -11,10 +11,16 @@
 			</div>
 			<table-vue :columns="getColumns" :data="dataArr" :config="getConfig" @editevent="onEditTable"></table-vue>
 			<div class="page">
-				<page-vue :total="dataNum" :current="currentPage" show-total @on-change="changePage"/>
+				<page-vue
+					:total="dataNum"
+					:page-size="pageSize"
+					:current="currentPage"
+					show-total
+					@on-change="changePage"
+				/>
 			</div>
 		</div>
-		<router-view class="modal" name="modal" @addsuccess="refreshTable"></router-view>
+		<router-view class="modal" name="modal" @addsuccess="fetchTableData(1)"></router-view>
 	</div>
 </template>
 <script>
@@ -29,7 +35,8 @@ export default {
 			dataArr: [],
 			dataNum: 0,
 			keyWord: "",
-			currentPage: 1
+			currentPage: 1,
+			pageSize: 15
 		};
 	},
 	components: {
@@ -65,7 +72,7 @@ export default {
 				// height: 600,
 				checkbox: true,
 				//0: 没有操作栏
-				editColumnType: 3
+				editColumnType: "xmgl"
 			};
 			return a;
 		}
@@ -83,17 +90,13 @@ export default {
 				method: "delete",
 				url: `/apis/p/project/${str}`
 			}).then(function({ data }) {
-				if (data.code == 0) {
-					_this.$Message.success("项目删除成功！");
-					_this.refreshTable();
+				if (data.msg == "删除成功") {
+					_this.$Message.success(data.msg);
 				} else {
-					_this.$Message.error("项目删除失败！");
-				}
+					_this.$Message.error(data.msg);
+                }
+                _this.fetchTableData(_this.currentPage);
 			});
-		},
-		refreshTable: function() {
-			this.fetchTableData(1);
-			this.currentPage = 1;
 		},
 		getLineById: function(id) {
 			for (let i = 0, len = this.dataArr.length; i < len; i++) {
@@ -112,7 +115,7 @@ export default {
 				});
 			}
 			if (e.type == 2) {
-				this.$router.push({ name: "appkey" });
+				this.$router.push({ name: "appkey", params: { model: model } });
 			}
 		},
 		changePage: function(e) {
@@ -121,9 +124,9 @@ export default {
 		onSearch: function(e) {
 			this.keyWord = e;
 			this.fetchTableData(1);
-			this.currentPage = 1;
 		},
 		fetchTableData: function(pageNum) {
+			this.currentPage = pageNum;
 			let _this = this;
 			let params = {
 				pn: pageNum
@@ -146,8 +149,8 @@ export default {
 	mounted: function() {
 		this.$store.dispatch("globalstate/setCurrentSection", {
 			currentSection: "xmgl"
-        });
-        this.fetchTableData(1);
+		});
+		this.fetchTableData(1);
 	}
 };
 </script>

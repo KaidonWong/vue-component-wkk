@@ -4,7 +4,7 @@ const state = {
 	windowWidth: 0,
 	//true: desktop  false: phone
 	mode: false,
-	token: window.localStorage.getItem("tyd_authorize_project_token"),
+    currentUser: JSON.parse(window.localStorage.getItem("tyd_authorize_project_user")),
 	currentSection: [
 		{ active: false },
 		{ active: false },
@@ -24,9 +24,9 @@ const mutations = {
 	setWindowWidth(state, payload) {
 		state.windowWidth = payload.width;
 	},
-	setToken(state, payload) {
-		state.token = payload.token;
-		window.localStorage.setItem("tyd_authorize_project_token", payload.token);
+    setCurrentUser(state, payload) {
+        state.currentUser = payload.currentUser;
+        window.localStorage.setItem("tyd_authorize_project_user", JSON.stringify(payload.currentUser));
 	},
 	setCurrentSection(state, payload) {
 		state.currentSection = [
@@ -44,16 +44,16 @@ const mutations = {
 			case "xmgl":
 				state.currentSection[1] = { active: true };
 				break;
-			case "yhgl":
+			case "sqls":
 				state.currentSection[2] = { active: true };
 				break;
-			case "qxfp":
+			case "czrz":
 				state.currentSection[3] = { active: true };
 				break;
-			case "sqls":
+			case "yhgl":
 				state.currentSection[4] = { active: true };
 				break;
-			case "czrz":
+			case "qxfp":
 				state.currentSection[5] = { active: true };
 				break;
 		}
@@ -66,8 +66,8 @@ const actions = {
 	setWindowWidth(context, payload) {
 		context.commit("setWindowWidth", payload);
 	},
-	setToken(context, payload) {
-		context.commit("setToken", payload);
+    setCurrentUser(context, payload) {
+		context.commit("setCurrentUser", payload);
 	},
 	setCurrentSection(context, payload) {
 		context.commit("setCurrentSection", payload);
@@ -87,8 +87,8 @@ const getters = {
 		}
 		return true;
 	},
-	getToken: state => {
-		let ret = state.token;
+    getCurrentUser: state => {
+		let ret = state.currentUser;
 		return ret;
 	},
 	getCurrentSection: state => {

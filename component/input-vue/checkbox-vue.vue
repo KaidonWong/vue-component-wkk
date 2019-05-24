@@ -10,12 +10,16 @@
 			<div class="box">
 				<span class="fill iconfont icon-check"></span>
 			</div>
-			<span class="label">{{item.label}}</span>
+			<div class="label">{{item.label}}</div>
 		</div>
 	</div>
 </template>
 <script>
 export default {
+    model: {
+        prop: "selected",
+        event: "inputevent"
+    },
 	props: {
 		// [{name: xxx,value:xxx},{}]
 		content: Array,
@@ -33,7 +37,7 @@ export default {
 			let ret = new Array();
 			for (let i = 0, len = this.content.length; i < len; i++) {
 				let item = this.content[i];
-				if (this.selected.indexOf(item.value) == -1) {
+				if (this.selectedContent.indexOf(item.value) == -1) {
 					ret.push(false);
 				} else {
 					ret.push(true);
@@ -56,7 +60,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$boxWidth: 1em;
+$boxWidth: 0.9em;
 .box {
 	height: $boxWidth;
 	width: $boxWidth;
@@ -67,31 +71,30 @@ $boxWidth: 1em;
         box-shadow: 0 0 1px #666666;
     }
 	.fill {
-        display: inline-block;
+        display: block;
         position: relative;
-        top: -0.2em;
-        left: 0.1em;
+        top: -0.1em;
+        left: -0.1em;
         color: #ffffff;
-        font-size: 0.5em;
-        transform: scale(0);
-        transition: transform 0.2s ease-in-out;
+        transform: scale(0.8);
 	}
 }
 .groups {
-	display: flex;
+    display: flex;
 	.group {
 		margin-right: 10px;
 		display: flex;
+        align-items: center;
+        &:hover {
+            cursor: default;
+        }
 		.label {
-			font-size: 0.8em;
+			margin-left: 0.2em;
 		}
 		&.on {
             .box {
                 border-color: transparent;
                 background-color: #2d8cf0;
-                .fill {
-                    transform: scale(1);
-                }
             }
 		}
 	}

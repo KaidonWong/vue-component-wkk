@@ -3,40 +3,25 @@
 		<section-header-vue icon="icon-systemlogs" title="操作日志" subtitle="查询平台使用者的历史操作记录"></section-header-vue>
 		<div class="condition-panel clearfix">
 			<div class="line">
-				<select-vue placeholder="选择用户" v-model="userSelected" style="width:13em">
-					<option-vue
-						v-for="item in getSelectOptions"
-						:value="item.value"
-						:key="item.value"
-					>{{ item.label }}</option-vue>
-				</select-vue>
+				<input-vue placeholder="关键字(用户名,操作模块)" v-model="keyWord"></input-vue>
 			</div>
 			<div class="line">
-				<select-vue placeholder="业务类型" v-model="userSelected" style="width:13em">
-					<option-vue
-						v-for="item in getSelectOptions"
-						:value="item.value"
-						:key="item.value"
-					>{{ item.label }}</option-vue>
-				</select-vue>
-			</div>
-			<div class="line">
-				<date-picker-vue
-					v-model="dateTimeRange"
-					type="daterange"
-					split-panels
-					placeholder="时间范围"
-					style="width: 13em"
-				></date-picker-vue>
+				<date-picker-vue v-model="dateTimeRange" type="daterange" split-panels placeholder="时间范围"></date-picker-vue>
 			</div>
 			<div class="line" style="margin-top:1px">
-				<button2-vue label="查询" icon="icon-search" color="#007d71" @clickevent="onAdd"></button2-vue>
+				<button2-vue label="查询" icon="icon-search" color="#007d71" @clickevent="fetchTableData(1)"></button2-vue>
 			</div>
 		</div>
 		<div class="table-panel">
-			<table-vue :columns="getColumns" :data="getData" :config="getConfig" @editevent="onEditTable"></table-vue>
+			<table-vue :columns="getColumns" :data="dataArr" :config="getConfig" @editevent="onEditTable"></table-vue>
 			<div class="page">
-				<page-vue :total="4" show-total/>
+				<page-vue
+					:page-size="pageSize"
+					:total="dataNum"
+					:current="currentPage"
+					show-total
+					@on-change="changePage"
+				/>
 			</div>
 		</div>
 		<router-view class="modal" name="modal"></router-view>
@@ -44,70 +29,57 @@
 </template>
 <script>
 import button2Vue from "../../component/button-vue/button2-vue.vue";
-import searchInputVue from "../../component/input-vue/search-input-vue.vue";
 import tableVue from "../../component/table-vue/table-vue.vue";
 import sectionHeaderVue from "../../component/section-header-vue/section-header-vue.vue";
 
 import datePickerVue from "../../iview-src/components/date-picker";
-import { selectVue, optionVue } from "../../iview-src/components/select";
 import pageVue from "../../iview-src/components/page";
+import inputVue from "../../iview-src/components/input";
 
 export default {
 	data: function() {
 		return {
-			userSelected: "",
+			keyWord: "",
 			dateTimeRange: [],
-			getSelectOptions: [
-				{
-					label: "臧洪四",
-					value: "apple"
-				},
-				{
-					label: "何启生",
-					value: "watermelon"
-				},
-				{
-					label: "方思晓",
-					value: "mango"
-				}
-			]
+			dataArr: [],
+			dataNum: 0,
+			pageSize: 15,
+			currentPage: 1
 		};
 	},
 	components: {
 		"button2-vue": button2Vue,
-		"search-input-vue": searchInputVue,
 		"table-vue": tableVue,
 		"section-header-vue": sectionHeaderVue,
-		"select-vue": selectVue,
-		"option-vue": optionVue,
 		"date-picker-vue": datePickerVue,
+		"input-vue": inputVue,
 		"page-vue": pageVue
 	},
 	computed: {
 		getColumns: function() {
 			let array = [
 				{
-					field: "name",
+					field: "userName",
 					title: "用户名称",
 					width: 1
 				},
 				{
-					field: "ip",
+					field: "userIp",
 					title: "IP",
 					width: 1
 				},
 				{
-					field: "type",
+					field: "logBusiness",
 					title: "业务类型",
 					width: 1
 				},
 				{
-					field: "remark",
-					title: "备注",
+					field: "logAction",
+					title: "操作",
 					width: 1
 				},
 				{
-					field: "time",
+					field: "createTime",
 					title: "时间",
 					width: 1
 				}
@@ -115,44 +87,70 @@ export default {
 
 			return array;
 		},
-		getData: function() {
-			let array = [
-				{
-					id: 1,
-					name: "和其正",
-					type: "用户管理",
-					ip: "192.168.1.1",
-					remark: "删除用户张三",
-					time: "2020-01-01 23:00:00"
-				}
-			];
-			return array;
-		},
 		getConfig: function() {
 			let a = {
 				//height: 600,
 				checkbox: false,
 				//0: 没有操作栏
-				editColumnType: 0
+				editColumnType: "czrz"
 			};
 			return a;
 		}
 	},
 	methods: {
-		onInput: function() {},
-		onAdd: function() {
-			this.$router.push({ name: "addrole" });
+		getLineById: function(id) {
+			for (let i = 0, len = this.dataArr.length; i < len; i++) {
+				if (this.dataArr[i].id == id) {
+					return this.dataArr[i];
+				}
+			}
+			return null;
 		},
 		onEditTable: function(e) {
-			if (e.type == 2) {
-				this.$router.push({ name: "selpri" });
+			let model = this.getLineById(e.id);
+			if (e.type == 1) {
+				this.$router.push({
+					name: "checkrz",
+					params: { model: model }
+				});
 			}
+		},
+		changePage: function(e) {
+			this.fetchTableData(e);
+		},
+		fetchTableData: function(pageNum) {
+			let _this = this;
+			let params = {
+				pn: pageNum
+			};
+			if (this.keyWord != "") {
+				Object.assign(params, { key: this.keyWord });
+			}
+			if (this.dateTimeRange[0] != "") {
+				Object.assign(params, {
+					startTime: this.dateTimeRange[0].Format(
+						"yyyy-MM-dd hh:mm:ss"
+					),
+					endTime: this.dateTimeRange[1].Format("yyyy-MM-dd hh:mm:ss")
+				});
+			}
+			this.axios({
+				method: "get",
+				url: "/apis/l/logs",
+				params: params
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					_this.dataArr = data.data.list;
+					_this.dataNum = data.data.total;
+				}
+			});
 		}
 	},
 	mounted: function() {
 		this.$store.dispatch("globalstate/setCurrentSection", {
 			currentSection: "czrz"
 		});
+		this.fetchTableData(1);
 	}
 };
 </script>

@@ -1,38 +1,37 @@
 <template>
 	<div class="modal-background">
-		<div class="modal">
+		<div class="modal" :style="{width:mWidth}">
 			<div class="header">
 				{{title}}
 				<span class="iconfont icon-close" @click="onClose"></span>
 			</div>
 			<div class="content">
-                <slot></slot>
+				<slot name="content"></slot>
 			</div>
 			<div class="buttons">
-				<button-vue label="确定" icon="icon-save" color="#007d71" @clickevent="onAdd"></button-vue>
-				<button-vue label="取消" icon="icon-withdraw" color="#007d71" @clickevent="onClose"></button-vue>
+				<slot name="footer"></slot>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-import buttonVue from "../../component/button-vue/button-vue.vue";
 export default {
-    props: {
-        title: String
-    },
-	components: {
-		"button-vue": buttonVue,
+	props: {
+        title: String,
+        mWidth: String,
+        special: String
 	},
-	computed: {
-	},
+	components: {},
+	computed: {},
 	methods: {
-		onAdd: function() {
-            this.$emit('addevent');
-        },
 		onClose: function() {
-            window.history.go(-1);
-        }
+            if(this.special == 'true') {
+                //this.$emit('closeevent');
+                this.$emit("xgmmevent");
+            }else {
+			    window.history.go(-1);
+            }
+		}
 	}
 };
 </script>
@@ -43,30 +42,30 @@ export default {
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background-color: rgba($color: #000000, $alpha: 0.3);
+	background-color: rgba($color: #000000, $alpha: 0.5);
 	.modal {
 		margin: 10em auto;
 		width: 24em;
-		border-radius: 1em;
+		border-radius: 0.5em;
 		background-color: #ffffff;
 		.header {
 			position: relative;
 			color: #007d71;
-            padding: 1em;
-            font-weight: bold;
-            letter-spacing: 0.1em;
+			padding: 1em;
+			font-weight: bold;
+			letter-spacing: 0.1em;
 			span {
 				position: absolute;
 				right: 1em;
 				display: inline-block;
 				font-size: 1.2em;
 				line-height: 1;
-				color: #333333;	
+				color: #333333;
 				vertical-align: middle;
 			}
 		}
 		.content {
-            margin: 1em 0;
+			margin: 1em 0;
 			font-size: 0.9em;
 		}
 		.buttons {

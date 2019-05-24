@@ -1,7 +1,7 @@
 <template>
 	<div class="basediv" tabindex="0" :class="baseDivClass" @click="onClickBase($event)" @blur="onBlur">
 		<span v-if="hasIconBefore" class="iconfont" :class="iconbefore"></span>
-        <div class="simu-input">{{selected.label}}</div>
+        <div class="simu-input">{{selectedOption.label}}</div>
 		<span class="iconfont icon-down"></span>
 		<div class="options">
 			<div
@@ -15,16 +15,21 @@
 </template>
 <script>
 export default {
+    model: {
+        prop: "selected",
+        event: "inputevent"
+    },
 	props: {
 		iconbefore: String,
-		options: Array
+        options: Array,
+        selected: {}
 	},
 	data: function() {
 		return {
 			baseDivClass: {
 				focus: false
-			},
-			selected: {}
+            },
+            selectedOption: {}
 		};
 	},
 	computed: {
@@ -40,21 +45,28 @@ export default {
 			this.baseDivClass.focus = !this.baseDivClass.focus;
 		},
 		onClickOption: function(e) {
-            this.selected = e;
-            this.$emit("inputevent", this.selected);
+            this.selectedOption = e;
+            this.$emit("inputevent", this.selectedOption.value);
             this.onBlur();
 		},
 		onBlur: function(e) {
             this.baseDivClass.focus = false;
         }
-	}
+    },
+    mounted: function() {
+        for(let i=0,len=this.options.length;i<len;i++) {
+            if(this.selected == this.options[i].value) {
+                this.selectedOption = this.options[i];
+            }
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
 .basediv {
 	position: relative;
 	display: inline-block;
-	padding: 2px;
+	padding: 5px;
 	border: 1px solid #dcdee2;
 	border-radius: 3px;
 	transition: box-shadow 0.1s;
@@ -62,7 +74,8 @@ export default {
     line-height: 1.2;
     .simu-input {
         display: inline-block;
-        width: 100px;
+        // overflow: hidden;
+        width: 85%;
         color: #444;
         font-size: 0.9em;
     }
@@ -94,9 +107,9 @@ export default {
 		display: none;
 		overflow-y: auto;
 		position: absolute;
-		top: 1.8em;
-		width: 98%;
-		max-height: 100px;
+		top: 2.2em;
+		width: 95%;
+		max-height: 8em;
 		box-shadow: 0 0 1px #aaaaaa;
         padding: 0.2em 0;
 		.option {

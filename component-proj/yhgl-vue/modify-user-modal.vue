@@ -1,5 +1,5 @@
 <template>
-	<modal-base-vue title="添加用户">
+	<modal-base-vue title="修改用户">
 		<template v-slot:content>
 			<div class="line">
 				<span>名称：</span>
@@ -30,6 +30,10 @@
 				<span>角色：</span>
 				<select-vue v-model="myModel.roleId" :options="myAllRole" style="width: 12em"></select-vue>
 			</div>
+			<div class="line">
+				<span>创建时间：</span>
+				<span>{{myModel.createTime}}</span>
+			</div>
 		</template>
 		<template v-slot:footer>
 			<button-vue label="确定" icon="icon-save" color="#007d71" @clickevent="onAdd"></button-vue>
@@ -42,6 +46,7 @@ import modalBaseVue from "../modal-base-vue/modal-base.vue";
 import inputVue from "../../iview-src/components/input";
 import selectVue from "../../component/input-vue/select-vue.vue";
 import buttonVue from "../../component/button-vue/button-vue.vue";
+
 export default {
 	data: function() {
 		return {
@@ -50,6 +55,7 @@ export default {
 		};
 	},
 	props: {
+		model: Object,
 		allRole: Array
 	},
 	components: {
@@ -74,9 +80,10 @@ export default {
 		onAdd: function() {
 			let _this = this;
 			this.axios({
-				method: "post",
+				method: "put",
 				url: "/apis/u/user",
 				data: {
+					uid: this.myModel.uid,
 					roleId: this.myModel.roleId,
 					userName: this.myModel.userName,
 					userPhone: this.myModel.userPhone,
@@ -85,7 +92,7 @@ export default {
 				}
 			}).then(function({ data }) {
 				if (data.code == 0) {
-					_this.$Message.success("用户添加成功！");
+					_this.$Message.success("用户修改成功！");
 					window.history.go(-1);
 					_this.$emit("addsuccess");
 				}
@@ -98,7 +105,9 @@ export default {
 			window.history.go(-1);
 		}
 	},
-	created: function() {},
+	created: function() {
+		Object.assign(this.myModel, this.model); //深复制
+	},
 	beforeRouteEnter(to, from, next) {
 		if (to.params.allRole == null) {
 			next("/yhgl");

@@ -6,18 +6,49 @@
 		<!-- <button2-vue label="申请授权" @clickevent="onSwitch" color="#009688"></button2-vue> -->
 		<!-- <transfer-box-vue :options="allOptions" title="所有项目"></transfer-box-vue> -->
 		<!-- <transfer-vue :availableOptions="availableOptions" :ownedOptions="ownedOptions"></transfer-vue> -->
-        <date-picker-vue v-model="dateTime" type="datetime" show-week-numbers confirm placeholder="Select date" style="width: 10em"></date-picker-vue>
-		<date-picker-vue v-model="dateTimeRange" type="daterange" split-panels placeholder="Select date" style="width: 200px"></date-picker-vue>
-        <!-- <table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue> -->
-        <div style='margin: 1em;'>
-		<input-vue
-			placeholder="请输入内容"
-			iconbefore="icon-bluetoothon"
-			iconafter="icon-search"
-			v-model="inputValue"
-		></input-vue>
+		<date-picker-vue
+			v-model="dateTime"
+			type="datetime"
+			show-week-numbers
+			confirm
+			placeholder="Select date"
+			style="width: 10em"
+		></date-picker-vue>
+		<date-picker-vue
+			v-model="dateTimeRange"
+			type="daterange"
+			split-panels
+			placeholder="Select date"
+			style="width: 200px"
+		></date-picker-vue>
+		<!-- <table-vue :columns="getColumns" :data="getData" :config="getConfig"></table-vue> -->
+		<div style="margin: 1em;">
+			<input-vue
+				placeholder="请输入内容"
+				iconbefore="icon-bluetoothon"
+				iconafter="icon-search"
+				v-model="inputValue"
+			></input-vue>
+		</div>
+		<div style="margin: 1em;">
+			<select-vue v-model="selectedVal" iconbefore="icon-bluetoothon" :options="getSelectOptions"></select-vue>
+		</div>
+		<div style="margin: 1em;font-size: 14px">
+			<checkbox-vue v-model="checkboxSelected" :content="getCheckbox"></checkbox-vue>
+		</div>
+		<div style="margin: 1em;font-size: 14px">
+			<radio-vue v-model="radioSelected" :content="getRadio"></radio-vue>
+		</div>
+		<div style="margin: 1em;font-size: 14px">
+			<switch-vue v-model="switchStatus" onLabel="开" offLabel="关"></switch-vue>
+		</div>
+		<div v-tap="onTap" style="margin: 1em;font-size: 14px">
+			<textarea-vue v-model="inputValue2" placeholder="请输入内容" rows="5"></textarea-vue>
+		</div>
+        <div>
+            <upload-vue></upload-vue>
         </div>
-
+	
 
 		<!-- <search-input-vue></search-input-vue>-->
 
@@ -54,6 +85,7 @@ import sectionHeaderVue from "../section-header-vue/section-header-vue.vue";
 import transferVue from "../transfer-vue/transfer-vue.vue";
 import transferBoxVue from "../transfer-vue/transfer-box-vue.vue";
 import datePickerVue from "../../iview-src/components/date-picker";
+import uploadVue from "../upload-vue/upload-vue.vue";
 
 export default {
 	components: {
@@ -73,12 +105,16 @@ export default {
 		"topbar-vue": topbarVue,
 		"section-header-vue": sectionHeaderVue,
 		"transfer-vue": transferVue,
-        "transfer-box-vue": transferBoxVue,
-        "date-picker-vue": datePickerVue
+		"transfer-box-vue": transferBoxVue,
+        "date-picker-vue": datePickerVue,
+        "upload-vue": uploadVue
 	},
 	data: function() {
 		return {
+			selectVal: 1,
 			inputValue: "",
+			inputValue2: "aaa",
+			selectedVal: {},
 			radioSelected: "male",
 			checkboxSelected: ["apple", "watermelon"],
 			switchStatus: false,
@@ -131,9 +167,9 @@ export default {
 					label: "角色分配",
 					to: "#"
 				}
-            ],
-            dateTime: new Date(),
-            dateTimeRange: [],
+			],
+			dateTime: new Date(),
+			dateTimeRange: []
 		};
 	},
 	computed: {
@@ -355,11 +391,38 @@ export default {
 				{
 					label: "芒果",
 					value: "mango"
+				},
+				{
+					label: "苹果",
+					value: "apple1"
+				},
+				{
+					label: "西瓜",
+					value: "watermelon1"
+				},
+				{
+					label: "芒果",
+					value: "mango1"
+				},
+				{
+					label: "苹果",
+					value: "apple2"
+				},
+				{
+					label: "西瓜",
+					value: "watermelon2"
+				},
+				{
+					label: "芒果",
+					value: "mango2"
 				}
 			];
 		}
 	},
 	methods: {
+		onTap: function(e) {
+			console.log(e);
+		},
 		onInput: function(e) {
 			this.inputValue = e;
 		},

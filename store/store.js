@@ -21,14 +21,15 @@ var store = new Vuex.Store({
 	}
 });
 
-axios.defaults.baseURL = 'http://192.168.1.22:8082';
+axios.defaults.baseURL = 'http://192.168.1.20:8082';
+axios.defaults.withCredentials = true
 // http request 拦截器
 axios.interceptors.request.use(
 	config => {
-		let token = store.getters["globalstate/getToken"];
-		if (token != null) {
+		let user = store.getters["globalstate/getCurrentUser"];
+		if (user != null) {
 			// 判断是否存在token，如果存在的话，则每个http header都加上token
-			config.headers.token = token;
+			config.headers.token = user.token;
 		}
 		return config;
 	},

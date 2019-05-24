@@ -1,15 +1,15 @@
 <template>
-	<modal-base-vue title="修改角色">
+	<modal-base-vue title="修改密码" mWidth="22em" special="true" @xgmmevent="onClose">
 		<template v-slot:content>
 			<div class="line">
-				<span>名称：</span>
-				<input-vue v-model="roleName" style="width: 12em"></input-vue>
-				<div class="tip">{{tip['roleName']}}</div>
+				<span>原密码：</span>
+				<input-vue v-model="oldPassword" style="width: 12em"></input-vue>
+				<div class="tip">{{tip['oldPassword']}}</div>
 			</div>
 			<div class="line">
-				<span>备注：</span>
-				<input-vue v-model="remark" style="width: 12em"></input-vue>
-				<div class="tip">{{tip['remark']}}</div>
+				<span>新密码：</span>
+				<input-vue v-model="newPassword" style="width: 12em"></input-vue>
+				<div class="tip">{{tip['newPassword']}}</div>
 			</div>
 		</template>
 		<template v-slot:footer>
@@ -21,41 +21,41 @@
 <script>
 import modalBaseVue from "../modal-base-vue/modal-base.vue";
 import inputVue from "../../iview-src/components/input";
+import selectVue from "../../component/input-vue/select-vue.vue";
 import buttonVue from "../../component/button-vue/button-vue.vue";
 
 export default {
 	data: function() {
 		return {
-			roleName: "",
-			remark: "",
-			tip: {}
+			tip: {},
+			oldPassword: "",
+			newPassword: ""
 		};
 	},
-	props: {
-		model: Object
-	},
+	props: {},
 	components: {
 		"modal-base-vue": modalBaseVue,
-		"input-vue": inputVue,
-		"button-vue": buttonVue
+		"select-vue": selectVue,
+        "input-vue": inputVue,
+        "button-vue": buttonVue
 	},
 	computed: {},
 	methods: {
 		onAdd: function() {
 			let _this = this;
 			this.axios({
-				method: "put",
-				url: "/apis/r/role",
-				data: {
-					id: _this.model.id,
-					roleName: _this.roleName,
-					remark: _this.remark
+				method: "post",
+				url: "/apis/u/user/updatePassword",
+				params: {
+					newPassword: this.newPassword,
+					oldPassword: this.oldPassword
 				}
 			}).then(function({ data }) {
 				if (data.code == 0) {
-					_this.$Message.success("角色修改成功！");
-					window.history.go(-1);
-					_this.$emit("addsuccess");
+					_this.$Message.success("修改密码成功！");
+					//关闭modal
+					_this.$emit("xgmmevent", false);
+					_this.$router.push({ path: `/login` });
 				}
 				if (data.code == 501 || data.code == 401) {
 					_this.tip = data.data;
@@ -63,23 +63,11 @@ export default {
 			});
 		},
 		onClose: function() {
-			window.history.go(-1);
+			//关闭modal
+			this.$emit("xgmmevent", false);
 		}
 	},
-	mounted: function() {
-		this.roleName = this.model.roleName;
-		this.remark = this.model.remark;
-	},
-	beforeRouteEnter(to, from, next) {
-		if (to.params.model == null) {
-			next("/qxfp");
-		} else {
-			next();
-		}
-		// 在渲染该组件的对应路由被 confirm 前调用
-		// 不！能！获取组件实例 `this`
-		// 因为当守卫执行前，组件实例还没被创建
-	}
+	created: function() {}
 };
 </script>
 <style lang="scss" scoped>
@@ -89,7 +77,7 @@ export default {
 		width: 5em;
 		text-align: right;
 	}
-	width: 90%;
+	width: 80%;
 	margin: 0 auto;
 	color: #333;
 	padding: 0.5em 0;

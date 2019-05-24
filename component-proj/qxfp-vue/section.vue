@@ -11,10 +11,16 @@
 			</div>
 			<table-vue :columns="getColumns" :data="dataArr" :config="getConfig" @editevent="onEditTable"></table-vue>
 			<div class="page">
-				<page-vue :total="dataNum" :current="currentPage" show-total @on-change="changePage"/>
+				<page-vue
+					:page-size="pageSize"
+					:total="dataNum"
+					:current="currentPage"
+					show-total
+					@on-change="changePage"
+				/>
 			</div>
 		</div>
-		<router-view class="modal" name="modal" @addsuccess="refreshTable"></router-view>
+		<router-view class="modal" name="modal" @addsuccess="fetchTableData(1)"></router-view>
 	</div>
 </template>
 <script>
@@ -26,10 +32,12 @@ import pageVue from "../../iview-src/components/page";
 export default {
 	data: function() {
 		return {
+			allProj: [],
 			dataArr: [],
 			dataNum: 0,
 			keyWord: "",
 			currentPage: 1,
+			pageSize: 15
 		};
 	},
 	components: {
@@ -65,7 +73,7 @@ export default {
 				//height: 600,
 				checkbox: true,
 				//0: 没有操作栏
-				editColumnType: 2
+				editColumnType: "qxfp"
 			};
 			return a;
 		}
@@ -83,18 +91,15 @@ export default {
 				method: "delete",
 				url: `/apis/r/role/${str}`
 			}).then(function({ data }) {
-				if (data.code == 0) {
-					_this.$Message.success("角色删除成功！");
-					_this.refreshTable();
+				if (data.msg == "删除成功") {
+					_this.$Message.success(data.msg);
 				} else {
-					_this.$Message.error("角色删除失败！");
-				}
+					_this.$Message.error(data.msg);
+                }
+                _this.fetchTableData(_this.currentPage);
 			});
 		},
-		refreshTable: function() {
-			this.fetchTableData(1);
-			this.currentPage = 1;
-		},
+
 		getLineById: function(id) {
 			for (let i = 0, len = this.dataArr.length; i < len; i++) {
 				if (this.dataArr[i].id == id) {
@@ -112,7 +117,10 @@ export default {
 				});
 			}
 			if (e.type == 2) {
-				this.$router.push({ name: "selpri" });
+				this.$router.push({
+					name: "selpri",
+					params: { model: model, allProj: this.allProj }
+				});
 			}
 		},
 		changePage: function(e) {
@@ -121,9 +129,9 @@ export default {
 		onSearch: function(e) {
 			this.keyWord = e;
 			this.fetchTableData(1);
-			this.currentPage = 1;
 		},
 		fetchTableData: function(pageNum) {
+            this.currentPage = pageNum;
 			let _this = this;
 			let params = {
 				pn: pageNum
@@ -141,6 +149,26 @@ export default {
 					_this.dataNum = data.data.total;
 				}
 			});
+		},
+		fetchAllProj: function() {
+			let _this = this;
+			this.axios({
+				method: "get",
+				url: "/apis/p/projectsAll"
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					let ret = new Array();
+					for (let i = 0, len = data.data.length; i < len; i++) {
+						ret.push({
+							id: data.data[i].id,
+							label: `${data.data[i].projectName}（${
+								data.data[i].projectNumber
+							}）`
+						});
+					}
+					_this.allProj = ret;
+				}
+			});
 		}
 	},
 	mounted: function() {
@@ -148,6 +176,7 @@ export default {
 			currentSection: "qxfp"
 		});
 		this.fetchTableData(1);
+		this.fetchAllProj();
 	}
 };
 </script>

@@ -1,125 +1,112 @@
 <template>
-	<div class="modal-background">
-		<div class="modal">
-			<div class="header">
-				权限选择
-				<span class="iconfont icon-close" @click="onAdd"></span>
-			</div>
-			<div class="content">
-				<transfer-vue class="transfer-box" :availableOptions="availableOptions" :ownedOptions="ownedOptions"></transfer-vue>
-			</div>
-			<div class="buttons">
-				<button-vue label="确定" icon="icon-save" color="#007d71" @clickevent="onAdd"></button-vue>
-				<button-vue label="取消" icon="icon-withdraw" color="#007d71" @clickevent="onAdd"></button-vue>
-			</div>
-		</div>
-	</div>
+	<modal-base-vue title="权限选择" mWidth='37em'>
+		<template v-slot:content>
+			<transfer-vue
+				class="transfer-box"
+				:availableOptions="noOwnedProj"
+				:ownedOptions="ownedProj"
+				@resultevent="onResult"
+			></transfer-vue>
+		</template>
+		<template v-slot:footer>
+			<button-vue label="确定" icon="icon-save" color="#007d71" @clickevent="onAdd"></button-vue>
+			<button-vue label="取消" icon="icon-withdraw" color="#007d71" @clickevent="onClose"></button-vue>
+		</template>
+	</modal-base-vue>
 </template>
 <script>
-import buttonVue from "../../component/button-vue/button-vue.vue";
-import selectVue from "../../component/input-vue/select-vue.vue";
-import inputVue from "../../component/input-vue/input-vue.vue";
+import modalBaseVue from "../modal-base-vue/modal-base.vue";
 import transferVue from "../../component/transfer-vue/transfer-vue.vue";
+import buttonVue from "../../component/button-vue/button-vue.vue";
 
 export default {
+	props: {
+		model: Object,
+		allProj: Array
+	},
 	data: function() {
 		return {
-			/******transfer 穿梭框********* */
-			availableOptions: [
-				{ id: 1, label: "JJM平台" },
-				{ id: 2, label: "BHF平台" },
-				{ id: 3, label: "监控站项目" },
-				{ id: 4, label: "西藏BF项目" },
-				{ id: 5, label: "JJM平台" },
-				{ id: 6, label: "BHF平台" },
-				{ id: 7, label: "监控站项目" },
-				{ id: 8, label: "西藏BF项目" },
-				{ id: 9, label: "JJM平台" },
-				{ id: 10, label: "BHF平台" },
-				{ id: 11, label: "监控站项目" },
-				{ id: 12, label: "西藏BF项目" }
-			],
-			ownedOptions: [
-				{ id: 13, label: "JJM平台" },
-				{ id: 14, label: "BHF平台" }
-			]
+			ownedProj: [],
+			noOwnedProj: [],
+			resultProj: []
 			/*************** */
 		};
 	},
 	components: {
-		"button-vue": buttonVue,
-		"select-vue": selectVue,
-		"input-vue": inputVue,
-		"transfer-vue": transferVue
+		"modal-base-vue": modalBaseVue,
+        "transfer-vue": transferVue,
+        "button-vue": buttonVue,
 	},
-	computed: {
-		getSelectOptions: function() {
-			return [
-				{
-					label: "苹果",
-					value: "apple"
-				},
-				{
-					label: "西瓜",
-					value: "watermelon"
-				},
-				{
-					label: "芒果",
-					value: "mango"
-				}
-			];
-		}
-	},
+	computed: {},
 	methods: {
-		onInput: function() {},
 		onAdd: function() {
+            let projectIds=[];
+            for(let i = 0,len=this.resultProj.length;i<len;i++) {
+                projectIds.push(this.resultProj[i].id);
+            }
+            let _this = this;
+			this.axios({
+				method: "post",
+				url: "/apis/r/roleAuthorize",
+				params: { 'roleId': this.model.id, 'projectIds': projectIds.join(',')}
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					_this.$Message.success("角色权限修改成功！");
+					window.history.go(-1);
+				}else {
+                    _this.$Message.error("角色权限修改失败！");
+                }
+			});
+        },
+		onClose: function() {
 			window.history.go(-1);
+		},
+		onResult: function(e) {
+			this.resultProj = e;
 		}
+	},
+	created: function() {
+		//获取本角色已有的项目权限
+		let _this = this;
+		this.axios({
+			method: "get",
+			url: `/apis/r/roleAuthorize/${this.model.id}`
+		}).then(function({ data }) {
+			if (data.code == 0) {
+				let ownedProjIds = [];
+				for (let i = 0, len = data.data.length; i < len; i++) {
+					_this.ownedProj.push({
+						id: data.data[i].id,
+						label: `${data.data[i].projectName}（${
+							data.data[i].projectNumber
+						}）`
+					});
+					ownedProjIds.push(data.data[i].id);
+				}
+				_this.noOwnedProj = _this.allProj.filter(item => {
+					if (ownedProjIds.indexOf(item.id) == -1) {
+						return true; //不含有该项目；
+					} else {
+						return false; //已含有该项目，筛选掉；
+					}
+				});
+			}
+		});
+	},
+	beforeRouteEnter(to, from, next) {
+		if (to.params.model == null) {
+			next("/qxfp");
+		} else {
+			next();
+		}
+		// 在渲染该组件的对应路由被 confirm 前调用
+		// 不！能！获取组件实例 `this`
+		// 因为当守卫执行前，组件实例还没被创建
 	}
 };
 </script>
 <style lang="scss" scoped>
-.modal-background {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background-color: rgba($color: #000000, $alpha: 0.3);
-	.modal {
-		margin: 10em auto;
-		width: 40%;
-		min-width: 20em;
-		border-radius: 1em;
-		background-color: #ffffff;
-		.header {
-			position: relative;
-			color: #007d71;
-			padding: 1em;
-			font-weight: bold;
-			letter-spacing: 0.1em;
-			span {
-				position: absolute;
-				right: 1em;
-				display: inline-block;
-				font-size: 1.2em;
-				line-height: 1;
-				color: #333333;
-				vertical-align: middle;
-			}
-		}
-		.content {
-            margin-bottom: 2em;
-            font-size: 0.9em;
-            .transfer-box {
-                margin: 1em auto;
-            }
-		}
-		.buttons {
-			padding: 0.5em 2em 1em 0;
-			text-align: right;
-			border-top: 1px solid #007d71;
-		}
-	}
+.transfer-box {
+	margin: 1em auto;
 }
 </style>

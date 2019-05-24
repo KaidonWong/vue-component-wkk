@@ -7,7 +7,7 @@
 			</div>
 		</div>
 		<div class="search">
-			<input-vue iconafter="icon-search" @inputevent="onSearch"></input-vue>
+			<input-vue iconafter="icon-search" v-model="keyword"></input-vue>
 		</div>
 		<div class="content">
 			<div class="line" v-for="(item,index) of filteredOptions" :key="index">
@@ -29,7 +29,8 @@ export default {
 		return {
 			selected: new Set(),
 			toggleAll: false,
-			filteredOptions: [...this.options]
+			filteredOptions: [...this.options],
+			keyword: ""
 		};
 	},
 	props: {
@@ -46,10 +47,8 @@ export default {
 			setTimeout(() => {
 				this.filteredOptions.splice(0, 0, ...this.options);
 			}, 10);
-		}
-	},
-	methods: {
-		onSearch: function(search) {
+		},
+		keyword: function(search) {
 			this.selected.clear();
 			this.toggleAll = false;
 
@@ -65,7 +64,9 @@ export default {
 				this.filteredOptions.splice(0, 0, ...resultArr);
 			}, 10);
 			this.$emit("changesel", this.selected);
-		},
+		}
+	},
+	methods: {
 		onAllBox: function(on) {
 			this.toggleAll = on;
 		},

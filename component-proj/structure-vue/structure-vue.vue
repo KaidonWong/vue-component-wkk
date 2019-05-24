@@ -1,67 +1,40 @@
 <template>
 	<div class="base-structure clearfix">
-		<topbar-vue @contractevent="onContract"></topbar-vue>
-		<sidebar-vue :user="user" :menus="menus" :contract="contract"></sidebar-vue>
+		<topbar-vue @contractevent="onContract" @xgmmevent="toggleXgmm"></topbar-vue>
+		<sidebar-vue :contract="contract"></sidebar-vue>
 		<router-view class="section" :class="{contract:contract}" name="section"></router-view>
 		<transition name="fade">
 			<router-view class="login-page" name="login"></router-view>
 		</transition>
+        <xgmm-modal-vue v-if="xgmmShow" @xgmmevent="toggleXgmm"></xgmm-modal-vue>
 	</div>
 </template>
 <script>
 import topbarVue from "../topbar-vue/topbar2-vue.vue";
 import sidebarVue from "../sidebar-vue/sidebar-vue.vue";
+import xgmmModalVue from "./xgmm-modal-vue.vue";
 export default {
 	components: {
 		"topbar-vue": topbarVue,
-		"sidebar-vue": sidebarVue
+        "sidebar-vue": sidebarVue,
+        "xgmm-modal-vue": xgmmModalVue
 	},
 	data: function() {
 		return {
+            xgmmShow: false,
 			contract: false,
-			user: {
-				id: 15245123,
-				name: "张红四",
-				job: "华北片区总经理"
-			},
-			menus: [
-				{
-					label: "数据统计",
-					to: "sjtj",
-					icon: "icon-et-sales-statistics"
-				},
-				{
-					label: "项目管理",
-					to: "xmgl",
-					icon: "icon-xiangmu"
-				},
-				{
-					label: "用户管理",
-					to: "yhgl",
-					icon: "icon-UserSettings1"
-				},
-				{
-					label: "权限分配",
-					to: "qxfp",
-					icon: "icon-key"
-				},
-				{
-					label: "授权历史",
-					to: "sqls",
-					icon: "icon-devicelogs"
-				},
-				{
-					label: "操作日志",
-					to: "czrz",
-					icon: "icon-systemlogs"
-				}
-			]
 		};
 	},
 	methods: {
 		onContract: function() {
 			this.contract = !this.contract;
-		}
+        },
+        toggleXgmm: function(e) {
+            this.xgmmShow = e;
+        },
+        onUpdateUser: function(e) {
+            console.log(e);
+        }
 	}
 };
 </script>

@@ -1,38 +1,40 @@
 <template>
-	<modal-base-vue title="添加项目" @addevent="onAdd">
-		<div class="line">
-			<span>名称：</span>
-			<input-vue v-model="name" style="width: 12em"></input-vue>
-            <div class="tip">{{tip['projectName']}}</div>
-		</div>
-		<div class="line">
-			<span>编号：</span>
-			<input-vue v-model="no" style="width: 12em"></input-vue>
-            <div class="tip">{{tip['projectNumber']}}</div>
-		</div>
+	<modal-base-vue title="添加项目" mWidth="22em">
+		<template v-slot:content>
+			<div class="line">
+				<span>名称：</span>
+				<input-vue v-model="name" style="width: 12em"></input-vue>
+				<div class="tip">{{tip['projectName']}}</div>
+			</div>
+			<div class="line">
+				<span>编号：</span>
+				<input-vue v-model="no" style="width: 12em"></input-vue>
+				<div class="tip">{{tip['projectNumber']}}</div>
+			</div>
+		</template>
+		<template v-slot:footer>
+			<button-vue label="确定" icon="icon-save" color="#007d71" @clickevent="onAdd"></button-vue>
+			<button-vue label="取消" icon="icon-withdraw" color="#007d71" @clickevent="onClose"></button-vue>
+		</template>
 	</modal-base-vue>
 </template>
 <script>
 import modalBaseVue from "../modal-base-vue/modal-base.vue";
 import inputVue from "../../iview-src/components/input";
-import {
-	selectVue,
-	optionVue,
-	optionGroupVue
-} from "../../iview-src/components/select";
+import buttonVue from "../../component/button-vue/button-vue.vue";
+
 export default {
 	data: function() {
 		return {
 			name: "",
-            no: "",
-            tip: {}
+			no: "",
+			tip: {}
 		};
 	},
 	components: {
 		"modal-base-vue": modalBaseVue,
-		"select-vue": selectVue,
-		"option-vue": optionVue,
-		"input-vue": inputVue
+		"input-vue": inputVue,
+		"button-vue": buttonVue
 	},
 	computed: {},
 	methods: {
@@ -44,14 +46,17 @@ export default {
 				data: { projectName: _this.name, projectNumber: _this.no }
 			}).then(function({ data }) {
 				if (data.code == 0) {
-                    _this.$Message.success('项目添加成功！');
-                    window.history.go(-1);
-                    _this.$emit("addsuccess");
-                }
-                if (data.code == 501 || data.code == 401) {
-                    _this.tip = data.data;
+					_this.$Message.success("项目添加成功！");
+					window.history.go(-1);
+					_this.$emit("addsuccess");
+				}
+				if (data.code == 501 || data.code == 401) {
+					_this.tip = data.data;
 				}
 			});
+		},
+		onClose: function() {
+			window.history.go(-1);
 		}
 	}
 };
@@ -67,10 +72,10 @@ export default {
 	margin: 0 auto;
 	color: #333;
 	padding: 0.5em 0;
-    .tip {
-        padding-left: 7em;
-        color: #800000;
-        font-size: 0.6em;
-    }
+	.tip {
+		padding-left: 7em;
+		color: #800000;
+		font-size: 0.6em;
+	}
 }
 </style>

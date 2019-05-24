@@ -1,48 +1,49 @@
 <template>
 	<div class="container">
-		<template v-if="isType1">
-			<div @click.stop="onEdit(1)">修改</div>
-		</template>
-		<template v-if="isType2">
+		<template v-if="isQxfp">
 			<div @click.stop="onEdit(1)">修改</div>
 			<div @click.stop="onEdit(2)">项目权限</div>
 		</template>
-		<template v-if="isType3">
+		<template v-if="isXmgl">
 			<div @click.stop="onEdit(1)">修改</div>
 			<div @click.stop="onEdit(2)">获取权限</div>
 		</template>
-		<template v-if="isType4">
-			<div @click.stop="onEdit(1)">详情</div>
-			<div @click.stop="onEdit(2)">下载密钥</div>
+		<template v-if="isYhgl">
+			<div @click.stop="onEdit(1)">修改</div>
+			<div v-show="!lineData.status" @click.stop="onEdit(2)">激活</div>
+			<div v-show="lineData.status" @click.stop="onEdit(3)">冻结</div>
+		</template>
+		<template v-if="isCzrz">
+			<div @click.stop="onEdit(1)">查看</div>
 		</template>
 	</div>
 </template>
 <script>
 export default {
 	props: {
-		type: Number,
-		lineid: [String, Number]
+		type: String,
+		lineData: Object
 	},
 	data: function() {
 		return {};
 	},
 	computed: {
-		isType1: function() {
-			return this.type == 1;
+		isXmgl: function() {
+			return this.type == "xmgl";
 		},
-		isType2: function() {
-			return this.type == 2;
+		isQxfp: function() {
+			return this.type == "qxfp";
 		},
-		isType3: function() {
-			return this.type == 3;
-		},
-		isType4: function() {
-			return this.type == 4;
+		isYhgl: function() {
+			return this.type == "yhgl";
+        },
+        isCzrz: function() {
+			return this.type == "czrz";
 		}
 	},
 	methods: {
 		onEdit: function(e) {
-			this.$emit("editevent", { id: this.lineid, type: e });
+			this.$emit("editevent", { id: this.lineData.id, type: e });
 		}
 	}
 };

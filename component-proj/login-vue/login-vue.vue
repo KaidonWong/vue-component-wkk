@@ -65,8 +65,8 @@ export default {
 			})
 				.then(function({data}) {
 					if (data.code == 0) {
-						_this.$store.dispatch("globalstate/setToken", {
-							token: data.data.token
+                        _this.$store.dispatch("globalstate/setCurrentUser", {
+							currentUser: data.data
 						});
 						_this.$router.push({ path: `/sjtj` });
 					} else {
