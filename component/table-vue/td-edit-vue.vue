@@ -7,6 +7,7 @@
 		<template v-if="isXmgl">
 			<div @click.stop="onEdit(1)">修改</div>
 			<div @click.stop="onEdit(2)">获取权限</div>
+            <div @click.stop="onEdit(3)">历史</div>
 		</template>
 		<template v-if="isYhgl">
 			<div @click.stop="onEdit(1)">修改</div>

@@ -25,12 +25,12 @@
 			<div class="line">
 				<span>申请人姓名：</span>
 				<input-vue v-model="params.applicant" style="width:13em"></input-vue>
-				<div class="tip">{{tip['applicant']}}</div>
+				<div class="tip">{{tip['projectAuthorize.applicant']}}</div>
 			</div>
 			<div class="line">
 				<span>申请人电话：</span>
 				<input-vue v-model="params.applicantPhone" style="width:13em"></input-vue>
-				<div class="tip">{{tip['applicantPhone']}}</div>
+				<div class="tip">{{tip['projectAuthorize.applicantPhone']}}</div>
 			</div>
 			<div class="line">
 				<span>详细地址：</span>
@@ -96,8 +96,8 @@ export default {
 			}).then(function({ data }) {
 				if (data.code == 0) {
 					_this.$Message.success("获取授权成功！");
-                    window.history.go(-1);
-                    window.open(`${data.data.path}`, "_blank");
+					window.history.go(-1);
+					window.open(`${data.data.path}`, "_blank");
 				}
 				if (data.code == 501 || data.code == 401) {
 					_this.tip = data.data;
@@ -127,6 +127,11 @@ export default {
 		display: inline-block;
 		width: 7em;
 		text-align: right;
+	}
+	> span:nth-of-type(2) {
+        display: inline-block;
+        width: calc(100% - 8em);
+		white-space: nowrap;
 	}
 	width: 80%;
 	margin: 0 auto;

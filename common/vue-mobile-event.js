@@ -58,7 +58,7 @@ class VueTouch {
 		g.touchType = type;
 
 		g.firstTouchPosition = { x: 0, y: 0 };
-        g.firstTouchTime = 0;
+		g.firstTouchTime = 0;
 
 		g.callBack =
 			typeof binding.value === "object" ? binding.value.fn : binding.value;
@@ -182,42 +182,38 @@ class VueTouch {
 	}
 }
 
-function initMobileEvent() {
-	Vue.directive("tap", {
-		bind: function(el, binding) {
-			new VueTouch(el, binding, "tap");
-		}
-	});
-	Vue.directive("swipe", {
-		bind: function(el, binding) {
-			new VueTouch(el, binding, "swipe");
-		}
-	});
-	Vue.directive("swipeleft", {
-		bind: function(el, binding) {
-			new VueTouch(el, binding, "swipeleft");
-		}
-	});
-	Vue.directive("swiperight", {
-		bind: function(el, binding) {
-			new VueTouch(el, binding, "swiperight");
-		}
-	});
-	Vue.directive("swipedown", {
-		bind: function(el, binding) {
-			new VueTouch(el, binding, "swipedown");
-		}
-	});
-	Vue.directive("swipeup", {
-		bind: function(el, binding) {
-			new VueTouch(el, binding, "swipeup");
-		}
-	});
-	Vue.directive("longtap", {
-		bind: function(el, binding) {
-			new VueTouch(el, binding, "longtap");
-		}
-	});
-}
-
-export default initMobileEvent;
+Vue.directive("tap", {
+	bind: function(el, binding) {
+		new VueTouch(el, binding, "tap");
+	}
+});
+Vue.directive("swipe", {
+	bind: function(el, binding) {
+		new VueTouch(el, binding, "swipe");
+	}
+});
+Vue.directive("swipeleft", {
+	bind: function(el, binding) {
+		new VueTouch(el, binding, "swipeleft");
+	}
+});
+Vue.directive("swiperight", {
+	bind: function(el, binding) {
+		new VueTouch(el, binding, "swiperight");
+	}
+});
+Vue.directive("swipedown", {
+	bind: function(el, binding) {
+		new VueTouch(el, binding, "swipedown");
+	}
+});
+Vue.directive("swipeup", {
+	bind: function(el, binding) {
+		new VueTouch(el, binding, "swipeup");
+	}
+});
+Vue.directive("longtap", {
+	bind: function(el, binding) {
+		new VueTouch(el, binding, "longtap");
+	}
+});

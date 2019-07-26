@@ -52,10 +52,21 @@ export default {
 	},
 	computed: {},
 	methods: {
-        onDownload: function() {
-            window.open(`${this.model.path}`, "_blank");
-            window.history.go(-1);
-        },
+		onDownload: function() {
+			this.axios({
+				method: "get",
+				url: "/apis/a/authorize/getAuthorizeFile",
+				params: {
+					id: `${this.model.id}`
+				}
+			}).then(function({ data }) {
+				if (data.code == 0) {
+					let path = data.data.path;
+					window.open(`${path}`, "_blank");
+					window.history.go(-1);
+				}
+			});
+		},
 		onClose: function() {
 			window.history.go(-1);
 		}

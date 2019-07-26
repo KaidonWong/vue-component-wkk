@@ -14,6 +14,7 @@ import xmglSection from "../component-proj/xmgl-vue/section.vue";
 import addProjModal from "../component-proj/xmgl-vue/add-project-modal.vue";
 import applyKeyModal from "../component-proj/xmgl-vue/apply-key-modal.vue";
 import modifyProjModal from "../component-proj/xmgl-vue/modify-project-modal.vue";
+import viewHistoryModal from "../component-proj/xmgl-vue/view-history-modal.vue";
 //数据统计
 import sjtjSection from "../component-proj/sjtj-vue/section.vue";
 //授权历史
@@ -129,6 +130,16 @@ const routes = [
 				name: "modifyproj",
 				components: {
 					modal: modifyProjModal
+				},
+				props: {
+					modal: true
+				}
+			},
+			{
+				path: "viewhistory",
+				name: "viewhistory",
+				components: {
+					modal: viewHistoryModal
 				},
 				props: {
 					modal: true

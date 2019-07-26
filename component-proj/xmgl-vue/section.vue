@@ -52,16 +52,21 @@ export default {
 				{
 					field: "projectName",
 					title: "项目名称",
-					width: 1
+					width: 3
 				},
 				{
 					field: "projectNumber",
 					title: "项目编号",
-					width: 1
+					width: 3
 				},
 				{
 					field: "createTime",
 					title: "创建时间",
+					width: 3
+				},
+				{
+					field: "authorizeNums",
+					title: "授权次数",
 					width: 1
 				}
 			];
@@ -94,8 +99,8 @@ export default {
 					_this.$Message.success(data.msg);
 				} else {
 					_this.$Message.error(data.msg);
-                }
-                _this.fetchTableData(_this.currentPage);
+				}
+				_this.fetchTableData(_this.currentPage);
 			});
 		},
 		getLineById: function(id) {
@@ -116,7 +121,10 @@ export default {
 			}
 			if (e.type == 2) {
 				this.$router.push({ name: "appkey", params: { model: model } });
-			}
+            }
+            if(e.type == 3) {
+                this.$router.push({ name: "viewhistory", params: { model: model } });
+            }
 		},
 		changePage: function(e) {
 			this.fetchTableData(e);

@@ -9,8 +9,13 @@ import dateFormatter from "../common/date-format.js";
 import structureVue from "../component-proj/structure-vue/structure-vue.vue";
 import Message from "../iview-src/components/message";
 
+import "../axios";
+
+Date.prototype.Format = dateFormatter;
+
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$Message = Message;
+
 new Vue({
 	el: "#root",
 	store,
@@ -20,4 +25,3 @@ new Vue({
 	}
 });
 
-Date.prototype.Format = dateFormatter;

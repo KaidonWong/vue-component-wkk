@@ -7,28 +7,28 @@
 					<span class="iconfont icon-logs"></span>
 					<div class="para">
 						<div class="title">项目总数</div>
-						<div class="sub-title">{{total.project}}</div>
+						<div class="sub-title">{{total.countProject}}</div>
 					</div>
 				</div>
 				<div class="card clearfix">
 					<span class="iconfont icon-caigoutonggerenbangaobaozhenzhucedenglu18"></span>
 					<div class="para">
 						<div class="title">授权总数</div>
-						<div class="sub-title">{{total.authorize}}</div>
+						<div class="sub-title">{{total.countAuthorize}}</div>
 					</div>
 				</div>
 				<div class="card clearfix">
 					<span class="iconfont icon-user1"></span>
 					<div class="para">
 						<div class="title">用户数量</div>
-						<div class="sub-title">{{total.user}}</div>
+						<div class="sub-title">{{total.countUser}}</div>
 					</div>
 				</div>
 				<div class="card clearfix">
 					<span class="iconfont icon-userset"></span>
 					<div class="para">
 						<div class="title">角色数量</div>
-						<div class="sub-title">{{total.role}}</div>
+						<div class="sub-title">{{total.countRole}}</div>
 					</div>
 				</div>
 			</div>
@@ -85,34 +85,39 @@ export default {
 			let _this = this;
 			this.axios({
 				method: "get",
-				url: "/apis/a/getStatistics"
+				url: "/apis/s/getNumber"
 			}).then(function({ data }) {
 				if (data.code == 0) {
 					_this.total = data.data;
 				}
 			});
 		},
-		fetchChartA: function() {
-			let _this = this;
-			this.axios({
-				method: "get",
-				url: "/apis/a/getStatistics"
-			}).then(function({ data }) {
-				if (data.code == 0) {
-				}
+		fetchChartData: function() {
+			return new Promise((resolve, reject) => {
+				this.axios({
+					method: "get",
+					url: "/apis/s/selectCountByProjectId"
+				}).then(function({ data }) {
+					if (data.code == 0) {
+						resolve(data.data);
+					}
+				});
 			});
+		},
+		fetchChartA: function() {
 			let optionA = {
 				tooltip: {
 					trigger: "axis"
 				},
 				legend: {
-					data: [
-						"全部项目",
-						"新疆BHF项目",
-						"西藏JJM平台",
-						"江苏监控站",
-						"和田维护平台"
-					]
+					// 待填充的项目名
+					// data: [
+					// 	"全部项目",
+					// 	"新疆BHF项目",
+					// 	"西藏JJM平台",
+					// 	"江苏监控站",
+					// 	"和田维护平台"
+					// ]
 				},
 				grid: {
 					left: "3%",
@@ -123,44 +128,47 @@ export default {
 				xAxis: {
 					name: "月份",
 					type: "category",
-					boundaryGap: false,
-					data: ["一","二","三","四","五","六"]
+					boundaryGap: false
+					// 待填充的月份
+					//data: ["一", "二", "三", "四", "五", "六"]
 				},
 				yAxis: {
 					name: "个数",
 					type: "value"
 				},
 				series: [
-					{
-						name: "全部项目",
-						type: "line",
-						data: [1, 1, 1, 1, 1, 1]
-					},
-					{
-						name: "新疆BHF项目",
-						type: "line",
-						data: [220, 182, 191, 234, 290, 330, 310]
-					},
-					{
-						name: "西藏JJM平台",
-						type: "line",
-						data: [150, 232, 201, 154, 190, 330, 410]
-					},
-					{
-						name: "江苏监控站",
-						type: "line",
-						data: [320, 332, 301, 334, 390, 330, 320]
-					},
-					{
-						name: "和田维护平台",
-						type: "line",
-						data: [820, 932, 901, 934, 1290, 1330, 1320]
-					}
+					// 待填充的具体数据
+					// {
+					// 	name: "全部项目",
+					// 	type: "line",
+					// 	data: [1, 1, 1, 1, 1, 1]
+					// },
 				]
 			};
-			this.chartA.setOption(optionA);
+			this.axios({
+				method: "get",
+				url: "/apis/s/getAuthorizeTrend"
+			}).then(({ data }) => {
+				if (data.code == 0) {
+					let projectNames = [];
+					let projects = [];
+					let { months, statistic } = data.data;
+					for (let i = 0, len = statistic.length; i < len; i++) {
+						projectNames.push(statistic[i].projectName);
+						projects.push({
+							name: statistic[i].projectName,
+							data: statistic[i].authorizeNum,
+							type: "line"
+						});
+					}
+					optionA.legend.data = projectNames;
+					optionA.xAxis.data = months;
+					optionA.series = projects;
+					this.chartA.setOption(optionA);
+				}
+			});
 		},
-		fetchChartB: function() {
+		fetchChartB: function(promise) {
 			let optionB = {
 				tooltip: {
 					trigger: "item",
@@ -193,42 +201,54 @@ export default {
 							normal: {
 								show: false
 							}
-						},
-						data: [
-							{ value: 335, name: "新疆BHF项目" },
-							{ value: 310, name: "西藏JJM平台" },
-							{ value: 234, name: "江苏监控站" },
-							{ value: 135, name: "和田维护平台" },
-							{ value: 135, name: "和田维护平台2" }
-						]
+						}
+						// 待填充的具体值
+						// data: [
+						// 	{ value: 335, name: "新疆BHF项目" },
+						// 	{ value: 310, name: "西藏JJM平台" },
+						// 	{ value: 234, name: "江苏监控站" },
+						// 	{ value: 135, name: "和田维护平台" },
+						// 	{ value: 135, name: "和田维护平台2" }
+						// ]
 					}
 				]
 			};
-			chartB.setOption(optionB);
+			promise.then(value => {
+				let chartBData = [];
+				let keys = Object.keys(value);
+				for (let i = 0, len = keys.length; i < len; i++) {
+					chartBData.push({
+						name: keys[i],
+						value: value[keys[i]]
+					});
+				}
+				optionB.series[0].data = chartBData;
+				this.chartB.setOption(optionB);
+			});
 		},
-		fetchChartC: function() {
+		fetchChartC: function(promise) {
 			let optionC = {
 				tooltip: {
 					trigger: "item"
 				},
 				xAxis: {
-					type: "category",
-					data: [
-						"新疆BHF项目",
-						"西藏JJM平台",
-						"江苏监控站",
-						"和田维护平台",
-						"大连平台",
-						"丹东平台",
-						"其它平台"
-					]
+					type: "category"
+					// data: [
+					// 	"新疆BHF项目",
+					// 	"西藏JJM平台",
+					// 	"江苏监控站",
+					// 	"和田维护平台",
+					// 	"大连平台",
+					// 	"丹东平台",
+					// 	"其它平台"
+					// ]
 				},
 				yAxis: {
 					type: "value"
 				},
 				series: [
 					{
-						data: [120, 200, 150, 80, 70, 110, 130],
+						// data: [120, 200, 150, 80, 70, 110, 130],
 						type: "bar",
 						itemStyle: {
 							normal: { color: "#009688" }
@@ -236,7 +256,18 @@ export default {
 					}
 				]
 			};
-			chartC.setOption(optionC);
+			promise.then(value => {
+				let xAxis = [];
+				let yAxis = [];
+				let keys = Object.keys(value);
+				for (let i = 0, len = keys.length; i < len; i++) {
+					xAxis.push(keys[i]);
+					yAxis.push(value[keys[i]]);
+				}
+				optionC.xAxis.data = xAxis;
+				optionC.series[0].data = yAxis;
+				this.chartC.setOption(optionC);
+			});
 		}
 	},
 	created: function() {},
@@ -255,9 +286,11 @@ export default {
 			document.querySelector("#chartC .content")
 		);
 		this.fetchTotalNum();
-		this.fetchChartA();
-		this.fetchChartB();
-		this.fetchChartC();
+        this.fetchChartA();
+        
+		let promise = this.fetchChartData();
+		this.fetchChartB(promise);
+		this.fetchChartC(promise);
 	}
 };
 </script>

@@ -13,14 +13,16 @@
 				<div class="side"></div>
 			</div>
 			<div style="height: 4em"></div>
-			<div class="line">
-				<input-vue v-model="userName" size="large" placeholder="用户名" icon="ios-contact"></input-vue>
-				<div id="name-tip">用户名不能为空！</div>
-			</div>
-			<div class="line">
-				<input-vue v-model="password" size="large" placeholder="密码" icon="md-key" type="password"></input-vue>
-				<div id="pass-tip">密码不能为空！</div>
-			</div>
+			<form>
+				<div class="line">
+					<input-vue v-model="userName" size="large" placeholder="用户名" icon="ios-contact" @on-enter="onSubmit"></input-vue>
+					<div id="name-tip">用户名不能为空！</div>
+				</div>
+				<div class="line">
+					<input-vue v-model="password" size="large" placeholder="密码" icon="md-key" type="password" @on-enter="onSubmit"></input-vue>
+					<div id="pass-tip">密码不能为空！</div>
+				</div>
+			</form>
 			<div class="line">
 				<button-vue label="提交" color="#009688" @clickevent="onSubmit" style="width: 100%;"></button-vue>
 				<div id="wrong-tip">用户名与密码错误！</div>
@@ -44,17 +46,23 @@ export default {
 	},
 	methods: {
 		onSubmit: function() {
-            let _this = this;
-			if (this.name == "") {
+			let _this = this;
+			if (this.userName == "") {
 				document.querySelector("#name-tip").style.visibility =
 					"visible";
 				return;
-			}
+			}else {
+                document.querySelector("#name-tip").style.visibility =
+					"hidden";
+            }
 			if (this.password == "") {
 				document.querySelector("#pass-tip").style.visibility =
 					"visible";
 				return;
-			}
+			}else {
+                document.querySelector("#pass-tip").style.visibility =
+					"hidden";
+            }
 			this.axios({
 				method: "post",
 				url: "/apis/login/m/login",
@@ -63,9 +71,9 @@ export default {
 					password: this.password
 				}
 			})
-				.then(function({data}) {
+				.then(function({ data }) {
 					if (data.code == 0) {
-                        _this.$store.dispatch("globalstate/setCurrentUser", {
+						_this.$store.dispatch("globalstate/setCurrentUser", {
 							currentUser: data.data
 						});
 						_this.$router.push({ path: `/sjtj` });
